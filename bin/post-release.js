@@ -21,4 +21,7 @@ module.exports = function (version, cb) {
     // Build and upload the package
     shell.exec('python setup.py sdist --formats=gztar,zip upload');
   }
+
+  // Callback
+  cb();
 };
