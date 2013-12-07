@@ -8,7 +8,9 @@ var Foundry = require('../bin/foundry');
 // Stop exec calls from happening
 // TODO: This will become mock
 var shell = require('shelljs');
-shell.exec = function () {};
+shell.exec = function () {
+  throw new Error('`shell.exec` was being called with ' + JSON.stringify(arguments));
+};
 
 // DEV: NEVER EVER RUN FOUNDRY VIA .exec
 // DEV: WE CANNOT STOP .exec CALLS FROM OCCURRING IN ANOTHER PROCESS
