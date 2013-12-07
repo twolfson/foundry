@@ -19,7 +19,7 @@ module.exports = function () {
     shell.exec('git commit -a -m "Release ' + version + '"');
     shell.exec('git tag ' + version + ' -a -m "Release ' + version + '"');
     shell.exec('git push');
-    shell.exec('git push --tags ');
+    shell.exec('git push --tags');
     cb();
   }
 
