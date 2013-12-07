@@ -52,6 +52,7 @@ if (module.parent === null) {
   program.version(require('../package').version);
 
   // Parse the arguments
+  console.log(process.argv);
   program.parse(process.argv);
 
   // If there weren't enough arguments, display help

@@ -56,12 +56,13 @@ describe('A release', function () {
     });
     before(function release (done) {
       var program = new Foundry();
-      program.parse(['node', 'foundry', 'release', '0.1.0']);
+      program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
       // TODO: Figure out how to hook in better
       setTimeout(done, 1000);
     });
 
     it('adds a git tag', function (done) {
+      process.chdir(this.gitDir);
       childProcess.exec('git tag', function (err, stdout, stderr) {
         if (err) {
           return done(err);
