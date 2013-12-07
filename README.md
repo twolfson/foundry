@@ -80,6 +80,8 @@ config will accept a mustache template for formatting
   // versionFormat: 'v{{major}}.{{minor}}.{{patch}}{{#pre-release}}-{{.}}{{/pre-release}}{{#metadata}}+{{.}}{{/metadata}}',
   versionFormat: '{{major}}.{{minor}}.{{patch}}{{#pre-release}}-{{.}}{{/pre-release}}{{#metadata}}+{{.}}{{/metadata}}',
   defaults: {
+    // TODO: Users will prob want a hook for injecting metadata, figure that out.
+    // TODO: Maybe `~/.foundry/hooks/metadata.js`?
     message: 'Release {{version}}',
     version: '0.1.0'
   }
