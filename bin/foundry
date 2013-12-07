@@ -4,45 +4,57 @@
 var async = require('async');
 
 // TODO: Move all CLI logic into a `lib` (even though a lot of this is going to get broken down)
-// Set up program
-var program = require('commander')
-                .version(require('../package').version);
+var Command = require('commander').Command;
 
-function preRelease(version, cb) {
-  console.log(version);
-  cb();
-}
+module.exports = function () {
+  // Set up program
+  var program = new Command();
 
-function gitTag(version, cb) {
+  function preRelease(version, cb) {
+    console.log(version);
+    cb();
+  }
 
-}
+  function gitTag(version, cb) {
 
-function postRelease(version, cb) {
+  }
 
-}
+  function postRelease(version, cb) {
 
-// Set up commands
-// TODO: Following iterations ($EDITOR for message, try to update changelog)
-program
-  .command('release <version>')
-  .description('Set version for package.json, bower, component, git tag, and setup.py and publish to corresponding registries')
-  .action(function release (version, argv) {
-    // DEV: This is directly mimicking behavior from `git-release`
-    async.series([
-      preRelease.bind(this, version),
-      gitTag.bind(this, version),
-      postRelease.bind(this, version)
-    ], function handleError (err) {
-      if (err) {
-        throw err;
-      }
+  }
+
+  // Set up commands
+  // TODO: Following iterations ($EDITOR for message, try to update changelog)
+  program
+    .command('release <version>')
+    .description('Set version for package.json, bower, component, git tag, and setup.py and publish to corresponding registries')
+    .action(function release (version, argv) {
+      // DEV: This is directly mimicking behavior from `git-release`
+      async.series([
+        preRelease.bind(this, version),
+        gitTag.bind(this, version),
+        postRelease.bind(this, version)
+      ], function handleError (err) {
+        if (err) {
+          throw err;
+        }
+      });
     });
-  });
 
-// Parse the arguments
-program.parse(process.argv);
+  // Return our program
+  return program;
+};
 
-// If there weren't enough arguments, display help
-if (process.argv.length <= 2) {
-  program.outputHelp();
+if (module.parent === null) {
+  // Create a new program
+  var program = new module.exports();
+  program.version(require('../package').version);
+
+  // Parse the arguments
+  program.parse(process.argv);
+
+  // If there weren't enough arguments, display help
+  if (process.argv.length <= 2) {
+    program.outputHelp();
+  }
 }
