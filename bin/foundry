@@ -15,7 +15,7 @@ module.exports = function () {
   function gitTag(version, cb) {
     var shell = require('shelljs');
     shell.exec('git commit -a -m "Release ' + version + '"');
-    shell.exec('git tag $1 -a -m "Release ' + version + '"');
+    shell.exec('git tag ' + version + ' -a -m "Release ' + version + '"');
     shell.exec('git push');
     shell.exec('git push --tags ');
     cb();
