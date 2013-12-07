@@ -9,18 +9,16 @@ var Command = require('commander').Command;
 module.exports = function () {
   // Set up program
   var program = new Command();
-
-  function preRelease(version, cb) {
-    console.log(version);
-    cb();
-  }
+  var preRelease = require('./pre-release');
+  var postRelease = require('./post-release');
 
   function gitTag(version, cb) {
-
-  }
-
-  function postRelease(version, cb) {
-
+    var shell = require('shelljs');
+    shell.exec('git commit -a -m "Release ' + version + '"');
+    shell.exec('git tag $1 -a -m "Release ' + version + '"');
+    shell.exec('git push');
+    shell.exec('git push --tags ');
+    cb();
   }
 
   // Set up commands
