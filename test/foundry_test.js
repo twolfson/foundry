@@ -75,6 +75,8 @@ describe('A release', function () {
     });
 
     it('adds a git tag', function () {
+      // TODO: This does a very poor job of real world simulation. Use Vagrant
+      // TODO: Inside of `npm test`, add a check for VAGRANT=TRUE || TRAVIS=TRUE. Otherwise, don't run.
       expect(this.stub.args[0]).to.deep.equal(['git commit -a -m "Release 0.1.0"']);
       expect(this.stub.args[1]).to.deep.equal(['git tag 0.1.0 -a -m "Release 0.1.0"']);
       expect(this.stub.args[2]).to.deep.equal(['git push']);
