@@ -41,7 +41,8 @@
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-watch": "~0.4.0",
-    "wrench": "~1.5.4"
+    "wrench": "~1.5.4",
+    "chai": "~1.8.1"
   },
   "keywords": [
     "release",

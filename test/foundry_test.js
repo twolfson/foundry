@@ -2,7 +2,8 @@
 var childProcess = require('child_process');
 var path = require('path');
 var wrench = require('wrench');
-var foundry = require('../bin/foundry');
+var expect = require('chai').expect;
+var Foundry = require('../bin/foundry');
 
 // Stop exec calls from happening
 // TODO: This will become mock
@@ -48,15 +49,25 @@ describe('A release', function () {
     before(function initializeGitFolder (done) {
       var that = this;
       process.chdir(this.gitDir);
-      console.log(this.gitDir);
-      // childProcess.exec('git init', function (err, stdout, stderr) {
-      //   that.stdout = stdout;
+      childProcess.exec('git init', function (err, stdout, stderr) {
+        that.stdout = stdout;
         done(err);
-      // });
+      });
+    });
+    before(function release (done) {
+      var program = new Foundry();
+      program.parse(['node', 'foundry', 'release', '0.1.0']);
+      // TODO: Figure out how to hook in better
+      setTimeout(done, 1000);
     });
 
-    it('adds a git tag', function () {
-
+    it('adds a git tag', function (done) {
+      childProcess.exec('git tag', function (err, stdout, stderr) {
+        if (err) {
+          return done(err);
+        }
+        expect(stdout).to.equal('0.1.0');
+      });
     });
   });
 });
