@@ -41,6 +41,8 @@ Grand vision:
 
 // TODO: Initial release could forego increasing of versions and go with a set-only approach.
 
+// TODO: Consider safeguards (e.g. don't release unless on `master`, probably inside of hooks)
+
 `release` command will need to accept `major`, `minor`, `patch`, `pre-release <name>`, `<semver>` (e.g. `0.1.0`).
 
 There will be the option to add `metadata` via `--metadata <metadata>`.
