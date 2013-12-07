@@ -5,6 +5,7 @@ module.exports = function (version, cb) {
     // If the package.json does not contain a 'private: true', publish it
     var result = shell.exec('node -e "f = \'./package.json\'; p = require(f); process.exit(+(p.private||0))"');
     if (result.code === 0) {
+      // TODO: Don't let this live as sync. Use spawn with forwarding to stdio.
       shell.exec('npm publish');
     }
   }
