@@ -7,6 +7,10 @@ var async = require('async');
 var Command = require('commander').Command;
 
 module.exports = function () {
+  var shell = require('shelljs');
+  console.log(shell.exec);
+
+  return;
   // Set up program
   var program = new Command();
   var preRelease = require('./pre-release');
