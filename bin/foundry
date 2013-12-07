@@ -1,12 +1,16 @@
 #!/usr/bin/env node
 
+// Load in dependencies
+var async = require('async');
+
 // TODO: Move all CLI logic into a `lib` (even though a lot of this is going to get broken down)
 // Set up program
 var program = require('commander')
                 .version(require('../package').version);
 
 function preRelease(version, cb) {
-
+  console.log(version);
+  cb();
 }
 
 function gitTag(version, cb) {
@@ -18,10 +22,11 @@ function postRelease(version, cb) {
 }
 
 // Set up commands
+// TODO: Following iterations ($EDITOR for message, try to update changelog)
 program
   .command('release <version>')
   .description('Set version for package.json, bower, component, git tag, and setup.py and publish to corresponding registries')
-  .action(function release () {
+  .action(function release (version, argv) {
     // DEV: This is directly mimicking behavior from `git-release`
     async.series([
       preRelease.bind(this, version),
