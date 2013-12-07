@@ -1,1 +1,43 @@
 #!/usr/bin/env node
+
+// TODO: Move all CLI logic into a `lib` (even though a lot of this is going to get broken down)
+// Set up program
+var program = require('commander')
+                .version(require('../package').version);
+
+function preRelease(version, cb) {
+
+}
+
+function gitTag(version, cb) {
+
+}
+
+function postRelease(version, cb) {
+
+}
+
+// Set up commands
+program
+  .command('release <version>')
+  .description('Set version for package.json, bower, component, git tag, and setup.py and publish to corresponding registries')
+  .action(function release () {
+    // DEV: This is directly mimicking behavior from `git-release`
+    async.series([
+      preRelease.bind(this, version),
+      gitTag.bind(this, version),
+      postRelease.bind(this, version)
+    ], function handleError (err) {
+      if (err) {
+        throw err;
+      }
+    });
+  });
+
+// Parse the arguments
+program.parse(process.argv);
+
+// If there weren't enough arguments, display help
+if (process.argv.length <= 2) {
+  program.outputHelp();
+}
