@@ -1,17 +1,23 @@
-module.exports = function () {
+var shell = require('shelljs');
+module.exports = function (version, cb) {
   // npm
-  if test -f package.json; then
+  if (shell.test('-f', 'package.json')) {
     // If the package.json does not contain a 'private: true', publish it
-    node -e "f = './package.json'; p = require(f); process.exit(+(p.private||0))" && npm publish
-  fi
+    var result = shell.exec('node -e "f = \'./package.json\'; p = require(f); process.exit(+(p.private||0))"');
+    if (result.code === 0) {
+      shell.exec('npm publish');
+    }
+  }
 
-  if test -f setup.py && ! test -f .private; then
+  // TODO: Don't miss out on testing .private for Python
+  if (shell.test('-f', 'setup.py') && !shell.test('-f', '.private')) {
     // If the package is at 0.1.0, register it
-    if test "$2" = "0.1.0"; then
-      python setup.py register
-    fi
+    // TODO: This should be comparing to default
+    if (version === '0.1.0') {
+      shell.exec('python setup.py register');
+    }
 
     // Build and upload the package
-    python setup.py sdist --formats=gztar,zip upload
-  fi
+    shell.exec('python setup.py sdist --formats=gztar,zip upload');
+  }
 };
