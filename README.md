@@ -18,17 +18,19 @@ Grand vision:
     - foundry-release-npm - Release script for npm. Looks for package.json, bumps semver, saves, publishes to npm.
     - foundry-release-git - Find the oldest git tag (defaults to 0.1.0 -- config override), bumps semver, git tag, git push --tags
     - foundry-release-changelog-md - This will not be part of the initial release. Or maybe it will be. This will insert a new line to a markdown template of the following format (maybe using reverse templating)
-    ```markdown
-    # foundry changelog
-    0.1.0 - Implemented release library
-    ```
 
-    Templater will see:
+        ```markdown
+        # foundry changelog
+        0.1.0 - Implemented release library
+        ```
 
-    ```
-    # {{name}} changelog
-    {{version}} - {{message}}
-    ```
+        Templater will see:
+
+        ```markdown
+        # {{name}} changelog
+        {{version}} - {{message}}
+        ```
+
     - foundry-release-bower - Look at the bower.json (don't fallback to component.json due to potential conflicts). Get the latest semver. If this is the first release, register with the register. git tag the version.
         - // TODO: How will this play with `git-tag`?
         - // TODO: Should git-tag play dead on bower.json files? Probably not in case they don't use release-bower.
