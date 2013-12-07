@@ -15,10 +15,13 @@ Grand vision:
     - If there are semvers that don't line up, it will prompt for action (maybe another library itself)
     - If semvers cannot be increased (e.g. a flavor doesn't support `release`)
         - // TODO: Is this a likely case? Does PyPI deal with this? Is this YAGNI for our MVP?
-- foundry-release-npm - Release script for npm. Looks for package.json, bumps semver, saves, publishes to npm.
-- foundry-release-git - Find the oldest git tag (defaults to 0.1.0 -- config override), bumps semver, git tag, git push --tags
-- foundry-release-changelog-md - This will not be part of the initial release. Or maybe it will be. This will insert a new line to a markdown template of the following format (maybe using reverse templating)
-- foundry-release-changelog-md -
+    - foundry-release-npm - Release script for npm. Looks for package.json, bumps semver, saves, publishes to npm.
+    - foundry-release-git - Find the oldest git tag (defaults to 0.1.0 -- config override), bumps semver, git tag, git push --tags
+    - foundry-release-changelog-md - This will not be part of the initial release. Or maybe it will be. This will insert a new line to a markdown template of the following format (maybe using reverse templating)
+    - foundry-release-bower
+    - foundry-release-component
+    - foundry-release-pypi
+- foundry-link - Links the current folder into the list of registered releasers
 
 ```markdown
 # foundry changelog
