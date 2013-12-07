@@ -26,7 +26,7 @@ module.exports = function (version, cb) {
 
   // Python
   if (shell.test('-f', 'setup.py')) {
-    shell.exec('node -e "fs = require(\'fs\'); f = \'./setup.py\'; p = fs.readFileSync(f, \'utf8\'); v = \'' + version + '\'; p = p.replace(/version=\'\\d+.\\d+.\\d+\'/, \'version=\\'\' + v + \'\\''); fs.writeFileSync(f, p, \'utf8\');"');
+    shell.exec('node -e "fs = require(\'fs\'); f = \'./setup.py\'; p = fs.readFileSync(f, \'utf8\'); v = \'' + version + '\'; p = p.replace(/version=\'\\d+.\\d+.\\d+\'/, \'version=\\\'\' + v + \'\\\'\'); fs.writeFileSync(f, p, \'utf8\');"');
   }
 
   // Callback
