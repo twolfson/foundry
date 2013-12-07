@@ -18,22 +18,26 @@ Grand vision:
     - foundry-release-npm - Release script for npm. Looks for package.json, bumps semver, saves, publishes to npm.
     - foundry-release-git - Find the oldest git tag (defaults to 0.1.0 -- config override), bumps semver, git tag, git push --tags
     - foundry-release-changelog-md - This will not be part of the initial release. Or maybe it will be. This will insert a new line to a markdown template of the following format (maybe using reverse templating)
-    - foundry-release-bower
-    - foundry-release-component
-    - foundry-release-pypi
+    ```markdown
+    # foundry changelog
+    0.1.0 - Implemented release library
+    ```
+
+    Templater will see:
+
+    ```
+    # {{name}} changelog
+    {{version}} - {{message}}
+    ```
+    - foundry-release-bower - Look at the bower.json (don't fallback to component.json due to potential conflicts). Get the latest semver. If this is the first release, register with the register. git tag the version.
+        - // TODO: How will this play with `git-tag`?
+        - // TODO: Should git-tag play dead on bower.json files? Probably not in case they don't use release-bower.
+        - // TODO: Both bower and git-tag should be tolerant if the current version already has the proper tag.
+    - foundry-release-component - Same as bower except with different register mechanism. Initial versions will not automatically register into the wiki page.
+    - foundry-release-pypi - Register setup.py to PyPI, publish with zip + tarball (allow for customization via config, under some namespace)
 - foundry-link - Links the current folder into the list of registered releasers
 
-```markdown
-# foundry changelog
-0.1.0 - Implemented release library
-```
-
-Templater will see:
-
-```
-# {{name}} changelog
-{{version}} - {{message}}
-```
+// TODO: Initial release could forego increasing of versions and go with a set-only approach.
 
 `release` command will need to accept `major`, `minor`, `patch`, `pre-release <name>`, `<semver>` (e.g. `0.1.0`).
 
