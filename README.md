@@ -97,6 +97,30 @@ config will accept a mustache template for formatting
 }
 ```
 
+We might want standalone functions for register and publish
+
+```bash
+foundry register
+foundry publish
+```
+
+Maybe even register/publish with callouts to specific releasers
+
+```bash
+foundry register git-tag
+foundry publish git-tag
+```
+
+This leads to the question of `get-version` and such as well
+
+```bash
+foundry get-version # 1.33.7
+foundry set-version 42.0.0
+
+foundry get-version bower # 1270.0.1
+foundry set-version npm 192168.1.1
+```
+
 ## Getting Started
 Install the module with: `npm install foundry`
 
