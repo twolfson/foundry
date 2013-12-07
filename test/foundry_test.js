@@ -16,12 +16,15 @@ shell.exec = function () {};
 var tmp = shell.tempdir();
 var fixtureDir = path.join(tmp, 'foundry_test');
 before(function deleteFixtureDir (done) {
-  wrench.rmdirRecursive(fixtureDir, done);
+  wrench.rmdirRecursive(fixtureDir, false, function (err) {
+    done();
+  });
 });
-before(function createFixtureDir (done) {
-  wrench.mkdirRecursive(fixtureDir, done);
+before(function createFixtureDir () {
+  // DEV: There is no asynchronous flavor. We could use mkdirp but this is fine.
+  wrench.mkdirSyncRecursive(fixtureDir);
 });
-before(function goToFixtureDir (done) {
+before(function goToFixtureDir () {
   process.chdir(fixtureDir);
 });
 
@@ -38,9 +41,9 @@ function fixtureDir(name) {
 
 describe('A release', function () {
   describe('in a git folder', function () {
-    before(function createGitFolder (done) {
+    before(function createGitFolder () {
       this.gitDir = path.join(fixtureDir, 'git_test');
-      wrench.mkdirRecursive(this.gitDir, done);
+      wrench.mkdirSyncRecursive(this.gitDir);
     });
     before(function initializeGitFolder (done) {
       var that = this;
