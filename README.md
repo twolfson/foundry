@@ -2,6 +2,50 @@
 
 Release manager for npm, bower, component, PyPI, and any plugin you can write
 
+Grand vision:
+
+- foundry - Sugar command that wraps subcommands (also node modules with `bin` scripts for individual invocation)
+- foundry-config - Manage config for foundry `~/.foundry/config.json`
+- // TODO: Consider how we can read from global npm install. Probably better to have our own in case we need to override things
+- // TODO: Maybe we can put these together into `foundry-manager`? (e.g. what about upgrades)
+- foundry-install - Installs
+- foundry-uninstall - Installs
+    - Alias as `unlink`
+- foundry-release - Discovers installed release scripts, determines flavors that match, compares and upgrades semvers.
+    - If there are semvers that don't line up, it will prompt for action (maybe another library itself)
+    - If semvers cannot be increased (e.g. a flavor doesn't support `release`)
+        - // TODO: Is this a likely case? Does PyPI deal with this? Is this YAGNI for our MVP?
+- foundry-release-npm - Release script for npm. Looks for package.json, bumps semver, saves, publishes to npm.
+- foundry-release-git - Find the oldest git tag (defaults to 0.1.0 -- config override), bumps semver, git tag, git push --tags
+- foundry-release-changelog-md - This will not be part of the initial release.
+
+`release` command will need to accept `major`, `minor`, `patch`, `release <name>`, `<semver>` (e.g. `0.1.0`).
+
+// TODO: $EDITOR opening should be another node module
+Optionally, a message can be provided via `-m, --message`. If not provided, a prompt will open in $EDITOR (config can override this).
+
+Each release script must have the following export functions
+
+```
+exports.getVersion = function (options, cb) {
+  // Working directory will be process.cwd();
+  // options.cwd = process.cwd();
+};
+exports.setVersion = function (version, options, cb) {
+  // semver = 0.1.0+release
+  // TODO: Thoughts on semver.major, semver.minor, semver.patch as properties?
+};
+// Optional setting for semver types
+exports.accepts = {
+  semver: {
+    major: true,
+    minor: true,
+    patch: true,
+    release: false
+  }
+};
+```
+
 ## Getting Started
 Install the module with: `npm install foundry`
 
