@@ -35,7 +35,6 @@ module.exports = function () {
         gitTag.bind(this, version),
         postRelease.bind(this, version)
       ], function handleError (err) {
-        console.log('aaa');
         if (err) {
           throw err;
         }
@@ -52,7 +51,6 @@ if (module.parent === null) {
   program.version(require('../package').version);
 
   // Parse the arguments
-  console.log(process.argv);
   program.parse(process.argv);
 
   // If there weren't enough arguments, display help
