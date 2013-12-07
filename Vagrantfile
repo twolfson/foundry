@@ -12,6 +12,7 @@ Vagrant.configure("2") do |config|
     touch .updated_apt_get
   fi
 SCRIPT
+  config.vm.provision "shell", inline: $update_apt_get
 
   # https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#ubuntu-mint-elementary-os
   $install_node = <<SCRIPT
