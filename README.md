@@ -32,7 +32,11 @@ Templater will see:
 {{version}} - {{message}}
 ```
 
-`release` command will need to accept `major`, `minor`, `patch`, `release <name>`, `<semver>` (e.g. `0.1.0`).
+`release` command will need to accept `major`, `minor`, `patch`, `pre-release <name>`, `<semver>` (e.g. `0.1.0`).
+
+There will be the option to add `metadata` via `--metadata <metadata>`.
+
+The commands above were provided by http://semver.org/
 
 // TODO: $EDITOR opening should be another node module
 Optionally, a message can be provided via `-m, --message`. If not provided, a prompt will open in $EDITOR (config can override this).
@@ -47,10 +51,11 @@ exports.getVersion = function (options, cb) {
   // options.cwd = process.cwd();
 };
 exports.setVersion = function (version, options, cb) {
-  // semver = 0.1.0+release
+  // semver = 0.1.0-pre-release+metadata
   // TODO: Thoughts on semver.major, semver.minor, semver.patch as properties?
 };
 // Optional function to register if the package is brand new
+// TODO: This should be a prompt (e.g. "This looks like an initial release. Should we register to the appropriate registries? [Y/n]
 exports.register = function (options, cb) {
   // Register to PyPI
   // Maybe bower too?
@@ -60,12 +65,11 @@ exports.publish = function (options, cb) {
 };
 // Optional setting for semver types
 exports.accepts = {
-  semver: {
-    major: true,
-    minor: true,
-    patch: true,
-    release: false
-  }
+  major: true,
+  minor: true,
+  patch: true,
+  'pre-release': false,
+  metadata: false
 };
 ```
 
@@ -73,8 +77,8 @@ config will accept a mustache template for formatting
 
 ```js
 {
-  // versionFormat: 'v{{major}}.{{minor}}.{{patch}}{{#release}}{{.}}{{/release}}'
-  versionFormat: '{{major}}.{{minor}}.{{patch}}{{#release}}{{.}}{{/release}}',
+  // versionFormat: 'v{{major}}.{{minor}}.{{patch}}{{#pre-release}}-{{.}}{{/pre-release}}{{#metadata}}+{{.}}{{/metadata}}',
+  versionFormat: '{{major}}.{{minor}}.{{patch}}{{#pre-release}}-{{.}}{{/pre-release}}{{#metadata}}+{{.}}{{/metadata}}',
   defaults: {
     message: 'Release {{version}}',
     version: '0.1.0'
