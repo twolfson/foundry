@@ -88,11 +88,18 @@ describe('A release', function () {
 
     // TODO: Use premade git directory a la sexy-bash-prompt
     before(function initializeGitFolder (done) {
-      var that = this;
       process.chdir(this.gitDir);
       iKnowWhatIAmDoingExec('git init', function (err, stdout, stderr) {
-        that.stdout = stdout;
-        done(err);
+        if (err) { return done(err); }
+        iKnowWhatIAmDoingExec('touch a', function (err, stdout, stderr) {
+          if (err) { return done(err); }
+          iKnowWhatIAmDoingExec('git add -A', function (err, stdout, stderr) {
+            if (err) { return done(err); }
+            iKnowWhatIAmDoingExec('git commit -m "Initial commit =D"', function (err, stdout, stderr) {
+              done(err);
+            });
+          });
+        });
       });
     });
 
@@ -109,14 +116,14 @@ describe('A release', function () {
       }, done);
     });
 
-    it('adds a git tag', function () {
-
-      // childProcess.exec('git tag', function (err, stdout, stderr) {
-      //   if (err) {
-      //     return done(err);
-      //   }
-      //   expect(stdout).to.equal('0.1.0');
-      // });
+    it('adds a git tag', function (done) {
+      iKnowWhatIAmDoingExec('git tag', function (err, stdout, stderr) {
+        if (err) {
+          return done(err);
+        }
+        expect(stdout).to.equal('0.1.0');
+        done();
+      });
     });
   });
 });
