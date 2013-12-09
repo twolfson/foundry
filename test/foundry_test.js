@@ -2,15 +2,13 @@
 var childProcess = require('child_process');
 var path = require('path');
 var expect = require('chai').expect;
-// TODO: Move to enclosed file system with no fear of publishing anything
-// TODO: How will this behave with gitter calls? Should we move off of git CLI? They might have customizations.
 var sinon = require('sinon');
 var wrench = require('wrench');
 var Foundry = require('../bin/foundry');
 
 // Stop exec calls from happening
-// TODO: This will become mock
 var shell = require('shelljs');
+var _exec = shell.exec;
 shell.exec = function () {
   throw new Error('`shell.exec` was being called with ' + JSON.stringify(arguments));
 };
@@ -45,6 +43,17 @@ function fixtureDir(name) {
   // });
 }
 
+function stubExec() {
+  before(function stubExec () {
+    this.execStub = sinon.stub(shell, 'exec', function () {
+      return {};
+    });
+  });
+  after(function () {
+    this.execStub.restore();
+  });
+}
+
 describe('A release', function () {
   describe('in a git folder', function () {
     before(function createGitFolder () {
@@ -59,14 +68,8 @@ describe('A release', function () {
         done(err);
       });
     });
-    before(function stubExec () {
-      this.stub = sinon.stub(shell, 'exec', function () {
-        return {};
-      });
-    });
-    after(function () {
-      this.stub.restore();
-    });
+    stubExec();
+
     before(function release (done) {
       var program = new Foundry();
       program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
@@ -77,10 +80,10 @@ describe('A release', function () {
     it('adds a git tag', function () {
       // TODO: This does a very poor job of real world simulation. Use Vagrant
       // TODO: Inside of `npm test`, add a check for VAGRANT=TRUE || TRAVIS=TRUE. Otherwise, don't run.
-      expect(this.stub.args[0]).to.deep.equal(['git commit -a -m "Release 0.1.0"']);
-      expect(this.stub.args[1]).to.deep.equal(['git tag 0.1.0 -a -m "Release 0.1.0"']);
-      expect(this.stub.args[2]).to.deep.equal(['git push']);
-      expect(this.stub.args[3]).to.deep.equal(['git push --tags']);
+      expect(this.execStub.args[0]).to.deep.equal(['git commit -a -m "Release 0.1.0"']);
+      expect(this.execStub.args[1]).to.deep.equal(['git tag 0.1.0 -a -m "Release 0.1.0"']);
+      expect(this.execStub.args[2]).to.deep.equal(['git push']);
+      expect(this.execStub.args[3]).to.deep.equal(['git push --tags']);
 
       // childProcess.exec('git tag', function (err, stdout, stderr) {
       //   if (err) {
