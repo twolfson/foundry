@@ -121,7 +121,7 @@ describe('A release', function () {
         if (err) {
           return done(err);
         }
-        expect(stdout).to.equal('0.1.0');
+        expect(stdout).to.equal('0.1.0\n');
         done();
       });
     });
