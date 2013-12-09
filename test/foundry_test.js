@@ -8,18 +8,18 @@ var Foundry = require('../bin/foundry');
 
 // Stop exec calls from happening
 var shell = require('shelljs');
-var _exec = shell.exec;
-shell.exec = function () {
+var originalExec = shell.exec;
+shell.exec = shell.complaintExec = function () {
   throw new Error('`shell.exec` was being called with ' + JSON.stringify(arguments));
 };
 
 // Stop childProcess exec and spawn calls too unless people opt in to our methods
 childProcess.iKnowWhatIAmDoingSpawn = childProcess.spawn;
-childProcess.spawn = function () {
+childProcess.spawn = childProcess.complaintSpawn = function () {
   throw new Error('`childProcess.spawn` was being called with ' + JSON.stringify(arguments));
 };
 childProcess.iKnowWhatIAmDoingExec = childProcess.exec;
-childProcess.exec = function () {
+childProcess.exec = childProcess.complaintExec = function () {
   throw new Error('`childProcess.exec` was being called with ' + JSON.stringify(arguments));
 };
 
@@ -52,8 +52,8 @@ function fixtureDir(name) {
   // });
 }
 
-function stubExec() {
-  before(function stubExec () {
+function stubShellExec() {
+  before(function () {
     this.execStub = sinon.stub(shell, 'exec', function () {
       return {};
     });
@@ -63,12 +63,31 @@ function stubExec() {
   });
 }
 
+function allowShellExec() {
+  before(function () {
+    shell.exec = originalExec;
+  });
+  after(function () {
+    shell.exec = complaintExec;
+  });
+}
+function allowChildExec(fn, cb) {
+  shell.exec = originalExec;
+  fn(function (err) {
+    shell.exec = complaintExec;
+    cb(err);
+  });
+}
+
+
 describe('A release', function () {
   describe('in a git folder', function () {
     before(function createGitFolder () {
       this.gitDir = path.join(fixtureDir, 'git_test');
       wrench.mkdirSyncRecursive(this.gitDir);
     });
+
+    // TODO: Use premade git directory a la sexy-bash-prompt
     before(function initializeGitFolder (done) {
       var that = this;
       process.chdir(this.gitDir);
@@ -77,7 +96,7 @@ describe('A release', function () {
         done(err);
       });
     });
-    stubExec();
+    allowShellExec();
 
     before(function release (done) {
       var program = new Foundry();
@@ -88,10 +107,6 @@ describe('A release', function () {
     });
 
     it('adds a git tag', function () {
-      expect(this.execStub.args[0]).to.deep.equal(['git commit -a -m "Release 0.1.0"']);
-      expect(this.execStub.args[1]).to.deep.equal(['git tag 0.1.0 -a -m "Release 0.1.0"']);
-      expect(this.execStub.args[2]).to.deep.equal(['git push']);
-      expect(this.execStub.args[3]).to.deep.equal(['git push --tags']);
 
       // childProcess.exec('git tag', function (err, stdout, stderr) {
       //   if (err) {
