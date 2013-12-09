@@ -84,7 +84,7 @@ describe('A release', function () {
       program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
       // TODO: Figure out how to hook in better (program.parse does not provide a callback hook)
       // TODO: Maybe an EventEmitter? (error, end)
-      setTimeout(done, 1000);
+      setTimeout(done, 100);
     });
 
     it('adds a git tag', function () {
