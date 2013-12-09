@@ -14,11 +14,11 @@ shell.exec = shell.complaintExec = function () {
 };
 
 // Stop childProcess exec and spawn calls too unless people opt in to our methods
-childProcess.iKnowWhatIAmDoingSpawn = childProcess.spawn;
+var iKnowWhatIAmDoingSpawn = childProcess.spawn;
 childProcess.spawn = childProcess.complaintSpawn = function () {
   throw new Error('`childProcess.spawn` was being called with ' + JSON.stringify(arguments));
 };
-childProcess.iKnowWhatIAmDoingExec = childProcess.exec;
+var iKnowWhatIAmDoingExec = childProcess.exec;
 childProcess.exec = childProcess.complaintExec = function () {
   throw new Error('`childProcess.exec` was being called with ' + JSON.stringify(arguments));
 };
@@ -63,18 +63,17 @@ function stubShellExec() {
   });
 }
 
-function allowShellExec() {
-  before(function () {
-    shell.exec = originalExec;
-  });
-  after(function () {
-    shell.exec = complaintExec;
+function allowShellExec(fn, cb) {
+  shell.exec = originalExec;
+  fn(function (err) {
+    shell.exec = shell.complaintExec;
+    cb(err);
   });
 }
 function allowChildExec(fn, cb) {
-  shell.exec = originalExec;
+  childProcess.exec = iKnowWhatIAmDoingExec;
   fn(function (err) {
-    shell.exec = complaintExec;
+    childProcess.exec = childProcess.complaintExec;
     cb(err);
   });
 }
@@ -91,19 +90,23 @@ describe('A release', function () {
     before(function initializeGitFolder (done) {
       var that = this;
       process.chdir(this.gitDir);
-      childProcess.iKnowWhatIAmDoingExec('git init', function (err, stdout, stderr) {
+      iKnowWhatIAmDoingExec('git init', function (err, stdout, stderr) {
         that.stdout = stdout;
         done(err);
       });
     });
-    allowShellExec();
 
     before(function release (done) {
-      var program = new Foundry();
-      program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
-      // TODO: Figure out how to hook in better (program.parse does not provide a callback hook)
-      // TODO: Maybe an EventEmitter? (error, end)
-      setTimeout(done, 100);
+      // TODO: Consider `allow` function
+      allowShellExec(function (cb1) {
+        allowChildExec(function (cb2) {
+          var program = new Foundry();
+          program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
+          // TODO: Figure out how to hook in better (program.parse does not provide a callback hook)
+          // TODO: Maybe an EventEmitter? (error, end)
+          setTimeout(cb2, 100);
+        }, cb1);
+      }, done);
     });
 
     it('adds a git tag', function () {
