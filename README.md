@@ -75,30 +75,6 @@ exports.publish = function (options, cb) {
   // Publish to npm, git tag, zip + tarball to PyPI
 };
 
-// TODO: Figure out how to do ordering of releasers. `git` *must* come after all others.
-// TODO: We could have a prePublish hook where git logic runs but that is sloppy.
-// TODO: Maybe have a order (either numeric or "earliest", "earlier", "normal", "later", "latest")
-// TODO: If there is a conflict with earliest/latest, we would have to prompt the user
-// TODO: Maybe order is stored as an array in the config where earliest etc is more of a guideline
-/*
-order:{
-  earliest: null,
-  early: [
-
-  ],
-  normal: [
-    "changelog-md",
-    "npm",
-    "python"
-  ],
-  later: [
-
-  ],
-  latest: "git"
-}
-*/
-// TODO: There is a concern about register/publish order but that *really* should be a non-issue
-
 // Optional setting for semver types
 exports.accepts = {
   major: true,
