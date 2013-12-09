@@ -7,5 +7,10 @@ matrix:
   allow_failures:
     - node_js: "0.11"
 
+before_script:
+  # Configure `git` user
+  - git config --global user.email "foundry-test@mailinator.com"
+  - git config --global user.name "Foundry Test"
+
 notifications:
   email: false
