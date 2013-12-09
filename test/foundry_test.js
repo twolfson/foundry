@@ -104,7 +104,7 @@ describe('A release', function () {
     });
 
     before(function release (done) {
-      // TODO: Consider `allow` function
+      // TODO: Consider `allow` function which can enable both of these
       allowShellExec(function (cb1) {
         allowChildExec(function (cb2) {
           var program = new Foundry();
