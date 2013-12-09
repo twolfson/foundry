@@ -13,9 +13,18 @@ shell.exec = function () {
   throw new Error('`shell.exec` was being called with ' + JSON.stringify(arguments));
 };
 
+// Stop childProcess exec and spawn calls too unless people opt in to our methods
+childProcess.iKnowWhatIAmDoingSpawn = childProcess.spawn;
+childProcess.spawn = function () {
+  throw new Error('`childProcess.spawn` was being called with ' + JSON.stringify(arguments));
+};
+childProcess.iKnowWhatIAmDoingExec = childProcess.exec;
+childProcess.exec = function () {
+  throw new Error('`childProcess.exec` was being called with ' + JSON.stringify(arguments));
+};
+
 // DEV: NEVER EVER RUN FOUNDRY VIA .exec
 // DEV: WE CANNOT STOP .exec CALLS FROM OCCURRING IN ANOTHER PROCESS
-// TODO: Strongly consider running tests within a Vagrant to prevent publication since nothing is configured
 
 var tmp = shell.tempdir();
 var fixtureDir = path.join(tmp, 'foundry_test');
@@ -63,7 +72,7 @@ describe('A release', function () {
     before(function initializeGitFolder (done) {
       var that = this;
       process.chdir(this.gitDir);
-      childProcess.exec('git init', function (err, stdout, stderr) {
+      childProcess.iKnowWhatIAmDoingExec('git init', function (err, stdout, stderr) {
         that.stdout = stdout;
         done(err);
       });
@@ -78,8 +87,6 @@ describe('A release', function () {
     });
 
     it('adds a git tag', function () {
-      // TODO: This does a very poor job of real world simulation. Use Vagrant
-      // TODO: Inside of `npm test`, add a check for VAGRANT=TRUE || TRAVIS=TRUE. Otherwise, don't run.
       expect(this.execStub.args[0]).to.deep.equal(['git commit -a -m "Release 0.1.0"']);
       expect(this.execStub.args[1]).to.deep.equal(['git tag 0.1.0 -a -m "Release 0.1.0"']);
       expect(this.execStub.args[2]).to.deep.equal(['git push']);
