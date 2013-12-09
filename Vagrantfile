@@ -25,10 +25,19 @@ SCRIPT
 SCRIPT
   config.vm.provision "shell", inline: $install_node
 
+  # Install test dependency on `git`
   $install_git = <<SCRIPT
   if ! which git &> /dev/null; then
     sudo apt-get install git -y
   fi
 SCRIPT
   config.vm.provision "shell", inline: $install_git
+
+  # Verify environment is properly configured
+  $configure_env = <<SCRIPT
+  if test "$VAGRANT" != "true"; then
+    echo "VAGRANT=true" >> /etc/environment
+  fi
+SCRIPT
+  config.vm.provision "shell", inline: $configure_env
 end

@@ -2,22 +2,29 @@
 var childProcess = require('child_process');
 var path = require('path');
 var expect = require('chai').expect;
-// TODO: Move to enclosed file system with no fear of publishing anything
-// TODO: How will this behave with gitter calls? Should we move off of git CLI? They might have customizations.
 var sinon = require('sinon');
 var wrench = require('wrench');
 var Foundry = require('../bin/foundry');
 
 // Stop exec calls from happening
-// TODO: This will become mock
 var shell = require('shelljs');
-shell.exec = function () {
+var originalExec = shell.exec;
+shell.exec = shell.complaintExec = function () {
   throw new Error('`shell.exec` was being called with ' + JSON.stringify(arguments));
+};
+
+// Stop childProcess exec and spawn calls too unless people opt in to our methods
+var iKnowWhatIAmDoingSpawn = childProcess.spawn;
+childProcess.spawn = childProcess.complaintSpawn = function () {
+  throw new Error('`childProcess.spawn` was being called with ' + JSON.stringify(arguments));
+};
+var iKnowWhatIAmDoingExec = childProcess.exec;
+childProcess.exec = childProcess.complaintExec = function () {
+  throw new Error('`childProcess.exec` was being called with ' + JSON.stringify(arguments));
 };
 
 // DEV: NEVER EVER RUN FOUNDRY VIA .exec
 // DEV: WE CANNOT STOP .exec CALLS FROM OCCURRING IN ANOTHER PROCESS
-// TODO: Strongly consider running tests within a Vagrant to prevent publication since nothing is configured
 
 var tmp = shell.tempdir();
 var fixtureDir = path.join(tmp, 'foundry_test');
@@ -45,49 +52,78 @@ function fixtureDir(name) {
   // });
 }
 
+function stubShellExec() {
+  before(function () {
+    this.execStub = sinon.stub(shell, 'exec', function () {
+      return {};
+    });
+  });
+  after(function () {
+    this.execStub.restore();
+  });
+}
+
+function allowShellExec(fn, cb) {
+  shell.exec = originalExec;
+  fn(function (err) {
+    shell.exec = shell.complaintExec;
+    cb(err);
+  });
+}
+function allowChildExec(fn, cb) {
+  childProcess.exec = iKnowWhatIAmDoingExec;
+  fn(function (err) {
+    childProcess.exec = childProcess.complaintExec;
+    cb(err);
+  });
+}
+
+
 describe('A release', function () {
   describe('in a git folder', function () {
     before(function createGitFolder () {
       this.gitDir = path.join(fixtureDir, 'git_test');
       wrench.mkdirSyncRecursive(this.gitDir);
     });
+
+    // TODO: Use premade git directory a la sexy-bash-prompt
     before(function initializeGitFolder (done) {
-      var that = this;
       process.chdir(this.gitDir);
-      childProcess.exec('git init', function (err, stdout, stderr) {
-        that.stdout = stdout;
-        done(err);
+      iKnowWhatIAmDoingExec('git init', function (err, stdout, stderr) {
+        if (err) { return done(err); }
+        iKnowWhatIAmDoingExec('touch a', function (err, stdout, stderr) {
+          if (err) { return done(err); }
+          iKnowWhatIAmDoingExec('git add -A', function (err, stdout, stderr) {
+            if (err) { return done(err); }
+            iKnowWhatIAmDoingExec('git commit -m "Initial commit =D"', function (err, stdout, stderr) {
+              done(err);
+            });
+          });
+        });
       });
     });
-    before(function stubExec () {
-      this.stub = sinon.stub(shell, 'exec', function () {
-        return {};
-      });
-    });
-    after(function () {
-      this.stub.restore();
-    });
+
     before(function release (done) {
-      var program = new Foundry();
-      program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
-      // TODO: Figure out how to hook in better
-      setTimeout(done, 1000);
+      // TODO: Consider `allow` function which can enable both of these
+      allowShellExec(function (cb1) {
+        allowChildExec(function (cb2) {
+          var program = new Foundry();
+          program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
+          // TODO: Figure out how to hook in better (program.parse does not provide a callback hook)
+          // TODO: Maybe an EventEmitter? (error, end)
+          setTimeout(cb2, 100);
+        }, cb1);
+      }, done);
     });
 
-    it('adds a git tag', function () {
-      // TODO: This does a very poor job of real world simulation. Use Vagrant
-      // TODO: Inside of `npm test`, add a check for VAGRANT=TRUE || TRAVIS=TRUE. Otherwise, don't run.
-      expect(this.stub.args[0]).to.deep.equal(['git commit -a -m "Release 0.1.0"']);
-      expect(this.stub.args[1]).to.deep.equal(['git tag 0.1.0 -a -m "Release 0.1.0"']);
-      expect(this.stub.args[2]).to.deep.equal(['git push']);
-      expect(this.stub.args[3]).to.deep.equal(['git push --tags']);
-
-      // childProcess.exec('git tag', function (err, stdout, stderr) {
-      //   if (err) {
-      //     return done(err);
-      //   }
-      //   expect(stdout).to.equal('0.1.0');
-      // });
+    it('adds a git tag', function (done) {
+      iKnowWhatIAmDoingExec('git tag', function (err, stdout, stderr) {
+        if (err) {
+          return done(err);
+        }
+        expect(stdout).to.equal('0.1.0\n');
+        done();
+      });
     });
   });
 });
