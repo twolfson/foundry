@@ -1,7 +1,7 @@
 {
   "name": "foundry",
   "description": "Release manager for npm, bower, component, PyPI, and any plugin you can write",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/twolfson/foundry",
   "author": {
     "name": "Todd Wolfson",
