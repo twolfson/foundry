@@ -6,6 +6,9 @@ var childUtils = require('./utils/child-process');
 var fixtureUtils = require('./utils/fixtures');
 var Foundry = require('../bin/foundry');
 
+// TODO: Don't tag if we aren't in a `git` repo
+// TODO: Don't push if there is no remote
+
 describe('A release', function () {
   describe('in a git folder', function () {
     before(function createGitFolder () {

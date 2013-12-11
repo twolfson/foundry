@@ -11,6 +11,7 @@ describe('A release', function () {
   describe.only('in a node module (npm)', function () {
     fixtureUtils.fixtureDir('npm');
     // TODO: Make this a util itself
+    // foundryUtils.release('0.1.0');
     before(function release (done) {
       // Introduce custom stubbing
       var program = new Foundry();
@@ -28,6 +29,9 @@ describe('A release', function () {
 
       // Run through the release
       program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
+    });
+    after(function unstub () {
+      childUtils.shellExec._unstub(this);
     });
 
     it('', function () {
