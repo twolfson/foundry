@@ -27,6 +27,7 @@ exports.fixtureDir = function (name) {
     process.chdir(destPath);
   });
   // TODO: Perform this
+  // TODO: Maybe this should be a separate fixture action?
   // before(function moveDotgitToGit (done) {
   // });
 };
