@@ -30,28 +30,42 @@ exports.shellExec = {
       this.execStub.restore();
     });
   },
-  allow: function allowShellExec (fn, cb) {
+  _allow: function () {
     shell.exec = originalExec;
+  },
+  _ban: function () {
+    shell.exec = shell.complaintExec;
+  },
+  allow: function allowShellExec (fn, cb) {
+    this._allow();
     fn(function (err) {
-      shell.exec = shell.complaintExec;
+      this._ban();
       cb(err);
     });
   },
-  allowDuring: function (obj, key) {
+  allowDuring: function (obj, key, done) {
     var origFn = obj[key];
     obj[key] = function newFn (/* args, ..., cb*/) {
+      // Save references to args and that
       var args = [].slice.call(arguments);
       var that = this;
 
-      // TODO: Need to enable childProcess.exec as well x_x
-      allowShellExec(function (execCb) {
-        var cb = args.pop();
-        args.push(function boundCallback (/* args */) {
-          execCb();
-          cb();
-        });
-        origFn.apply(that, arguments);
+      // TODO: Need to enable childProcess.exec as well
+      // Enable .exec until callback is run
+      var cb = args.pop();
+      this._allow();
+      args.push(function boundCallback (/* args */) {
+        // Re-ban the function and apply the original callback
+        that._ban();
+        cb.apply(this, arguments);
+
+        // Restore the original data and call the outer callback
+        obj[key] = origFn;
+        done();
       });
+
+      // Run the original function with the modified callback
+      return origFn.apply(this, args);
     };
   }
 };
