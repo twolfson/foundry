@@ -19,7 +19,8 @@ describe('A release', function () {
       program.once('postRelease#before', function banAndStub () {
         childUtils.shellExec._ban();
         childUtils.childExec._ban();
-        childUtils.shellExec.stub();
+        console.log('hai');
+        // childUtils.shellExec.stub();
       });
 
       // Set up our callback

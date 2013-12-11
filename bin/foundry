@@ -40,22 +40,27 @@ extend(Foundry.prototype, {
   release: function (version, cb) {
     // DEV: This is directly mimicking behavior from `git-release`
     var that = this;
+    console.log('aaa');
     async.series([
       function preReleaseFn (cb) {
         that.emit('preRelease#before');
+        console.log('bbb');
         that.preRelease(version, cb);
       },
       function gitTagFn (cb) {
         that.emit('preRelease#after');
+        console.log('ccc');
         that.emit('gitTag#before');
         that.gitTag(version, cb);
       },
       function postReleaseFn (cb) {
-        that.emit('gitTag#before');
-        that.emit('postRelease#after');
+        console.log('ddd');
+        that.emit('gitTag#after');
+        that.emit('postRelease#before');
         that.postRelease(version, cb);
       },
       function afterPostReleaseFn (cb) {
+        console.log('eee');
         that.emit('postRelease#after');
         cb();
       }
