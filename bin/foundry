@@ -2,18 +2,18 @@
 
 // Load in dependencies
 var async = require('async');
+var shell = require('shelljs');
+var preRelease = require('./pre-release');
+var postRelease = require('./post-release');
 
 // TODO: Move all CLI logic into a `lib` (even though a lot of this is going to get broken down)
 var Command = require('commander').Command;
 
 module.exports = function () {
-  var shell = require('shelljs');
-
   // Set up program
   var program = new Command();
-  var preRelease = require('./pre-release');
-  var postRelease = require('./post-release');
 
+  // TODO: Relocate this to `set-version` as in the grand vision
   function gitTag(version, cb) {
     var shell = require('shelljs');
     shell.exec('git commit -a -m "Release ' + version + '"');
@@ -31,9 +31,9 @@ module.exports = function () {
     .action(function release (version, argv) {
       // DEV: This is directly mimicking behavior from `git-release`
       async.series([
-        preRelease.bind(this, version),
+        exports.preRelease.bind(this, version),
         gitTag.bind(this, version),
-        postRelease.bind(this, version)
+        exports.postRelease.bind(this, version)
       ], function handleError (err) {
         if (err) {
           throw err;
@@ -44,6 +44,8 @@ module.exports = function () {
   // Return our program
   return program;
 };
+module.exports.preRelease = preRelease;
+module.exports.postRelease = postRelease;
 
 if (module.parent === null) {
   // Create a new program

@@ -43,6 +43,7 @@ exports.shellExec = {
       cb(err);
     });
   },
+  // TODO: This code is starting to look too clever =_=
   allowDuring: function (obj, key, done) {
     var origFn = obj[key];
     obj[key] = function newFn (/* args, ..., cb*/) {
@@ -55,18 +56,14 @@ exports.shellExec = {
       var cb = args.pop();
       this._allow();
       args.push(function boundCallback (/* args */) {
-        // Re-ban the function and apply the original callback
-        that._ban();
+        // Apply the original callback
         cb.apply(this, arguments);
-
-        // Restore the original data and call the outer callback
-        obj[key] = origFn;
-        done();
       });
 
       // Run the original function with the modified callback
       return origFn.apply(this, args);
     };
+    done(function
   }
 };
 
