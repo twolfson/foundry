@@ -29,7 +29,7 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "test": "(test \"$VAGRANT\" = \"true\" || test \"$TRAVIS\" = \"true\" || (echo \"Tests must be run in enclosed environment (e.g. Vagrant, Travis) to prevent accidental publishes\n\" 1>&2 && exit 1)) && mocha"
+    "test": "(test \"$VAGRANT\" = \"true\" || test \"$TRAVIS\" = \"true\" || (echo \"Tests must be run in enclosed environment (e.g. Vagrant, Travis) to prevent accidental publishes\n\" 1>&2 && exit 1)) && mocha --recursive"
   },
   "dependencies": {
     "shelljs": "~0.2.6",

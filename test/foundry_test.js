@@ -6,40 +6,8 @@ var sinon = require('sinon');
 var wrench = require('wrench');
 var Foundry = require('../bin/foundry');
 
-// Stop exec calls from happening
-var shell = require('shelljs');
-var originalExec = shell.exec;
-shell.exec = shell.complaintExec = function () {
-  throw new Error('`shell.exec` was being called with ' + JSON.stringify(arguments));
-};
-
-// Stop childProcess exec and spawn calls too unless people opt in to our methods
-var iKnowWhatIAmDoingSpawn = childProcess.spawn;
-childProcess.spawn = childProcess.complaintSpawn = function () {
-  throw new Error('`childProcess.spawn` was being called with ' + JSON.stringify(arguments));
-};
-var iKnowWhatIAmDoingExec = childProcess.exec;
-childProcess.exec = childProcess.complaintExec = function () {
-  throw new Error('`childProcess.exec` was being called with ' + JSON.stringify(arguments));
-};
-
 // DEV: NEVER EVER RUN FOUNDRY VIA .exec
 // DEV: WE CANNOT STOP .exec CALLS FROM OCCURRING IN ANOTHER PROCESS
-
-var tmp = shell.tempdir();
-var fixtureDir = path.join(tmp, 'foundry_test');
-before(function deleteFixtureDir (done) {
-  wrench.rmdirRecursive(fixtureDir, false, function (err) {
-    done();
-  });
-});
-before(function createFixtureDir () {
-  // DEV: There is no asynchronous flavor. We could use mkdirp but this is fine.
-  wrench.mkdirSyncRecursive(fixtureDir);
-});
-before(function goToFixtureDir () {
-  process.chdir(fixtureDir);
-});
 
 // TODO: Use this... similar to that of sexy-bash-prompt
 function fixtureDir(name) {
@@ -80,7 +48,7 @@ function allowChildExec(fn, cb) {
 
 
 describe('A release', function () {
-  describe('in a git folder', function () {
+  describe.skip('in a git folder', function () {
     before(function createGitFolder () {
       this.gitDir = path.join(fixtureDir, 'git_test');
       wrench.mkdirSyncRecursive(this.gitDir);
@@ -129,7 +97,7 @@ describe('A release', function () {
 
   describe('in a node module (npm)', function () {
     it('', function () {
-      console.log(shell.exec + '');
+      // console.log(shell.exec + '');
       console.log(childProcess.exec + '');
       console.log(childProcess.spawn + '');
     });
