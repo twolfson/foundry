@@ -11,7 +11,7 @@ var childUtils = require('./utils/child-process');
 
 // Define our test
 describe('A release', function () {
-  describe.only('in a node module (npm)', function () {
+  describe('in a node module (npm)', function () {
     fixtureUtils.fixtureDir('npm');
     // TODO: Make this a util itself
     // foundryUtils.release('0.1.0');
