@@ -44,23 +44,19 @@ extend(Foundry.prototype, {
     async.series([
       function preReleaseFn (cb) {
         that.emit('preRelease#before');
-        console.log('bbb');
         that.preRelease(version, cb);
       },
       function gitTagFn (cb) {
         that.emit('preRelease#after');
-        console.log('ccc');
         that.emit('gitTag#before');
         that.gitTag(version, cb);
       },
       function postReleaseFn (cb) {
-        console.log('ddd');
         that.emit('gitTag#after');
         that.emit('postRelease#before');
         that.postRelease(version, cb);
       },
       function afterPostReleaseFn (cb) {
-        console.log('eee');
         that.emit('postRelease#after');
         cb();
       }

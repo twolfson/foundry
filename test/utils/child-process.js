@@ -28,14 +28,22 @@ function allowExec(fn, cb) {
   });
 }
 exports.shellExec = {
+  // DEV: To avoid any missed `.call`, make the context (`this`) a require param
+  _stub: function (context) {
+    context.execStub = sinon.stub(shell, 'exec', function () {
+      return {};
+    });
+  },
+  _unstub: function (context) {
+    context.execStub.restore();
+  },
   stub: function stubShellExec () {
+    var that = this;
     before(function () {
-      this.execStub = sinon.stub(shell, 'exec', function () {
-        return {};
-      });
+      that._stub(this);
     });
     after(function () {
-      this.execStub.restore();
+      that._unstub(this);
     });
   },
   _allow: function () {

@@ -14,13 +14,13 @@ describe('A release', function () {
     before(function release (done) {
       // Introduce custom stubbing
       var program = new Foundry();
+      var that = this;
       childUtils.shellExec._allow();
       childUtils.childExec._allow();
       program.once('postRelease#before', function banAndStub () {
         childUtils.shellExec._ban();
         childUtils.childExec._ban();
-        console.log('hai');
-        // childUtils.shellExec.stub();
+        childUtils.shellExec._stub(that);
       });
 
       // Set up our callback
@@ -29,7 +29,6 @@ describe('A release', function () {
       // Run through the release
       program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
     });
-
 
     it('', function () {
       console.log(process.cwd());
