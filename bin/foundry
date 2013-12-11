@@ -23,8 +23,9 @@ extend(Foundry.prototype, {
   bindCommands: function () {
     // Set up commands
     // TODO: Following iterations ($EDITOR for message, try to update changelog)
+    var program = this;
     var that = this;
-    this
+    program
       .command('release <version>')
       .description('Set version for package.json, bower, component, git tag, and setup.py and publish to corresponding registries')
       .action(function callRelease (version, argv) {
