@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 // Load in dependencies
+var util = require('util');
 var async = require('async');
 var shell = require('shelljs');
 var preRelease = require('./pre-release');
@@ -9,47 +10,72 @@ var postRelease = require('./post-release');
 // TODO: Move all CLI logic into a `lib` (even though a lot of this is going to get broken down)
 var Command = require('commander').Command;
 
-module.exports = function () {
+function Foundry() {
   // Set up program
-  var program = new Command();
+  Command.apply(this, arguments);
+
+  // Bind our commands
+  Foundry.bindCommands();
+}
+util.inherits(Foundry, Command);
+extend(Foundry.prototype, {
+  bindCommands: function () {
+    // Set up commands
+    // TODO: Following iterations ($EDITOR for message, try to update changelog)
+    var that = this;
+    program
+      .command('release <version>')
+      .description('Set version for package.json, bower, component, git tag, and setup.py and publish to corresponding registries')
+      .action(function callRelease (version, argv) {
+        that.release(version, function handleError (err) {
+          if (err) {
+            throw err;
+          }
+        });
+      });
+  },
+
+  release: function (version, cb) {
+    // DEV: This is directly mimicking behavior from `git-release`
+    var that = this;
+    async.series([
+      function preReleaseFn (cb) {
+        that.emit('preRelease#before');
+        that.preRelease(version, cb);
+      },
+      function gitTagFn (cb) {
+        that.emit('preRelease#after');
+        that.emit('gitTag#before');
+        that.gitTag(version, cb);
+      },
+      function postReleaseFn (cb) {
+        that.emit('gitTag#before');
+        that.emit('postRelease#after');
+        that.postRelease(version, cb);
+      },
+      function afterPostReleaseFn (cb) {
+        that.emit('postRelease#after');
+        cb();
+      }
+    ], cb);
+  },
 
   // TODO: Relocate this to `set-version` as in the grand vision
-  function gitTag(version, cb) {
+  gitTag: function gitTag (version, cb) {
     var shell = require('shelljs');
     shell.exec('git commit -a -m "Release ' + version + '"');
     shell.exec('git tag ' + version + ' -a -m "Release ' + version + '"');
     shell.exec('git push');
     shell.exec('git push --tags');
     cb();
-  }
-
-  // Set up commands
-  // TODO: Following iterations ($EDITOR for message, try to update changelog)
-  program
-    .command('release <version>')
-    .description('Set version for package.json, bower, component, git tag, and setup.py and publish to corresponding registries')
-    .action(function release (version, argv) {
-      // DEV: This is directly mimicking behavior from `git-release`
-      async.series([
-        module.exports.preRelease.bind(this, version),
-        // gitTag.bind(this, version),
-        module.exports.postRelease.bind(this, version)
-      ], function handleError (err) {
-        if (err) {
-          throw err;
-        }
-      });
-    });
-
-  // Return our program
-  return program;
+  },
+  preRelease: preRelease,
+  postRelease: postRelease
 };
-module.exports.preRelease = preRelease;
-module.exports.postRelease = postRelease;
 
 if (module.parent === null) {
   // Create a new program
-  var program = new module.exports();
+  var program = new Foundry();
   program.version(require('../package').version);
 
   // Parse the arguments
