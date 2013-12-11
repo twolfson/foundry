@@ -53,21 +53,4 @@ describe('A release', function () {
       });
     });
   });
-
-  describe('in a node module (npm)', function () {
-    it('', function () {
-    });
-  });
-
-  describe('in a bower module', function () {
-
-  });
-
-  describe('in a component module', function () {
-
-  });
-
-  describe('in a PyPI package', function () {
-
-  });
 });
