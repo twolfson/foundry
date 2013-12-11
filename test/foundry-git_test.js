@@ -6,10 +6,6 @@ var childUtils = require('./utils/child-process');
 var fixtureUtils = require('./utils/fixtures');
 var Foundry = require('../bin/foundry');
 
-before(function goToFixtureDir () {
-  process.chdir(fixtureUtils.dir);
-});
-
 describe('A release', function () {
   describe('in a git folder', function () {
     before(function createGitFolder () {
