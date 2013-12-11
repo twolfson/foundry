@@ -126,4 +126,24 @@ describe('A release', function () {
       });
     });
   });
+
+  describe('in a node module (npm)', function () {
+    it('', function () {
+      console.log(shell.exec + '');
+      console.log(childProcess.exec + '');
+      console.log(childProcess.spawn + '');
+    });
+  });
+
+  describe('in a bower module', function () {
+
+  });
+
+  describe('in a component module', function () {
+
+  });
+
+  describe('in a PyPI package', function () {
+
+  });
 });
