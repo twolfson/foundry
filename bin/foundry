@@ -31,9 +31,9 @@ module.exports = function () {
     .action(function release (version, argv) {
       // DEV: This is directly mimicking behavior from `git-release`
       async.series([
-        exports.preRelease.bind(this, version),
+        module.exports.preRelease.bind(this, version),
         gitTag.bind(this, version),
-        exports.postRelease.bind(this, version)
+        module.exports.postRelease.bind(this, version)
       ], function handleError (err) {
         if (err) {
           throw err;

@@ -43,8 +43,10 @@ exports.shellExec = {
       cb(err);
     });
   },
-  // TODO: This code is starting to look too clever =_=
-  allowDuring: function (obj, key, done) {
+  allowDuring: function (obj, key) {
+    // Outside of fn/before running (banned) ->
+    // Inside of fn (allowed) ->
+    // Outside of fn/inside callback (banned)
     var origFn = obj[key];
     obj[key] = function newFn (/* args, ..., cb*/) {
       // Save references to args and that
@@ -54,16 +56,18 @@ exports.shellExec = {
       // TODO: Need to enable childProcess.exec as well
       // Enable .exec until callback is run
       var cb = args.pop();
-      this._allow();
+      exports.shellExec._allow();
       args.push(function boundCallback (/* args */) {
+        // Re-ban before the callback
+        exports.shellExec._ban();
+
+        // Restore the original function
+        obj[key] = origFn;
+
         // Apply the original callback
         cb.apply(this, arguments);
       });
-
-      // Run the original function with the modified callback
-      return origFn.apply(this, args);
     };
-    done(function
   }
 };
 

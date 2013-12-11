@@ -1,6 +1,7 @@
 var shell = require('shelljs');
 module.exports = function (version, cb) {
   // npm
+  console.log(shell.exec);
   if (shell.test('-f', 'package.json')) {
     // TODO: Use shellquote
     // TODO: Avoid exec altogether

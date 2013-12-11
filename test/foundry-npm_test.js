@@ -11,7 +11,7 @@ describe('A release', function () {
   describe.only('in a node module (npm)', function () {
     fixtureUtils.fixtureDir('npm');
     before(function release (done) {
-      childUtils.allowDuring(Foundry
+      childUtils.shellExec.allowDuring(Foundry, 'preRelease');
       var program = new Foundry();
       program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
       setTimeout(done, 100);
