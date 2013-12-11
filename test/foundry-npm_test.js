@@ -14,7 +14,7 @@ describe('A release', function () {
       childUtils.shellExec.allowDuring(Foundry, 'preRelease');
       var program = new Foundry();
       program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
-      setTimeout(done, 100);
+      setTimeout(done, 1000);
     });
 
 

@@ -25,6 +25,7 @@ module.exports = function () {
 
   // Set up commands
   // TODO: Following iterations ($EDITOR for message, try to update changelog)
+  console.log(module.exports.preRelease);
   program
     .command('release <version>')
     .description('Set version for package.json, bower, component, git tag, and setup.py and publish to corresponding registries')

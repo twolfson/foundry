@@ -67,6 +67,9 @@ exports.shellExec = {
         // Apply the original callback
         cb.apply(this, arguments);
       });
+
+      // Run the original function
+      return origFn.apply(this, args);
     };
   }
 };
