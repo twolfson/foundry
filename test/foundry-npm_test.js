@@ -1,5 +1,8 @@
 // Load in dependencies
+var fs = require('fs');
 var expect = require('chai').expect;
+var sinon = require('sinon');
+var shell = require('shelljs');
 var fixtureUtils = require('./utils/fixtures');
 var Foundry = require('../bin/foundry');
 
@@ -21,7 +24,9 @@ describe('A release', function () {
       program.once('postRelease#before', function banAndStub () {
         childUtils.shellExec._ban();
         childUtils.childExec._ban();
-        childUtils.shellExec._stub(that);
+        that.execStub = sinon.stub(shell, 'exec', function () {
+          return {code: 0};
+        });
       });
 
       // Set up our callback
@@ -31,11 +36,19 @@ describe('A release', function () {
       program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
     });
     after(function unstub () {
-      childUtils.shellExec._unstub(this);
+      this.execStub.restore();
     });
 
-    it('', function () {
-      console.log(process.cwd());
+    it('updates the package.json', function () {
+      var pkgJson = fs.readFileSync(fixtureUtils.dir + '/npm/package.json');
+      expect(JSON.parse(pkgJson)).to.have.property('version', '0.1.0');
+    });
+    it('publishes to npm', function () {
+      expect(this.execStub.args[1]).to.deep.equal(['npm publish']);
+    });
+
+    // TODO: Test private
+    it.skip('does not attempt to publish private packages', function () {
     });
   });
 

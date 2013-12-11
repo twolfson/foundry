@@ -40,7 +40,6 @@ extend(Foundry.prototype, {
   release: function (version, cb) {
     // DEV: This is directly mimicking behavior from `git-release`
     var that = this;
-    console.log('aaa');
     async.series([
       function preReleaseFn (cb) {
         that.emit('preRelease#before');
