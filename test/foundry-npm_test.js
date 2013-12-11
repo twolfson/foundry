@@ -13,15 +13,10 @@ describe('A release', function () {
     });
   });
 
-  describe('in a bower module', function () {
-
+  describe.skip('in a bower module', function () {
   });
-
-  describe('in a component module', function () {
-
+  describe.skip('in a component module', function () {
   });
-
-  describe('in a PyPI package', function () {
-
+  describe.skip('in a PyPI package', function () {
   });
 });
