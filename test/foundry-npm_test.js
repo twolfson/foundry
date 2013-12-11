@@ -10,12 +10,23 @@ var childUtils = require('./utils/child-process');
 describe('A release', function () {
   describe.only('in a node module (npm)', function () {
     fixtureUtils.fixtureDir('npm');
+    // TODO: Make this a util itself
     before(function release (done) {
-      // childUtils.shellExec.allowDuring(Foundry, 'preRelease');
-      // childUtils.childExec.allowDuring(Foundry, 'preRelease');
+      // Introduce custom stubbing
       var program = new Foundry();
+      childUtils.shellExec._allow();
+      childUtils.childExec._allow();
+      program.once('postRelease#before', function banAndStub () {
+        childUtils.shellExec._ban();
+        childUtils.childExec._ban();
+        childUtils.shellExec.stub();
+      });
+
+      // Set up our callback
+      program.once('postRelease#after', done);
+
+      // Run through the release
       program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
-      setTimeout(done, 1000);
     });
 
 
