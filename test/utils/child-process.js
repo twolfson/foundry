@@ -19,6 +19,14 @@ childProcess.exec = childProcess.complaintExec = function () {
   throw new Error('`childProcess.exec` was being called with ' + JSON.stringify(arguments));
 };
 
+function allowExec(fn, cb) {
+  var that = this;
+  this._allow();
+  fn(function (err) {
+    that._ban();
+    cb(err);
+  });
+}
 exports.shellExec = {
   stub: function stubShellExec () {
     before(function () {
@@ -36,13 +44,7 @@ exports.shellExec = {
   _ban: function () {
     shell.exec = shell.complaintExec;
   },
-  allow: function allowShellExec (fn, cb) {
-    this._allow();
-    fn(function (err) {
-      this._ban();
-      cb(err);
-    });
-  }
+  allow: allowExec
 };
 
 exports.childExec = {
@@ -52,11 +54,5 @@ exports.childExec = {
   _ban: function () {
     childProcess.exec = childProcess.complaintExec;
   },
-  allow: function allowChildExec(fn, cb) {
-    this._allow();
-    fn(function (err) {
-      this._ban();
-      cb(err);
-    });
-  }
+  allow: allowExec
 };
