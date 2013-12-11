@@ -8,6 +8,7 @@ var Foundry = require('../bin/foundry');
 
 // DEV: NEVER EVER RUN FOUNDRY VIA .exec
 // DEV: WE CANNOT STOP .exec CALLS FROM OCCURRING IN ANOTHER PROCESS
+// DEV: We have placed a safe-guard inside of `utils/child-process` (automatically picked up by `mocha --recursive`) for this
 
 // TODO: Use this... similar to that of sexy-bash-prompt
 function fixtureDir(name) {
