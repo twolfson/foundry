@@ -3,6 +3,7 @@
 // Load in dependencies
 var util = require('util');
 var async = require('async');
+var extend = require('obj-extend');
 var shell = require('shelljs');
 var preRelease = require('./pre-release');
 var postRelease = require('./post-release');
@@ -15,7 +16,7 @@ function Foundry() {
   Command.apply(this, arguments);
 
   // Bind our commands
-  Foundry.bindCommands();
+  this.bindCommands();
 }
 util.inherits(Foundry, Command);
 extend(Foundry.prototype, {
@@ -23,7 +24,7 @@ extend(Foundry.prototype, {
     // Set up commands
     // TODO: Following iterations ($EDITOR for message, try to update changelog)
     var that = this;
-    program
+    this
       .command('release <version>')
       .description('Set version for package.json, bower, component, git tag, and setup.py and publish to corresponding registries')
       .action(function callRelease (version, argv) {
@@ -62,7 +63,6 @@ extend(Foundry.prototype, {
 
   // TODO: Relocate this to `set-version` as in the grand vision
   gitTag: function gitTag (version, cb) {
-    var shell = require('shelljs');
     shell.exec('git commit -a -m "Release ' + version + '"');
     shell.exec('git tag ' + version + ' -a -m "Release ' + version + '"');
     shell.exec('git push');
@@ -71,7 +71,8 @@ extend(Foundry.prototype, {
   },
   preRelease: preRelease,
   postRelease: postRelease
-};
+});
+module.exports = Foundry;
 
 if (module.parent === null) {
   // Create a new program

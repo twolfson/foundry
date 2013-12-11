@@ -34,7 +34,8 @@
   "dependencies": {
     "shelljs": "~0.2.6",
     "commander": "~2.1.0",
-    "async": "~0.2.9"
+    "async": "~0.2.9",
+    "obj-extend": "~0.1.0"
   },
   "devDependencies": {
     "mocha": "~1.11.0",
