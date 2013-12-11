@@ -75,11 +75,47 @@ exports.shellExec = {
 };
 
 exports.childExec = {
-  allow: function allowChildExec(fn, cb) {
+  _allow: function () {
     childProcess.exec = exports.iKnowWhatIAmDoingExec;
+  },
+  _ban: function () {
+    childProcess.exec = childProcess.complaintExec;
+  },
+  allow: function allowChildExec(fn, cb) {
+    this._allow();
     fn(function (err) {
-      childProcess.exec = childProcess.complaintExec;
+      this._ban();
       cb(err);
     });
+  },
+  allowDuring: function (obj, key) {
+    // Outside of fn/before running (banned) ->
+    // Inside of fn (allowed) ->
+    // Outside of fn/inside callback (banned)
+    var origFn = obj[key];
+    obj[key] = function newFn (/* args, ..., cb*/) {
+      // Save references to args and that
+      var args = [].slice.call(arguments);
+      var that = this;
+
+      // TODO: Need to enable childProcess.exec as well
+      // Enable .exec until callback is run
+      var cb = args.pop();
+      exports.childExec._allow();
+      args.push(function boundCallback (/* args */) {
+        // Re-ban before the callback
+        exports.childExec._ban();
+
+        // Restore the original function
+        obj[key] = origFn;
+
+        // Apply the original callback
+        cb.apply(this, arguments);
+      });
+
+      // Run the original function
+      return origFn.apply(this, args);
+    };
   }
+
 };

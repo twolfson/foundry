@@ -25,7 +25,6 @@ module.exports = function () {
 
   // Set up commands
   // TODO: Following iterations ($EDITOR for message, try to update changelog)
-  console.log(module.exports.preRelease);
   program
     .command('release <version>')
     .description('Set version for package.json, bower, component, git tag, and setup.py and publish to corresponding registries')
@@ -33,7 +32,7 @@ module.exports = function () {
       // DEV: This is directly mimicking behavior from `git-release`
       async.series([
         module.exports.preRelease.bind(this, version),
-        gitTag.bind(this, version),
+        // gitTag.bind(this, version),
         module.exports.postRelease.bind(this, version)
       ], function handleError (err) {
         if (err) {
