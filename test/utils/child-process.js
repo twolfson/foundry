@@ -30,12 +30,29 @@ exports.shellExec = {
       this.execStub.restore();
     });
   },
-  allow: function allowShellExec(fn, cb) {
+  allow: function allowShellExec (fn, cb) {
     shell.exec = originalExec;
     fn(function (err) {
       shell.exec = shell.complaintExec;
       cb(err);
     });
+  },
+  allowDuring: function (obj, key) {
+    var origFn = obj[key];
+    obj[key] = function newFn (/* args, ..., cb*/) {
+      var args = [].slice.call(arguments);
+      var that = this;
+
+      // TODO: Need to enable childProcess.exec as well x_x
+      allowShellExec(function (execCb) {
+        var cb = args.pop();
+        args.push(function boundCallback (/* args */) {
+          execCb();
+          cb();
+        });
+        origFn.apply(that, arguments);
+      });
+    };
   }
 };
 
