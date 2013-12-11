@@ -16,13 +16,17 @@ before(function createFixtureDir () {
   wrench.mkdirSyncRecursive(exports.dir);
 });
 
-// TODO: Use this... similar to that of sexy-bash-prompt
+// Create a directory specifically for this test
 exports.fixtureDir = function (name) {
+  var srcPath = path.join(__dirname, '/../test-files/', name);
+  var destPath = path.join(exports.dir, name);
   before(function copyFixtures (done) {
-
+    wrench.copyDirRecursive(srcPath, destPath, done);
+  });
+  before(function moveToDestPath () {
+    process.chdir(destPath);
   });
   // TODO: Perform this
   // before(function moveDotgitToGit (done) {
-
   // });
 };
