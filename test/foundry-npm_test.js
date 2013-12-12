@@ -46,7 +46,7 @@ describe('A release', function () {
     });
   });
 
-  describe.only('in a private node module (npm)', function () {
+  describe('in a private node module (npm)', function () {
     var fixtureDir = fixtureUtils.fixtureDir('npm-private');
     before(function release (done) {
       // Introduce custom stubbing
