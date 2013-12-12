@@ -1,4 +1,6 @@
 # foundry changelog
+0.3.0 - Completed tests for `release-bower`, `release-component`, and `release-pypi`
+
 0.2.0 - Refactored Factory to extend from Commander and started `release-npm` test
 
 0.1.2 - Fixed git test in Travis CI
