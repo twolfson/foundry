@@ -22,7 +22,7 @@ describe('A release', function () {
 
       // When publishing to npm, stub over exec to return all valid calls
       var that = this;
-      program.once('postRelease#before', function banAndStub () {
+      program.once('postRelease#before', function () {
         // TODO: We should be testing against shell.exec on `private: false` for the first call. No stubbing.
         that.execStub = sinon.stub(shell, 'exec', function () {
           return {code: 0};
@@ -52,8 +52,15 @@ describe('A release', function () {
       // Introduce custom stubbing
       var program = foundryUtils.create({
         allowPreRelease: true,
-        allowGitTag: true,
-        allowPostRelease: true
+        allowGitTag: true
+      });
+
+      var that = this;
+      program.once('postRelease#before', function () {
+        // TODO: We should be testing against shell.exec on `private: true` for the first call. No stubbing.
+        that.execStub = sinon.stub(shell, 'exec', function () {
+          return {code: 1};
+        });
       });
 
       // Run through the release
@@ -69,7 +76,8 @@ describe('A release', function () {
       expect(JSON.parse(pkgJson)).to.have.property('version', '0.1.0');
     });
     it('publishes to npm', function () {
-      expect(this.execStub.args[1]).to.deep.equal(['npm publish']);
+      expect(this.execStub.args).to.have.property('length', 1);
+      expect(this.execStub.args[0]).to.not.contain('npm publish');
     });
 
     // TODO: Test private
