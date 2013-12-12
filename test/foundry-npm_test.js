@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 var sinon = require('sinon');
 var shell = require('shelljs');
 var fixtureUtils = require('./utils/fixtures');
-var Foundry = require('../bin/foundry');
+var foundryUtils = require('./utils/foundry');
 
 // Guarantee safeguards against exec are in place (see WARNING.md)
 var childUtils = require('./utils/child-process');
@@ -17,13 +17,14 @@ describe('A release', function () {
     // foundryUtils.release('0.1.0');
     before(function release (done) {
       // Introduce custom stubbing
-      var program = new Foundry();
+      var program = foundryUtils.create({
+        allowPreRelease: true,
+        allowGitTag: true
+      });
+
+      // When publishing to npm, stub over exec to return all valid calls
       var that = this;
-      childUtils.shellExec._allow();
-      childUtils.childExec._allow();
       program.once('postRelease#before', function banAndStub () {
-        childUtils.shellExec._ban();
-        childUtils.childExec._ban();
         that.execStub = sinon.stub(shell, 'exec', function () {
           return {code: 0};
         });
