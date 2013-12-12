@@ -32,6 +32,18 @@ exports.create = function (options) {
     });
   }
 
+  // If we are allowing postRelease, allow exec calls
+  if (options.allowPostRelease) {
+    program.once('postRelease#before', function () {
+      childUtils.shellExec._allow();
+      childUtils.childExec._allow();
+    });
+    program.once('postRelease#after', function () {
+      childUtils.shellExec._ban();
+      childUtils.childExec._ban();
+    });
+  }
+
   // Return the program
   return program;
 };

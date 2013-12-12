@@ -12,9 +12,7 @@ var childUtils = require('./utils/child-process');
 // Define our test
 describe('A release', function () {
   describe('in a node module (npm)', function () {
-    fixtureUtils.fixtureDir('npm');
-    // TODO: Make this a util itself
-    // foundryUtils.release('0.1.0');
+    var fixtureDir = fixtureUtils.fixtureDir('npm');
     before(function release (done) {
       // Introduce custom stubbing
       var program = foundryUtils.create({
@@ -25,7 +23,7 @@ describe('A release', function () {
       // When publishing to npm, stub over exec to return all valid calls
       var that = this;
       program.once('postRelease#before', function banAndStub () {
-        // TODO: We should be testing against `private: false` for the first call. No stubbing.
+        // TODO: We should be testing against shell.exec on `private: false` for the first call. No stubbing.
         that.execStub = sinon.stub(shell, 'exec', function () {
           return {code: 0};
         });
@@ -40,7 +38,7 @@ describe('A release', function () {
     });
 
     it('updates the package.json', function () {
-      var pkgJson = fs.readFileSync(fixtureUtils.dir + '/npm/package.json');
+      var pkgJson = fs.readFileSync(fixtureDir + '/package.json');
       expect(JSON.parse(pkgJson)).to.have.property('version', '0.1.0');
     });
     it('publishes to npm', function () {
@@ -48,23 +46,14 @@ describe('A release', function () {
     });
   });
 
-  describe.skip('in a private node module (npm)', function () {
-    fixtureUtils.fixtureDir('npm-private');
-    // TODO: Make this a util itself
-    // foundryUtils.release('0.1.0');
+  describe.only('in a private node module (npm)', function () {
+    var fixtureDir = fixtureUtils.fixtureDir('npm-private');
     before(function release (done) {
       // Introduce custom stubbing
       var program = foundryUtils.create({
         allowPreRelease: true,
-        allowGitTag: true
-      });
-
-      // When publishing to npm, stub over exec to return all valid calls
-      var that = this;
-      program.once('postRelease#before', function banAndStub () {
-        that.execStub = sinon.stub(shell, 'exec', function () {
-          return {code: 1};
-        });
+        allowGitTag: true,
+        allowPostRelease: true
       });
 
       // Run through the release
@@ -76,7 +65,7 @@ describe('A release', function () {
     });
 
     it('updates the package.json', function () {
-      var pkgJson = fs.readFileSync(fixtureUtils.dir + '/npm/package.json');
+      var pkgJson = fs.readFileSync(fixtureDir + '/package.json');
       expect(JSON.parse(pkgJson)).to.have.property('version', '0.1.0');
     });
     it('publishes to npm', function () {
