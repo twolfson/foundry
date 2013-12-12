@@ -38,5 +38,13 @@ describe('A release', function () {
       var pkgPython = fs.readFileSync(fixtureDir + '/setup.py', 'utf8');
       expect(pkgPython).to.contain('version=\'0.1.0\'');
     });
+
+    it('registers the package', function () {
+      expect(this.execStub.args[0]).to.deep.equal(['python setup.py register']);
+    });
+
+    it('publishes the package', function () {
+      expect(this.execStub.args[1][0]).to.contain(['python setup.py sdist']);
+    });
   });
 });
