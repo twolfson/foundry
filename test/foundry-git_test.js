@@ -4,7 +4,7 @@ var path = require('path');
 var wrench = require('wrench');
 var childUtils = require('./utils/child-process');
 var fixtureUtils = require('./utils/fixtures');
-var Foundry = require('../bin/foundry');
+var foundryUtils = require('./utils/foundry');
 
 // TODO: Don't tag if we aren't in a `git` repo
 // TODO: Don't push if there is no remote
@@ -34,16 +34,12 @@ describe('A release', function () {
     });
 
     before(function release (done) {
-      // TODO: Consider `allow` function which can enable both of these
-      childUtils.shellExec.allow(function (cb1) {
-        childUtils.childExec.allow(function (cb2) {
-          var program = new Foundry();
-          program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
-          // TODO: Figure out how to hook in better (program.parse does not provide a callback hook)
-          // TODO: Maybe an EventEmitter? (error, end)
-          setTimeout(cb2, 100);
-        }, cb1);
-      }, done);
+      // Allow git tag to run without restraints and callback when done
+      var program = foundryUtils.create({
+        allowGitTag: true
+      });
+      program.once('postRelease#after', done);
+      program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
     });
 
     it('adds a git tag', function (done) {
