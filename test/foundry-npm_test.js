@@ -45,6 +45,42 @@ describe('A release', function () {
     it('publishes to npm', function () {
       expect(this.execStub.args[1]).to.deep.equal(['npm publish']);
     });
+  });
+
+  describe.skip('in a private node module (npm)', function () {
+    fixtureUtils.fixtureDir('npm-private');
+    // TODO: Make this a util itself
+    // foundryUtils.release('0.1.0');
+    before(function release (done) {
+      // Introduce custom stubbing
+      var program = foundryUtils.create({
+        allowPreRelease: true,
+        allowGitTag: true
+      });
+
+      // When publishing to npm, stub over exec to return all valid calls
+      var that = this;
+      program.once('postRelease#before', function banAndStub () {
+        that.execStub = sinon.stub(shell, 'exec', function () {
+          return {code: 1};
+        });
+      });
+
+      // Run through the release
+      program.once('postRelease#after', done);
+      program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
+    });
+    after(function unstub () {
+      this.execStub.restore();
+    });
+
+    it('updates the package.json', function () {
+      var pkgJson = fs.readFileSync(fixtureUtils.dir + '/npm/package.json');
+      expect(JSON.parse(pkgJson)).to.have.property('version', '0.1.0');
+    });
+    it('publishes to npm', function () {
+      expect(this.execStub.args[1]).to.deep.equal(['npm publish']);
+    });
 
     // TODO: Test private
     it.skip('does not attempt to publish private packages', function () {
