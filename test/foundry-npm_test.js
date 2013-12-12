@@ -81,8 +81,6 @@ describe('A release', function () {
     });
   });
 
-  describe.skip('in a component module', function () {
-  });
   describe.skip('in a PyPI package', function () {
   });
 });

@@ -1,0 +1,13 @@
+{
+  "name": "super-secret-foundry-test",
+  "repo": "twolfson/super-secret-foundry-test",
+  "description": "Super secret Foundry test.",
+  "version": "0.0.0",
+  "dependencies": {},
+  "development": {},
+  "license": "UNLICENSE",
+  "main": "lib/super-secret-foundry-test.js",
+  "scripts": [
+    "lib/super-secret-foundry-test.js"
+  ]
+}
