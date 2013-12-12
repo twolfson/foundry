@@ -79,14 +79,8 @@ describe('A release', function () {
       expect(this.execStub.args).to.have.property('length', 1);
       expect(this.execStub.args[0]).to.not.contain('npm publish');
     });
-
-    // TODO: Test private
-    it.skip('does not attempt to publish private packages', function () {
-    });
   });
 
-  describe.skip('in a bower module', function () {
-  });
   describe.skip('in a component module', function () {
   });
   describe.skip('in a PyPI package', function () {

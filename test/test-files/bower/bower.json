@@ -1,0 +1,11 @@
+{
+  "name": "super-secret-foundry-test",
+  "version": "0.0.0",
+  "main": "dist/super-secret-foundry-test.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "lib",
+    "test"
+  ]
+}
