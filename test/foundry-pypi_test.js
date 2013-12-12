@@ -11,7 +11,6 @@ var childUtils = require('./utils/child-process');
 
 // Define our test
 describe('A release', function () {
-  // TODO: Test private
   describe('in a new PyPI package', function () {
     var fixtureDir = fixtureUtils.fixtureDir('pypi');
     before(function release (done) {
@@ -24,10 +23,7 @@ describe('A release', function () {
       // Monitor shell.exec calls
       var that = this;
       program.once('postRelease#before', function () {
-        // TODO: We should be testing against shell.exec on `private: true` for the first call. No stubbing.
-        that.execStub = sinon.stub(shell, 'exec', function () {
-          return {code: 0};
-        });
+        that.execStub = sinon.stub(shell, 'exec');
       });
 
       // Run through the release
@@ -65,10 +61,7 @@ describe('A release', function () {
       // Monitor shell.exec calls
       var that = this;
       program.once('postRelease#before', function () {
-        // TODO: We should be testing against shell.exec on `private: true` for the first call. No stubbing.
-        that.execStub = sinon.stub(shell, 'exec', function () {
-          return {code: 0};
-        });
+        that.execStub = sinon.stub(shell, 'exec');
       });
 
       // Run through the release
@@ -89,7 +82,7 @@ describe('A release', function () {
     });
   });
 
-  describe.only('in a private PyPI package', function () {
+  describe('in a private PyPI package', function () {
     var fixtureDir = fixtureUtils.fixtureDir('pypi-private');
     before(function release (done) {
       // Introduce custom stubbing
@@ -101,10 +94,7 @@ describe('A release', function () {
       // Monitor shell.exec calls
       var that = this;
       program.once('postRelease#before', function () {
-        // TODO: We should be testing against shell.exec on `private: true` for the first call. No stubbing.
-        that.execStub = sinon.stub(shell, 'exec', function () {
-          return {code: 0};
-        });
+        that.execStub = sinon.stub(shell, 'exec');
       });
 
       // Run through the release
