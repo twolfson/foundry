@@ -30,10 +30,8 @@ describe('A release', function () {
         });
       });
 
-      // Set up our callback
-      program.once('postRelease#after', done);
-
       // Run through the release
+      program.once('postRelease#after', done);
       program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
     });
     after(function unstub () {
