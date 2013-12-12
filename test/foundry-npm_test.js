@@ -25,9 +25,8 @@ describe('A release', function () {
       // When publishing to npm, stub over exec to return all valid calls
       var that = this;
       program.once('postRelease#before', function banAndStub () {
-        that.execStub = sinon.stub(shell, 'exec', function () {
-          return {code: 0};
-        });
+        // that.execStub = sinon.stub(shell, 'exec', function () {
+        that.execStub = sinon.stub(shell, 'exec').withArgs('npm publish');
       });
 
       // Run through the release
