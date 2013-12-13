@@ -41,10 +41,12 @@ extend(Foundry.prototype, {
       .description('Get potential completions for a command. Looks for `COMP_CWORD`, `COMP_LINE`, `COMP_POINT`.')
       .action(function completeLine (/* word1, word2, ..., argv */) {
         // Example: `foundry rel|e`
+        // Localize environment variables
         var wordIndex = process.env.COMP_CWORD; // 1 (second word)
         var line = process.env.COMP_LINE; // 'foundry rele' (entire line)
         var lineIndex = process.env.COMP_POINT; // 11 (index of cursor in line)
-        console.error(wordIndex, line, lineIndex);
+
+        //
       });
   },
 
