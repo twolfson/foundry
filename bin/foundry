@@ -52,7 +52,9 @@ extend(Foundry.prototype, {
           if (err) {
             throw err;
           }
-          data.forEach(console.log);
+          data.forEach(function (line) {
+            console.log(line);
+          });
         });
       });
   },
@@ -61,9 +63,12 @@ extend(Foundry.prototype, {
     var words = params.words;
     // TODO: Use before word
     var currentWord = words[params.wordIndex];
-    var releaseSlice = 'release'.slice(0, currentWord.length);
-    if (releaseSlice === currentWord) {
-      return cb(null, ['release']);
+    console.error(currentWord, currentWord.length, params.words.length);
+    if (currentWord) {
+      var releaseSlice = 'release'.slice(0, currentWord.length);
+      if (releaseSlice === currentWord) {
+        return cb(null, ['release']);
+      }
     }
     return cb(null, []);
   },

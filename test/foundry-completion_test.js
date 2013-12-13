@@ -2,7 +2,19 @@
 var expect = require('chai').expect;
 var Foundry = require('../');
 
-describe.only('A partial `release` command', function () {
+function runCompletion() {
+  before(function (done) {
+    // Create a new program and run auto-complete on it
+    var program = new Foundry();
+    var that = this;
+    program.completion(this.params, function (err, data) {
+      that.data = data;
+      done(err);
+    });
+  });
+}
+
+describe('A partial `release` command', function () {
   before(function () {
     // TODO: It would be nice to make the split functionality into a node module
     // TODO: We have done some work on this inside of sublime-plugin-tests
@@ -16,18 +28,54 @@ describe.only('A partial `release` command', function () {
   });
 
   describe('when completed', function () {
-    before(function (done) {
-      // Create a new program and run auto-complete on it
-      var program = new Foundry();
-      var that = this;
-      program.completion(this.params, function (err, data) {
-        that.data = data;
-        done(err);
-      });
-    });
+    runCompletion();
 
     it('receives `release` as an auto-complete option', function () {
       expect(this.data).to.contain('release');
+    });
+  });
+});
+
+describe('A partial `release` command with semver', function () {
+  before(function () {
+    // TODO: It would be nice to make the split functionality into a node module
+    // TODO: We have done some work on this inside of sublime-plugin-tests
+    // foundry rele|0.1.0
+    this.params = {
+      wordIndex: 1,
+      words: ['foundry', 'rele0.1.0'],
+      line: 'foundry rele0.1.0',
+      linePosition: 12
+    };
+  });
+
+  describe('when completed', function () {
+    runCompletion();
+
+    it('receives `release` as an auto-complete option', function () {
+      expect(this.data).to.contain('release');
+    });
+  });
+});
+
+describe.only('An empty command', function () {
+  before(function () {
+    // TODO: It would be nice to make the split functionality into a node module
+    // TODO: We have done some work on this inside of sublime-plugin-tests
+    // foundry |
+    this.params = {
+      wordIndex: 1,
+      words: ['foundry', ''],
+      line: 'foundry ',
+      linePosition: 8
+    };
+  });
+
+  describe('when completed', function () {
+    runCompletion();
+
+    it('receives no options', function () {
+      expect(this.data).to.have.property('length', 0);
     });
   });
 });
