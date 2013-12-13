@@ -61,13 +61,25 @@ extend(Foundry.prototype, {
 
   completion: function (params, cb) {
     var words = params.words;
-    // TODO: Use before word
     var currentWord = words[params.wordIndex];
-    console.error(currentWord, currentWord.length, params.words.length);
     if (currentWord) {
-      var releaseSlice = 'release'.slice(0, currentWord.length);
-      if (releaseSlice === currentWord) {
-        return cb(null, ['release']);
+      // Logic taken from https://github.com/isaacs/npm/blob/v1.3.17/lib/completion.js#L74-L91
+      // DEV: It slices line from the left until it matches the word
+      // line = 'foundry rel|e'
+      // partialLiine = 'foundry rel'
+      var partialLine = params.line.slice(0, params.linePosition);
+      var i = currentWord.length;
+      // TOD: Refactor outside of while
+      while (currentWord.substr(0, i) !== partialLine.substr(-1*i) && i > 0) {
+        i -= 1;
+      }
+      var partialWord = currentWord.substr(0, i);
+
+      // Determine if our word matches release
+      // TODO: Generalize the fuck out of this
+      var releaseSlice = 'release'.slice(0, partialWord.length);
+      if (releaseSlice === partialWord) {
+        return cb(null, ['release ']);
       }
     }
     return cb(null, []);

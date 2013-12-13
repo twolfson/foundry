@@ -31,15 +31,13 @@ describe('A partial `release` command', function () {
     runCompletion();
 
     it('receives `release` as an auto-complete option', function () {
-      expect(this.data).to.contain('release');
+      expect(this.data).to.contain('release ');
     });
   });
 });
 
-describe('A partial `release` command with semver', function () {
+describe.only('A partial `release` command with semver', function () {
   before(function () {
-    // TODO: It would be nice to make the split functionality into a node module
-    // TODO: We have done some work on this inside of sublime-plugin-tests
     // foundry rele|0.1.0
     this.params = {
       wordIndex: 1,
@@ -53,15 +51,13 @@ describe('A partial `release` command with semver', function () {
     runCompletion();
 
     it('receives `release` as an auto-complete option', function () {
-      expect(this.data).to.contain('release');
+      expect(this.data).to.contain('release ');
     });
   });
 });
 
-describe.only('An empty command', function () {
+describe('An empty command', function () {
   before(function () {
-    // TODO: It would be nice to make the split functionality into a node module
-    // TODO: We have done some work on this inside of sublime-plugin-tests
     // foundry |
     this.params = {
       wordIndex: 1,
@@ -75,6 +71,26 @@ describe.only('An empty command', function () {
     runCompletion();
 
     it('receives no options', function () {
+      expect(this.data).to.have.property('length', 0);
+    });
+  });
+});
+
+describe('A partial `release` command including semver but in the meat of the command', function () {
+  before(function () {
+    // foundry r|el0.1.0
+    this.params = {
+      wordIndex: 1,
+      words: ['foundry', 'rel0.1.0'],
+      line: 'foundry rel0.1.0',
+      linePosition: 9
+    };
+  });
+
+  describe('when completed', function () {
+    runCompletion();
+
+    it('receives receives release with some deletion marks', function () {
       expect(this.data).to.have.property('length', 0);
     });
   });
