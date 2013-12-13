@@ -35,6 +35,13 @@ extend(Foundry.prototype, {
           }
         });
       });
+
+    program
+      .command('completion')
+      .description('Get potential completions for a command. Looks for `COMP_CWORD`, `COMP_LINE`, `COMP_POINT`.')
+      .action(function completeLine (argv) {
+        console.error(argv);
+      });
   },
 
   release: function (version, cb) {
