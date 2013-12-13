@@ -42,12 +42,18 @@ extend(Foundry.prototype, {
       .action(function completeLine (/* word1, word2, ..., argv */) {
         // Example: `foundry rel|e`
         // Localize environment variables
-        var wordIndex = process.env.COMP_CWORD; // 1 (second word)
-        var line = process.env.COMP_LINE; // 'foundry rele' (entire line)
-        var lineIndex = process.env.COMP_POINT; // 11 (index of cursor in line)
-
-        //
+        that.completion({
+          wordIndex: process.env.COMP_CWORD, // 1 (second word)
+          line: process.env.COMP_LINE, // 'foundry rele' (entire line)
+          linePosition: process.env.COMP_POINT // 11 (position of cursor in line)
+        }, function handleResponse (err, data) {
+          data.forEach(console.log);
+        });
       });
+  },
+
+  completion: function (params, cb) {
+
   },
 
   release: function (version, cb) {
