@@ -92,7 +92,7 @@ extend(Foundry.prototype, {
         // TODO: Generalize the fuck out of this
         var releaseSlice = 'release'.slice(0, partialWord.length);
         if (releaseSlice === partialWord) {
-          return cb(null, ['release ']);
+          return cb(null, ['release']);
         }
       }
     }

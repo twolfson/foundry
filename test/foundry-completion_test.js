@@ -31,7 +31,7 @@ describe('A partial `release` command', function () {
     runCompletion();
 
     it('receives `release` as an auto-complete option', function () {
-      expect(this.data).to.contain('release ');
+      expect(this.data).to.contain('release');
     });
   });
 });
@@ -51,7 +51,7 @@ describe('A partial `release` command with semver', function () {
     runCompletion();
 
     it('receives `release` as an auto-complete option', function () {
-      expect(this.data).to.contain('release ');
+      expect(this.data).to.contain('release');
     });
   });
 });
@@ -91,7 +91,7 @@ describe.skip('A partial `release` command including semver but in the meat of t
     runCompletion();
 
     it('receives receives release with some deletion marks', function () {
-      expect(this.data).to.contain('release ');
+      expect(this.data).to.contain('release');
     });
   });
 });
