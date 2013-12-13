@@ -45,6 +45,7 @@ extend(Foundry.prototype, {
         // Localize environment variables
         that.completion({
           wordIndex: process.env.COMP_CWORD, // 1 (second word)
+          words: [].slice.call(arguments, 0, -1), // ['foundry', 'rele'] (words)
           line: process.env.COMP_LINE, // 'foundry rele' (entire line)
           linePosition: process.env.COMP_POINT // 11 (position of cursor in line)
         }, function handleResponse (err, data) {
@@ -57,7 +58,14 @@ extend(Foundry.prototype, {
   },
 
   completion: function (params, cb) {
-    cb(null, ['release']);
+    var words = params.words;
+    // TODO: Use before word
+    var currentWord = words[params.wordIndex];
+    var releaseSlice = 'release'.slice(0, currentWord.length);
+    if (releaseSlice === currentWord) {
+      return cb(null, ['release']);
+    }
+    return cb(null, []);
   },
 
   release: function (version, cb) {

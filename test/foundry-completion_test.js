@@ -9,6 +9,7 @@ describe.only('A partial `release` command', function () {
     // foundry rel|e
     this.params = {
       wordIndex: 1,
+      words: ['foundry', 'rele'],
       line: 'foundry rele',
       linePosition: 11
     };
