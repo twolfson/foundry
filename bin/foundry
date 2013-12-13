@@ -36,6 +36,7 @@ extend(Foundry.prototype, {
         });
       });
 
+    // TODO: Move this into its own node module
     program
       .command('completion')
       .description('Get potential completions for a command. Looks for `COMP_CWORD`, `COMP_LINE`, `COMP_POINT`.')
@@ -47,13 +48,16 @@ extend(Foundry.prototype, {
           line: process.env.COMP_LINE, // 'foundry rele' (entire line)
           linePosition: process.env.COMP_POINT // 11 (position of cursor in line)
         }, function handleResponse (err, data) {
+          if (err) {
+            throw err;
+          }
           data.forEach(console.log);
         });
       });
   },
 
   completion: function (params, cb) {
-
+    cb(null, []);
   },
 
   release: function (version, cb) {
