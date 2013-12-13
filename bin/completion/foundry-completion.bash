@@ -8,10 +8,15 @@ _foundry_completion () {
   #   IFS=$'\n' COMPREPLY=($(COMP_CWORD="$COMP_CWORD" \
   #                          COMP_LINE="$COMP_LINE" \
   #                          COMP_POINT="$COMP_POINT" \
-  echo "$COMP_CWORD"
-  echo "$COMP_LINE"
-  echo "$COMP_POINT"
-  COMPREPLY=('release\n')
+  # echo -n "$COMP_CWORD"
+  # echo -n "$COMP_LINE"
+  # echo -n "$COMP_POINT"
+  echo -n 'A'
+  echo -n "${COMP_WORDS[@]}"
+  echo -n 'B'
+  local si="$IFS"
+  # IFS=$'\n' COMPREPLY=('release')
+  IFS="$si"
 }
 
 complete -F _foundry_completion foundry
