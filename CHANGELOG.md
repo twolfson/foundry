@@ -1,4 +1,6 @@
 # foundry changelog
+0.4.0 - Added rudimentary bash/zsh completion via opt-in `npm run link-bash-completion`
+
 0.3.0 - Completed tests for `release-bower`, `release-component`, and `release-pypi`
 
 0.2.0 - Refactored Factory to extend from Commander and started `release-npm` test
