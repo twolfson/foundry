@@ -26,7 +26,7 @@ describe.only('A partial `release` command', function () {
     });
 
     it('receives `release` as an auto-complete option', function () {
-
+      expect(this.data).to.contain('release');
     });
   });
 });

@@ -57,7 +57,7 @@ extend(Foundry.prototype, {
   },
 
   completion: function (params, cb) {
-    cb(null, []);
+    cb(null, ['release']);
   },
 
   release: function (version, cb) {
