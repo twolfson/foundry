@@ -36,7 +36,7 @@ describe('A partial `release` command', function () {
   });
 });
 
-describe.only('A partial `release` command with semver', function () {
+describe('A partial `release` command with semver', function () {
   before(function () {
     // foundry rele|0.1.0
     this.params = {
@@ -76,7 +76,7 @@ describe('An empty command', function () {
   });
 });
 
-describe('A partial `release` command including semver but in the meat of the command', function () {
+describe.skip('A partial `release` command including semver but in the meat of the command', function () {
   before(function () {
     // foundry r|el0.1.0
     this.params = {
@@ -91,7 +91,7 @@ describe('A partial `release` command including semver but in the meat of the co
     runCompletion();
 
     it('receives receives release with some deletion marks', function () {
-      expect(this.data).to.have.property('length', 0);
+      expect(this.data).to.contain('release ');
     });
   });
 });

@@ -67,19 +67,33 @@ extend(Foundry.prototype, {
       // DEV: It slices line from the left until it matches the word
       // line = 'foundry rel|e'
       // partialLiine = 'foundry rel'
+      var partialWord = currentWord;
       var partialLine = params.line.slice(0, params.linePosition);
       var i = currentWord.length;
-      // TOD: Refactor outside of while
-      while (currentWord.substr(0, i) !== partialLine.substr(-1*i) && i > 0) {
-        i -= 1;
-      }
-      var partialWord = currentWord.substr(0, i);
+      while (true) {
+        // Check if the word is a subword
+        // partialWord = rel, re, r
+        // line slice = foundry rele, oundry rele, undry rele, ndry, rele
+        partialWord = currentWord.substr(0, i);
+        if (partialWord === partialLine.substr(-1*i)) {
+          break;
+        }
 
-      // Determine if our word matches release
-      // TODO: Generalize the fuck out of this
-      var releaseSlice = 'release'.slice(0, partialWord.length);
-      if (releaseSlice === partialWord) {
-        return cb(null, ['release ']);
+        // Decrement i
+        i -= 1;
+        if (i === 0) {
+          partialWord = '';
+          break;
+        }
+      }
+
+      if (partialWord) {
+        // Determine if our word matches release
+        // TODO: Generalize the fuck out of this
+        var releaseSlice = 'release'.slice(0, partialWord.length);
+        if (releaseSlice === partialWord) {
+          return cb(null, ['release ']);
+        }
       }
     }
     return cb(null, []);
