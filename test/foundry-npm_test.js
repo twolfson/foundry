@@ -80,7 +80,4 @@ describe('A release', function () {
       expect(this.execStub.args[0]).to.not.contain('npm publish');
     });
   });
-
-  describe.skip('in a PyPI package', function () {
-  });
 });
