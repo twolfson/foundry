@@ -20,6 +20,7 @@ function Foundry() {
 }
 util.inherits(Foundry, Command);
 extend(Foundry.prototype, {
+  name: 'foundry',
   bindCommands: function () {
     // Set up commands
     // TODO: Following iterations ($EDITOR for message, try to update changelog)
@@ -41,20 +42,10 @@ extend(Foundry.prototype, {
       .command('completion')
       .description('Get potential completions for a command. Looks for `COMP_CWORD`, `COMP_LINE`, `COMP_POINT`.')
       .action(function completeLine (/* word1, word2, ..., argv */) {
-        // Localize and interpret environment variables
-        var cursor = process.env.COMP_POINT;
-        var leftLine = process.env.COMP_LINE.slice(0, cursor);
-        var rightLine = process.env.COMP_LINE.slice(cursor);
-
-        // Remove `node /usr/bin/foundry` (first 2 words)
-        var leftWords = leftLine.split(/\w+/g);
-        var newLeftLine = leftWords.join(' ');
-        console.error(cursor);
-
-        // Run the completion
+        // Run completion against environment variables
         program.complete({
-          line: newLeftLine + rightLine,
-          cursor: newLeftLine.length
+          line: process.env.COMP_LINE,
+          cursor: process.env.COMP_POINT
         });
       });
   },
