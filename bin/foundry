@@ -9,7 +9,7 @@ var preRelease = require('./pre-release');
 var postRelease = require('./post-release');
 
 // TODO: Move all CLI logic into a `lib` (even though a lot of this is going to get broken down)
-var Command = require('commander').Command;
+var Command = require('commander-completion');
 
 function Foundry() {
   // Set up program
@@ -41,62 +41,22 @@ extend(Foundry.prototype, {
       .command('completion')
       .description('Get potential completions for a command. Looks for `COMP_CWORD`, `COMP_LINE`, `COMP_POINT`.')
       .action(function completeLine (/* word1, word2, ..., argv */) {
-        // Example: `foundry rel|e`
-        // Localize environment variables
-        that.completion({
-          wordIndex: process.env.COMP_CWORD, // 1 (second word)
-          words: [].slice.call(arguments, 0, -1), // ['foundry', 'rele'] (words)
-          line: process.env.COMP_LINE, // 'foundry rele' (entire line)
-          linePosition: process.env.COMP_POINT // 11 (position of cursor in line)
-        }, function handleResponse (err, data) {
-          if (err) {
-            throw err;
-          }
-          data.forEach(function (line) {
-            console.log(line);
-          });
+        // Localize and interpret environment variables
+        var cursor = process.env.COMP_POINT;
+        var leftLine = process.env.COMP_LINE.slice(0, cursor);
+        var rightLine = process.env.COMP_LINE.slice(cursor);
+
+        // Remove `node /usr/bin/foundry` (first 2 words)
+        var leftWords = leftLine.split(/\w+/g);
+        var newLeftLine = leftWords.join(' ');
+        console.error(cursor);
+
+        // Run the completion
+        program.complete({
+          line: newLeftLine + rightLine,
+          cursor: newLeftLine.length
         });
       });
-  },
-
-  completion: function (params, cb) {
-    var words = params.words;
-    var currentWord = words[params.wordIndex];
-    if (currentWord) {
-      // Logic taken from https://github.com/isaacs/npm/blob/v1.3.17/lib/completion.js#L74-L91
-      // DEV: It slices line from the left until it matches the word
-      // line = 'foundry rel|e'
-      // partialLiine = 'foundry rel'
-      var partialWord = currentWord;
-      var partialLine = params.line.slice(0, params.linePosition);
-      var i = currentWord.length;
-      while (true) {
-        // Check if the word is a subword
-        // partialWord = rel, re, r
-        // line slice = foundry rele, oundry rele, undry rele, ndry, rele
-        partialWord = currentWord.substr(0, i);
-        if (partialWord === partialLine.substr(-1*i)) {
-          break;
-        }
-
-        // Decrement i
-        i -= 1;
-        if (i === 0) {
-          partialWord = '';
-          break;
-        }
-      }
-
-      if (partialWord) {
-        // Determine if our word matches release
-        // TODO: Generalize the fuck out of this
-        var releaseSlice = 'release'.slice(0, partialWord.length);
-        if (releaseSlice === partialWord) {
-          return cb(null, ['release']);
-        }
-      }
-    }
-    return cb(null, []);
   },
 
   release: function (version, cb) {

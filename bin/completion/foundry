@@ -19,7 +19,8 @@ if complete &>/dev/null; then
                            COMP_LINE="$COMP_LINE" \
                            COMP_POINT="$COMP_POINT" \
                            foundry completion -- "${COMP_WORDS[@]}" \
-                           2>/dev/null)) || return $?
+                           # 2>/dev/null)) || return $?
+                           )) || return $?
     IFS="$si"
   }
   complete -F _foundry_completion foundry
