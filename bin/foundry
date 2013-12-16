@@ -9,7 +9,7 @@ var preRelease = require('./pre-release');
 var postRelease = require('./post-release');
 
 // TODO: Move all CLI logic into a `lib` (even though a lot of this is going to get broken down)
-var Command = require('commander-completion');
+var Command = require('commander-completion').Command;
 
 function Foundry() {
   // Set up program
