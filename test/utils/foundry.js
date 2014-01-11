@@ -1,5 +1,5 @@
 var childUtils = require('./child-process');
-var Foundry = require('../../bin/foundry');
+var Foundry = require('../../');
 
 exports.create = function (options) {
   // Fallback options

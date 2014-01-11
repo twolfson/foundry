@@ -24,7 +24,7 @@
   "bin": {
     "foundry": "bin/foundry"
   },
-  "main": "bin/foundry",
+  "main": "lib/foundry",
   "engines": {
     "node": ">= 0.8.0"
   },
