@@ -16,8 +16,7 @@ describe('A release', function () {
     before(function release (done) {
       // Introduce custom stubbing
       var program = foundryUtils.create({
-        allowPreRelease: true,
-        allowGitTag: true
+        allowSetVersion: true
       });
 
       // When publishing to npm, stub over exec to return all valid calls

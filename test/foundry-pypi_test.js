@@ -87,8 +87,7 @@ describe('A release', function () {
     before(function release (done) {
       // Introduce custom stubbing
       var program = foundryUtils.create({
-        allowPreRelease: true,
-        allowGitTag: true
+        allowSetVersion: true
       });
 
       // Monitor shell.exec calls

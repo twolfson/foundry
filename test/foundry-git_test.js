@@ -10,7 +10,7 @@ var foundryUtils = require('./utils/foundry');
 // TODO: Don't push if there is no remote
 
 describe('A release', function () {
-  describe('in a git folder', function () {
+  describe.only('in a git folder', function () {
     before(function createGitFolder () {
       this.gitDir = path.join(fixtureUtils.dir, 'git_test');
       wrench.mkdirSyncRecursive(this.gitDir);
