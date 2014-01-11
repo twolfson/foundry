@@ -38,20 +38,12 @@ describe('A release', function () {
     before(function release (done) {
       // Allow git tag to run without restraints and callback when done
       var program = foundryUtils.create({
-        allowSetVersion: true
-      });
-
-      // Monitor shell.exec calls
-      var that = this;
-      program.once('publish#before', function () {
-        that.execStub = sinon.stub(shell, 'exec');
+        allowSetVersion: true,
+        allowPublish: true
       });
 
       program.once('publish#after', done);
       program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
-    });
-    after(function unstub () {
-      this.execStub.restore();
     });
 
     it('adds a git tag', function (done) {
@@ -62,10 +54,6 @@ describe('A release', function () {
         expect(stdout).to.equal('0.1.0\n');
         done();
       });
-    });
-
-    it('pushes tags', function () {
-      expect(this.execStub.args[1]).to.deep.equal(['git push --tags']);
     });
   });
 });
