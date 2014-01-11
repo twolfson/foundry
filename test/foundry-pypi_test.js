@@ -54,7 +54,7 @@ describe('A release', function () {
     });
   });
 
-  describe.only('in a registered PyPI package', function () {
+  describe('in a registered PyPI package', function () {
     var fixtureDir = fixtureUtils.fixtureDir('pypi-registered');
     before(function release (done) {
       // Introduce custom stubbing
