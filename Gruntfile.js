@@ -22,6 +22,7 @@ module.exports = function(grunt) {
           exports: true,
           describe: true,
           before: true,
+          after: true,
           it: true
         }
       }
