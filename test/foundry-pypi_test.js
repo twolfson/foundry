@@ -11,19 +11,24 @@ var childUtils = require('./utils/child-process');
 
 // Define our test
 describe('A release', function () {
-  describe('in a new PyPI package', function () {
+  describe.only('in a new PyPI package', function () {
     var fixtureDir = fixtureUtils.fixtureDir('pypi');
     before(function release (done) {
       // Introduce custom stubbing
       var program = foundryUtils.create({
-        allowPreRelease: true,
-        allowGitTag: true
+        allowSetVersion: true
       });
 
       // Monitor shell.exec calls
       var that = this;
       program.once('register#before', function () {
-        that.execStub = sinon.stub(shell, 'exec');
+        that.execStubRegister = sinon.stub(shell, 'exec');
+      });
+      program.once('register#after', function () {
+        that.execStubRegister.restore();
+      });
+      program.once('publish#before', function () {
+        that.execStubPublish = sinon.stub(shell, 'exec');
       });
 
       // Run through the release
@@ -31,7 +36,7 @@ describe('A release', function () {
       program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
     });
     after(function unstub () {
-      this.execStub.restore();
+      this.execStubPublish.restore();
     });
 
 
@@ -41,11 +46,11 @@ describe('A release', function () {
     });
 
     it('registers the package', function () {
-      expect(this.execStub.args[0]).to.deep.equal(['python setup.py register']);
+      expect(this.execStubRegister.args[0]).to.deep.equal(['python setup.py register']);
     });
 
     it('publishes the package', function () {
-      expect(this.execStub.args[1][0]).to.contain(['python setup.py sdist']);
+      expect(this.execStubPublish.args[0][0]).to.contain(['python setup.py sdist']);
     });
   });
 
@@ -54,18 +59,17 @@ describe('A release', function () {
     before(function release (done) {
       // Introduce custom stubbing
       var program = foundryUtils.create({
-        allowPreRelease: true,
-        allowGitTag: true
+        allowSetVersion: true
       });
 
       // Monitor shell.exec calls
       var that = this;
-      program.once('postRelease#before', function () {
+      program.once('publish#before', function () {
         that.execStub = sinon.stub(shell, 'exec');
       });
 
       // Run through the release
-      program.once('postRelease#after', done);
+      program.once('publish#after', done);
       program.parse(['node', '/usr/bin/foundry', 'release', '0.3.0']);
     });
     after(function unstub () {
@@ -92,12 +96,12 @@ describe('A release', function () {
 
       // Monitor shell.exec calls
       var that = this;
-      program.once('postRelease#before', function () {
+      program.once('publish#before', function () {
         that.execStub = sinon.stub(shell, 'exec');
       });
 
       // Run through the release
-      program.once('postRelease#after', done);
+      program.once('publish#after', done);
       program.parse(['node', '/usr/bin/foundry', 'release', '0.3.0']);
     });
     after(function unstub () {
