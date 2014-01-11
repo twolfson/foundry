@@ -11,7 +11,7 @@ var childUtils = require('./utils/child-process');
 
 // Define our test
 describe('A release', function () {
-  describe.only('in a new PyPI package', function () {
+  describe('in a new PyPI package', function () {
     var fixtureDir = fixtureUtils.fixtureDir('pypi');
     before(function release (done) {
       // Introduce custom stubbing
@@ -54,7 +54,7 @@ describe('A release', function () {
     });
   });
 
-  describe('in a registered PyPI package', function () {
+  describe.only('in a registered PyPI package', function () {
     var fixtureDir = fixtureUtils.fixtureDir('pypi-registered');
     before(function release (done) {
       // Introduce custom stubbing
