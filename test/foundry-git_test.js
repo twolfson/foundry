@@ -1,6 +1,8 @@
 // Load in dependencies
 var expect = require('chai').expect;
 var path = require('path');
+var shell = require('shelljs');
+var sinon = require('sinon');
 var wrench = require('wrench');
 var childUtils = require('./utils/child-process');
 var fixtureUtils = require('./utils/fixtures');
@@ -36,10 +38,20 @@ describe('A release', function () {
     before(function release (done) {
       // Allow git tag to run without restraints and callback when done
       var program = foundryUtils.create({
-        allowGitTag: true
+        allowSetVersion: true
       });
+
+      // Monitor shell.exec calls
+      var that = this;
+      program.once('publish#before', function () {
+        that.execStub = sinon.stub(shell, 'exec');
+      });
+
       program.once('publish#after', done);
       program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
+    });
+    after(function unstub () {
+      this.execStub.restore();
     });
 
     it('adds a git tag', function (done) {
@@ -50,6 +62,10 @@ describe('A release', function () {
         expect(stdout).to.equal('0.1.0\n');
         done();
       });
+    });
+
+    it('pushes tags', function () {
+      expect(this.execStub.args[1]).to.deep.equal(['git push --tags']);
     });
   });
 });
