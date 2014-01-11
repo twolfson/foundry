@@ -1,4 +1,6 @@
 # foundry changelog
+0.6.0 - Relocated foundry library from `bin` to `lib`
+
 0.5.0 - Upgraded completion library to `commander-completion`
 
 0.4.1 - Removed extra space from auto-complete output
