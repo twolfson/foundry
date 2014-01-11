@@ -38,7 +38,7 @@ describe('A release', function () {
       var program = foundryUtils.create({
         allowGitTag: true
       });
-      program.once('postRelease#after', done);
+      program.once('publish#after', done);
       program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
     });
 

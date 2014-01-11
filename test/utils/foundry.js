@@ -8,37 +8,37 @@ exports.create = function (options) {
   // Create a new program
   var program = new Foundry();
 
-  // If we are allowing preRelease, allow exec calls
-  if (options.allowPreRelease) {
-    program.once('preRelease#before', function () {
+  // If we are allowing setVersion, allow exec calls
+  if (options.allowSetVersion) {
+    program.once('setVersion#before', function () {
       childUtils.shellExec._allow();
       childUtils.childExec._allow();
     });
-    program.once('preRelease#after', function () {
+    program.once('setVersion#after', function () {
       childUtils.shellExec._ban();
       childUtils.childExec._ban();
     });
   }
 
-  // If we are allowing gitTag, allow exec calls
-  if (options.allowGitTag) {
-    program.once('gitTag#before', function () {
+  // If we are allowing register, allow exec calls
+  if (options.allowRegister) {
+    program.once('register#before', function () {
       childUtils.shellExec._allow();
       childUtils.childExec._allow();
     });
-    program.once('gitTag#after', function () {
+    program.once('register#after', function () {
       childUtils.shellExec._ban();
       childUtils.childExec._ban();
     });
   }
 
-  // If we are allowing postRelease, allow exec calls
-  if (options.allowPostRelease) {
-    program.once('postRelease#before', function () {
+  // If we are allowing publish, allow exec calls
+  if (options.allowPublish) {
+    program.once('publish#before', function () {
       childUtils.shellExec._allow();
       childUtils.childExec._allow();
     });
-    program.once('postRelease#after', function () {
+    program.once('publish#after', function () {
       childUtils.shellExec._ban();
       childUtils.childExec._ban();
     });

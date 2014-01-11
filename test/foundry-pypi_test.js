@@ -22,12 +22,12 @@ describe('A release', function () {
 
       // Monitor shell.exec calls
       var that = this;
-      program.once('postRelease#before', function () {
+      program.once('register#before', function () {
         that.execStub = sinon.stub(shell, 'exec');
       });
 
       // Run through the release
-      program.once('postRelease#after', done);
+      program.once('publish#after', done);
       program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
     });
     after(function unstub () {
