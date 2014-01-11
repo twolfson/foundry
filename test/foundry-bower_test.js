@@ -8,14 +8,14 @@ var foundryUtils = require('./utils/foundry');
 var childUtils = require('./utils/child-process');
 
 // Define our test
-describe('A release', function () {
+describe.only('A release', function () {
   describe('in a bower module', function () {
     var fixtureDir = fixtureUtils.fixtureDir('bower');
     before(function release (done) {
       // Introduce custom stubbing
       var program = foundryUtils.create({
-        allowPreRelease: true,
-        allowGitTag: true
+        allowSetVersion: true,
+        allowPublish: true
       });
 
       // Run through the release
