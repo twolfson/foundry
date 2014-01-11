@@ -1,4 +1,6 @@
 # foundry changelog
+0.7.0 - Rearranged steps into setVersion, register, and publish
+
 0.6.0 - Relocated foundry library from `bin` to `lib`
 
 0.5.0 - Upgraded completion library to `commander-completion`
