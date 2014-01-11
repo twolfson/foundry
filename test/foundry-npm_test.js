@@ -21,7 +21,7 @@ describe('A release', function () {
 
       // When publishing to npm, stub over exec to return all valid calls
       var that = this;
-      program.once('postRelease#before', function () {
+      program.once('publish#before', function () {
         // TODO: We should be testing against shell.exec on `private: false` for the first call. No stubbing.
         that.execStub = sinon.stub(shell, 'exec', function () {
           return {code: 0};
@@ -50,12 +50,11 @@ describe('A release', function () {
     before(function release (done) {
       // Introduce custom stubbing
       var program = foundryUtils.create({
-        allowPreRelease: true,
-        allowGitTag: true
+        allowSetVersion: true
       });
 
       var that = this;
-      program.once('postRelease#before', function () {
+      program.once('publish#before', function () {
         // TODO: We should be testing against shell.exec on `private: true` for the first call. No stubbing.
         that.execStub = sinon.stub(shell, 'exec', function () {
           return {code: 1};
@@ -63,7 +62,7 @@ describe('A release', function () {
       });
 
       // Run through the release
-      program.once('postRelease#after', done);
+      program.once('publish#after', done);
       program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
     });
     after(function unstub () {
