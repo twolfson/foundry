@@ -1,4 +1,6 @@
 # foundry changelog
+0.9.0 - Broke up setVersion, register, and publish into release specific libraries
+
 0.8.1 - Corrected lint errors
 
 0.8.0 - Moved from minified `exec` calls to update version to `fs` read/write
