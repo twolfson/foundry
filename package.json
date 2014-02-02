@@ -37,7 +37,8 @@
     "commander": "~2.1.0",
     "async": "~0.2.9",
     "obj-extend": "~0.1.0",
-    "commander-completion": "~0.1.0"
+    "commander-completion": "~0.1.0",
+    "shell-quote": "~1.4.1"
   },
   "devDependencies": {
     "mocha": "~1.11.0",
