@@ -1,4 +1,6 @@
 # foundry changelog
+0.11.0 - Relocated `message` generation from `git` plugin to `release` command itself
+
 0.10.0 - Moved from `version` to `params` for all release steps
 
 0.9.0 - Broke up setVersion, register, and publish into release specific libraries
