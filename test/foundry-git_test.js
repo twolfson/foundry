@@ -55,5 +55,15 @@ describe('A release', function () {
         done();
       });
     });
+
+    it('adds a git commit', function (done) {
+      childUtils.iKnowWhatIAmDoingExec('git log --format=oneline -n 1', function (err, stdout, stderr) {
+        if (err) {
+          return done(err);
+        }
+        expect(stdout).to.match(/[\w]{32} Release 0.1.0\n/);
+        done();
+      });
+    });
   });
 });
