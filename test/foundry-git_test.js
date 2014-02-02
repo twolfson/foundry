@@ -61,7 +61,7 @@ describe('A release', function () {
         if (err) {
           return done(err);
         }
-        expect(stdout).to.match(/[\w]{32} Release 0.1.0\n/);
+        expect(stdout).to.match(/\w{32} Release 0.1.0\n/);
         done();
       });
     });
