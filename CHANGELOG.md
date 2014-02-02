@@ -1,4 +1,6 @@
 # foundry changelog
+0.10.0 - Moved from `version` to `params` for all release steps
+
 0.9.0 - Broke up setVersion, register, and publish into release specific libraries
 
 0.8.1 - Corrected lint errors
