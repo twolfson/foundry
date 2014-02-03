@@ -27,7 +27,7 @@ describe('A release', function () {
 
       // Run through the release
       program.once('publish#after', done);
-      program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0']);
+      program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0', '--module-dir', __dirname + '/node_modules']);
     });
     after(function unstub () {
       this.execStub.restore();
