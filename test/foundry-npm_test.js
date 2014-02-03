@@ -10,7 +10,7 @@ var foundryUtils = require('./utils/foundry');
 var childUtils = require('./utils/child-process');
 
 // Define our test
-describe('A release', function () {
+describe.only('A release', function () {
   describe('in a node module (npm)', function () {
     var fixtureDir = fixtureUtils.fixtureDir('npm');
     before(function release (done) {
