@@ -10,8 +10,8 @@ var foundryUtils = require('./utils/foundry');
 var childUtils = require('./utils/child-process');
 
 // Define our test
-describe.only('A release', function () {
-  describe('in a node module (npm)', function () {
+describe('A release', function () {
+  describe.only('in a node module (npm)', function () {
     var fixtureDir = fixtureUtils.fixtureDir('npm');
     before(function release (done) {
       // Introduce custom stubbing
@@ -27,7 +27,7 @@ describe.only('A release', function () {
 
       // Run through the release
       program.once('publish#after', done);
-      program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0', '--module-dir', __dirname + '/node_modules']);
+      program.parse(['node', '/usr/bin/foundry', 'release', '0.1.0', '--module-dir', __dirname + '/../node_modules']);
     });
     after(function unstub () {
       this.execStub.restore();
