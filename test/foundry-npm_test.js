@@ -11,7 +11,7 @@ var childUtils = require('./utils/child-process');
 
 // Define our test
 describe('A release', function () {
-  describe.only('in a node module (npm)', function () {
+  describe('in a node module (npm)', function () {
     var fixtureDir = fixtureUtils.fixtureDir('npm');
     before(function release (done) {
       // Introduce custom stubbing
