@@ -1,4 +1,6 @@
 # foundry changelog
+0.13.0 - Moved to external `git` release plugin
+
 0.12.0 - Introduced `glob` discovered modules
 
 0.11.0 - Relocated `message` generation from `git` plugin to `release` command itself
