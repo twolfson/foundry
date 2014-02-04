@@ -1,4 +1,6 @@
 # foundry changelog
+0.14.0 - Moved to external `bower` and `component` release plugins
+
 0.13.0 - Moved to external `git` release plugin
 
 0.12.0 - Introduced `glob` discovered modules
