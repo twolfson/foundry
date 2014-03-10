@@ -42,7 +42,7 @@
     "npm": "~1.3.25",
     "glob": "~3.2.8",
     "foundry-release-npm": "~0.1.0",
-    "foundry-release-git": "~0.1.0",
+    "foundry-release-git": "~1.0.0",
     "foundry-release-bower": "~0.1.0",
     "foundry-release-component": "~0.1.0"
   },
