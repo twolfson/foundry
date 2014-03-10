@@ -20,6 +20,18 @@ exports.create = function (options) {
     });
   }
 
+  // If we are allowing commit, allow exec calls
+  if (options.allowCommit) {
+    program.once('commit#before', function () {
+      childUtils.shellExec._allow();
+      childUtils.childExec._allow();
+    });
+    program.once('commit#after', function () {
+      childUtils.shellExec._ban();
+      childUtils.childExec._ban();
+    });
+  }
+
   // If we are allowing register, allow exec calls
   if (options.allowRegister) {
     program.once('register#before', function () {

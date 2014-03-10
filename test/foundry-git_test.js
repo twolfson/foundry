@@ -39,6 +39,7 @@ describe('A release', function () {
       // Allow git tag to run without restraints and callback when done
       var program = foundryUtils.create({
         allowSetVersion: true,
+        allowCommit: true,
         allowPublish: true
       });
 
