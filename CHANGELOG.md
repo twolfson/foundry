@@ -1,4 +1,6 @@
 # foundry changelog
+0.15.0 - Upgraded to `foundry-release-git@1.0.0` and supporting `foundry-release-spec@0.2.0` via `commit` step
+
 0.14.0 - Moved to external `bower` and `component` release plugins
 
 0.13.0 - Moved to external `git` release plugin
