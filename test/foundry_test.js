@@ -29,13 +29,14 @@ describe('foundry', function () {
       // ['setVersion', {version, message, description}, cb]
       // DEV: We are verifying we meet the spec
       expect(this.releaseLib.calls[0][0]).to.equal('setVersion');
-      expect(this.releaseLib.calls[0][1]).to.deep.equal({
+      var setVersionArgs = this.releaseLib.calls[0][1];
+      expect(setVersionArgs[0]).to.deep.equal({
         version: '0.1.0',
         message: 'Release 0.1.0',
         description: null,
         config: {}
       });
-      expect(this.releaseLib.calls[0][2]).to.be.a('function');
+      expect(setVersionArgs[1]).to.be.a('function');
     });
     it.skip('commits the updates', function () {
 
