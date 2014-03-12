@@ -53,7 +53,7 @@ $ foundry --help
 
   Commands:
 
-    release <version>      Set version for package metadata and publish to corresponding registries
+    release <version>      Set version for package metadata and publish to registries
     completion             Get potential completions for a command. Looks for `COMP_CWORD`, `COMP_LINE`, `COMP_POINT`.
 
   Options:
