@@ -87,9 +87,20 @@ When a release occurs, the following steps are processed:
 
 https://github.com/twolfson/foundry-release-spec
 
-Existing plugins can be found on `npm` at:
+Existing plugins are:
 
-https://www.npmjs.org/browse/keyword/foundry-release
+- [foundry-release-bower][]
+- [foundry-release-component][]
+- [foundry-release-git][]
+- [foundry-release-npm][]
+- [foundry-release-pypi][]
+- More plugins can be found at https://www.npmjs.org/browse/keyword/foundry-release
+
+[foundry-release-bower]: https://github.com/twolfson/foundry-release-bower
+[foundry-release-component]: https://github.com/twolfson/foundry-release-component
+[foundry-release-git]: https://github.com/twolfson/foundry-release-git
+[foundry-release-npm]: https://github.com/twolfson/foundry-release-npm
+[foundry-release-pypi]: https://github.com/twolfson/foundry-release-pypi
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint via [grunt](https://github.com/gruntjs/grunt) and test via `npm test`.
