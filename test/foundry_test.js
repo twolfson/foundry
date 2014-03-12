@@ -24,22 +24,29 @@ describe('foundry', function () {
       delete this.releaseLib;
     });
 
-
+    var expectedParams = {
+      version: '0.1.0',
+      message: 'Release 0.1.0',
+      description: null,
+      config: {}
+    };
     it('updates the package version', function () {
       // ['setVersion', {version, message, description}, cb]
       // DEV: We are verifying we meet the spec
-      expect(this.releaseLib.calls[0][0]).to.equal('setVersion');
+      var method = this.releaseLib.calls[0][0];
+      expect(method).to.equal('setVersion');
+
       var setVersionArgs = this.releaseLib.calls[0][1];
-      expect(setVersionArgs[0]).to.deep.equal({
-        version: '0.1.0',
-        message: 'Release 0.1.0',
-        description: null,
-        config: {}
-      });
+      expect(setVersionArgs[0]).to.deep.equal(expectedParams);
       expect(setVersionArgs[1]).to.be.a('function');
     });
-    it.skip('commits the updates', function () {
+    it('commits the updates', function () {
+      var method = this.releaseLib.calls[1][0];
+      expect(method).to.equal('commit');
 
+      var commitArgs = this.releaseLib.calls[1][1];
+      expect(commitArgs[0]).to.deep.equal(expectedParams);
+      expect(commitArgs[1]).to.be.a('function');
     });
     it.skip('registers the package', function () {
 
