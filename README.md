@@ -16,11 +16,31 @@ This was created out of frustration; there was no generic *sharable* release man
 // TODO: Example output (probably via screenshot)
 
 ## Getting Started
-Install the module with: `npm install foundry`
+Install the module globally via: `npm install -g foundry`
 
-```javascript
-var foundry = require('foundry');
-foundry.awesome(); // "awesome"
+Once installed, you can run a release in any package you own. The current built-in plugins are `git`, `npm`, `bower`, `component`, and `PyPI`.
+
+> In `1.0.0`, we will remove the built-in release libraries. This means you will need to globally install the release libraries you want.
+
+For example purposes, we will create/release on a local-only `git` repository.
+
+```bash
+# Create git repo
+mkdir foundry-example
+cd foundry-example
+git init
+echo "Hello World" > README.md
+git add README.md
+git commit -m "Added documentation"
+
+# Run our release
+foundry release
+# [master c6ce921] Release 0.1.0
+
+# See the release commit and tag
+git log --decorate --oneline
+# c6ce921 (HEAD, tag: 0.1.0, master) Release 0.1.0
+# f0c25b3 Added documentation
 ```
 
 ## Documentation
