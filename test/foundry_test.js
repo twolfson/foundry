@@ -90,8 +90,9 @@ describe('foundry', function () {
   });
 
   describe('releasing a package with no commands', function () {
-    it.skip('does not error out', function () {
-
+    it('does not error out', function (done) {
+      var release = new Foundry.Release([{}]);
+      release.release('0.1.0', done);
     });
   });
 });
