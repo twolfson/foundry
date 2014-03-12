@@ -99,7 +99,7 @@ describe('foundry', function () {
 
 // DEV: Hooray, internal tests ;_;
 var gitReleaseLib = require('foundry-release-git');
-describe.only('Foundry.getReleaseLibs', function () {
+describe('Foundry.getReleaseLibs', function () {
   describe('resolving local node_modules', function () {
     before(function getLocalReleaseLibs (done) {
       // Resolve our local release libs
