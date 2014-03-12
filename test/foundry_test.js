@@ -67,12 +67,25 @@ describe('foundry', function () {
   });
 
   describe('releasing an existing package', function () {
-    it.skip('updates the package version', function () {
-
+    before(function releaseNewPackage (done) {
+      this.releaseLib = new ReleaseCacheFactory();
+      var release = new Foundry.Release([this.releaseLib]);
+      release.release('0.3.0', done);
+    });
+    after(function cleanup () {
+      delete this.releaseLib;
     });
 
-    it.skip('does not register the package', function () {
+    it('updates the package version', function () {
+      var firstMethod = this.releaseLib.calls[0][0];
+      expect(firstMethod).to.equal('setVersion');
+    });
 
+    it('does not register the package', function () {
+      var methods = this.releaseLib.calls.map(function (call) {
+        return call[0];
+      });
+      expect(methods).to.not.contain('register');
     });
   });
 
