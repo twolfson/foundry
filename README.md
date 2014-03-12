@@ -89,11 +89,11 @@ https://github.com/twolfson/foundry-release-spec
 
 Existing plugins are:
 
-- [foundry-release-bower][]
-- [foundry-release-component][]
-- [foundry-release-git][]
-- [foundry-release-npm][]
-- [foundry-release-pypi][]
+- [foundry-release-bower][], manages `version` in `bower.json`
+- [foundry-release-component][], manages `version` in `component.json`
+- [foundry-release-git][], runs `git tag` and `git commit` upon release
+- [foundry-release-npm][], manages `version` in `package.json` and runs `npm publish` upon release
+- [foundry-release-pypi][], manages `version` in `setup.py` and registers/zips/gzips package upon release
 - More plugins can be found at https://www.npmjs.org/browse/keyword/foundry-release
 
 [foundry-release-bower]: https://github.com/twolfson/foundry-release-bower
