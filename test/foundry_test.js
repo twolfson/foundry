@@ -48,11 +48,21 @@ describe('foundry', function () {
       expect(commitArgs[0]).to.deep.equal(expectedParams);
       expect(commitArgs[1]).to.be.a('function');
     });
-    it.skip('registers the package', function () {
+    it('registers the package', function () {
+      var method = this.releaseLib.calls[2][0];
+      expect(method).to.equal('register');
 
+      var registerArgs = this.releaseLib.calls[2][1];
+      expect(registerArgs[0]).to.deep.equal(expectedParams);
+      expect(registerArgs[1]).to.be.a('function');
     });
-    it.skip('publishes the package', function () {
+    it('publishes the package', function () {
+      var method = this.releaseLib.calls[3][0];
+      expect(method).to.equal('publish');
 
+      var publishArgs = this.releaseLib.calls[3][1];
+      expect(publishArgs[0]).to.deep.equal(expectedParams);
+      expect(publishArgs[1]).to.be.a('function');
     });
   });
 
