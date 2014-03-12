@@ -13,7 +13,7 @@ This was created out of frustration; there was no generic *sharable* release man
 [git-extra's git-release]: https://github.com/visionmedia/git-extras/blob/1.9.0/Readme.md#git-release
 [dotfiles git hooks]: https://github.com/twolfson/dotfiles/tree/0.39.1/git-template-dir/hooks
 
-// TODO: Example output (probably via screenshot)
+![Example foundry-release](docs/foundry-release.png)
 
 ## Getting Started
 Install the module globally via: `npm install -g foundry`
