@@ -18,32 +18,41 @@ describe('foundry', function () {
 
     });
 
-    it('commits the updates', function () {
+    it.skip('commits the updates', function () {
 
     });
 
-    it('registers the package', function () {
+    it.skip('registers the package', function () {
 
     });
 
-    it('publishes the package', function () {
+    it.skip('publishes the package', function () {
 
     });
   });
 
   describe('releasing an existing package', function () {
-    it('updates the package version', function () {
+    it.skip('updates the package version', function () {
 
     });
 
-    it('does not register the package', function () {
+    it.skip('does not register the package', function () {
 
     });
   });
 
   describe('releasing a package with no commands', function () {
-    it('does not error out', function () {
+    it.skip('does not error out', function () {
 
+    });
+  });
+});
+
+// DEV: Hooray, internal tests ;_;
+describe('Foundry.getReleaseLibs', function () {
+  describe('resolving local node_modules', function () {
+    it.skip('discovers installed foundry modules', function () {
+      // TODO: Test me
     });
   });
 });
