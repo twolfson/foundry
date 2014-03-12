@@ -73,7 +73,7 @@ foundry release 1.0.0
 
 > It is planned to allow for `foundry release major`, `foundry release minor`. See https://github.com/twolfson/foundry/issues/16
 
-### Process
+### Release process
 
 When a release occurs, the following steps are processed:
 
@@ -82,6 +82,14 @@ When a release occurs, the following steps are processed:
 3. Register, if the package is brand new (semver === `0.1.0`), then register it to its repository (e.g. `python setup.py register`)
 4. Publish, release changes to package's repostiroy manager (e.g. `npm publish`)
 
+### Plugins
+`foundry` plugins contain the `foundry-plugin` keyword and adhered to the `foundry` release plugin specification:
+
+https://github.com/twolfson/foundry-release-spec
+
+Existing plugins can be found on `npm` at:
+
+https://www.npmjs.org/browse/keyword/foundry-release
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint via [grunt](https://github.com/gruntjs/grunt) and test via `npm test`.
