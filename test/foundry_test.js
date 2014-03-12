@@ -2,6 +2,7 @@
 var childProcess = require('child_process');
 var expect = require('chai').expect;
 var foundry = require('../');
+var FoundryReleaseCacheFactory = require('./test-files/foundry-release-cache-factory.js');
 
 // Stop childProcess exec and spawn calls too unless people opt in to our methods
 // DEV: This is borrowed from https://github.com/twolfson/foundry/blob/0.15.0/test/utils/child-process.js
@@ -14,6 +15,11 @@ childProcess.exec = function () {
 
 describe('foundry', function () {
   describe('releasing a new package', function () {
+    before(function createReleaseLib () {
+
+    });
+
+
     it('updates the package version', function () {
 
     });
