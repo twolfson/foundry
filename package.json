@@ -44,7 +44,8 @@
     "foundry-release-npm": "~0.1.0",
     "foundry-release-git": "~1.0.0",
     "foundry-release-bower": "~0.1.0",
-    "foundry-release-component": "~0.1.0"
+    "foundry-release-component": "~0.1.0",
+    "foundry-release-pypi": "~0.1.0"
   },
   "devDependencies": {
     "mocha": "~1.11.0",
