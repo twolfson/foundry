@@ -1,7 +1,0 @@
-{
-  "name": "super-secret-foundry-test",
-  "description": "Super secret Foundry test. This one is private.",
-  "version": "0.0.0",
-  "homepage": "https://github.com/twolfson/foundry",
-  "private": true
-}
