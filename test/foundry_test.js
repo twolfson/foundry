@@ -98,10 +98,22 @@ describe('foundry', function () {
 });
 
 // DEV: Hooray, internal tests ;_;
-describe('Foundry.getReleaseLibs', function () {
+var gitReleaseLib = require('foundry-release-git');
+describe.only('Foundry.getReleaseLibs', function () {
   describe('resolving local node_modules', function () {
-    it.skip('discovers installed foundry modules', function () {
-      // TODO: Test me
+    before(function getLocalReleaseLibs (done) {
+      // Resolve our local release libs
+      var params = {cwd: __dirname + '/../node_modules/'};
+      var that = this;
+      Foundry.getReleaseLibs(params, function handleReleaseLibs (err, releaseLibs) {
+        // Save the release libs and callback
+        that.releaseLibs = releaseLibs;
+        done(err);
+      });
+    });
+
+    it('discovers installed foundry modules', function () {
+      expect(this.releaseLibs).to.contain(gitReleaseLib);
     });
   });
 });
