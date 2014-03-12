@@ -1,4 +1,6 @@
 # foundry changelog
+0.17.0 - Updated tests to no longer test release plugins and added documentation
+
 0.16.0 - Moved to external `pypi` release plugins
 
 0.15.0 - Upgraded to `foundry-release-git@1.0.0` and supporting `foundry-release-spec@0.2.0` via `commit` step
