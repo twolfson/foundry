@@ -1,16 +1,17 @@
 # foundry [![Build status](https://travis-ci.org/twolfson/foundry.png?branch=master)](https://travis-ci.org/twolfson/foundry)
 
-Release manager for [npm][], [bower][], [component][], [PyPI][], and any plugin you can write
+Release manager for [npm][], [bower][], [component][], [PyPI][], [git tags][], and any plugin you can write.
 
-[npm]:
-[bower]:
-[component]:
-[PyPI]:
+[npm]: http://npmjs.org/
+[bower]: http://bower.io/
+[component]: http://component.io/
+[PyPI]: http://pypi.python.org/
+[git tags]: http://git-scm.com/
 
 This was created out of frustration; there was no generic release manager. Previous to this, I was using [git-extra's git-release][] command with [dotfiles git hooks][].
 
-[git-extra's git-release]:
-[dotfiles git hooks]:
+[git-extra's git-release]: https://github.com/visionmedia/git-extras/blob/1.9.0/Readme.md#git-release
+[dotfiles git hooks]: https://github.com/twolfson/dotfiles/tree/0.39.1/git-template-dir/hooks
 
 // TODO: Example output (probably via screenshot)
 
