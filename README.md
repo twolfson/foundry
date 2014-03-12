@@ -44,7 +44,24 @@ git log --decorate --oneline
 ```
 
 ## Documentation
-_(Coming soon)_
+`foundry` provides a command line interface for releasing.
+
+```bash
+$ foundry --help
+
+  Usage: foundry [options] [command]
+
+  Commands:
+
+    release <version>      Set version for package metadata and publish to corresponding registries
+    completion             Get potential completions for a command. Looks for `COMP_CWORD`, `COMP_LINE`, `COMP_POINT`.
+
+  Options:
+
+    -h, --help     output usage information
+    -V, --version  output the version number
+
+```
 
 ## Examples
 _(Coming soon)_
