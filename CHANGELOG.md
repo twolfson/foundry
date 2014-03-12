@@ -1,4 +1,6 @@
 # foundry changelog
+0.17.1 - Added example screenshot image
+
 0.17.0 - Updated tests to no longer test release plugins and added documentation
 
 0.16.0 - Moved to external `pypi` release plugins
