@@ -71,7 +71,7 @@ foundry release 0.3.0
 foundry release 1.0.0
 ```
 
-> It is planned to allow for `foundry release major`, `foundry release minor`. See https://github.com/twolfson/foundry/issues/16
+> Commands that automatically increment semver are planned (e.g. `foundry release major`, `foundry release minor`). See https://github.com/twolfson/foundry/issues/16 for more information.
 
 ### Release process
 
