@@ -45,7 +45,8 @@
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-watch": "~0.4.0",
-    "chai": "~1.8.1"
+    "chai": "~1.8.1",
+    "foundry-release-git": "~1.0.1"
   },
   "keywords": [
     "release",
