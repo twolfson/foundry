@@ -18,13 +18,24 @@ This was created out of frustration; there was no generic *sharable* release man
 ## Getting Started
 Install the module globally via: `npm install -g foundry`
 
-Once installed, you can run a release in any package you own. The current built-in plugins are `git`, `npm`, `bower`, `component`, and `PyPI`.
+By default, `foundry` is not configured with any release libraries. Install a release library via `npm` globally:
 
-> In `1.0.0`, we will remove the built-in release libraries. This means you will need to globally install the release libraries you want.
+```bash
+npm install -g foundry-release-bower  # bower
+npm install -g foundry-release-component  # component.io
+npm install -g foundry-release-git  # git
+npm install -g foundry-release-npm  # npm
+npm install -g foundry-release-pypi  # PyPI
+```
+
+Details about existing plugins and their documentation can be found under the [Plugins](#plugins) heading.
 
 For example purposes, we will create/release on a local-only `git` repository.
 
 ```bash
+# Install a `git` foundry-release plugin
+npm install -g foundry-release-git
+
 # Create git repo
 mkdir foundry-example
 cd foundry-example
