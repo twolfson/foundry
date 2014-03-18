@@ -1,4 +1,6 @@
 # foundry changelog
+1.1.0 - Improved `plugins` command output
+
 1.0.0 - Moved to global release plugins, added `plugins` list command
 
 0.17.1 - Added example screenshot image
