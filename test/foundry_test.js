@@ -103,7 +103,7 @@ describe('Foundry.getReleaseLibs', function () {
   describe('resolving local node_modules', function () {
     before(function getLocalReleaseLibs (done) {
       // Resolve our local release libs
-      var params = {cwd: __dirname + '/../node_modules/'};
+      var params = {pluginDir: __dirname + '/../node_modules/'};
       var that = this;
       Foundry.getReleaseLibs(params, function handleReleaseLibs (err, releaseLibs) {
         // Save the release libs and callback
