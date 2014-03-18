@@ -65,6 +65,7 @@ $ foundry --help
   Commands:
 
     release <version>      Set version for package metadata and publish to registries
+    plugins                List installed `foundry` plugins
     completion             Get potential completions for a command. Looks for `COMP_CWORD`, `COMP_LINE`, `COMP_POINT`.
 
   Options:
