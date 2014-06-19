@@ -1,4 +1,6 @@
 # foundry changelog
+1.1.1 - Updated `bash/zsh` completion script
+
 1.1.0 - Improved `plugins` command output
 
 1.0.0 - Moved to global release plugins, added `plugins` list command
