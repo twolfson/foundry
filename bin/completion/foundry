@@ -23,17 +23,7 @@ if type complete &>/dev/null; then
     IFS="$si"
   }
   complete -F _foundry_completion foundry
-elif type compdef &>/dev/null; then
-  _foundry_completion() {
-    si=$IFS
-    compadd -- $(COMP_CWORD=$((CURRENT-1)) \
-                 COMP_LINE=$BUFFER \
-                 COMP_POINT=0 \
-                 foundry completion -- "${words[@]}" \
-                 2>/dev/null)
-    IFS=$si
-  }
-  compdef _foundry_completion foundry
+# DEV: We removed `compdef` due to issues with `zsh`
 elif type compctl &>/dev/null; then
   _foundry_completion () {
     local cword line point words si
