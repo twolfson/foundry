@@ -23,7 +23,7 @@ if type complete &>/dev/null; then
     IFS="$si"
   }
   complete -F _foundry_completion foundry
-# DEV: We removed `compdef` due to issues with `zsh`
+# DEV: We removed `compdef` due to issues with `zsh` (zsh 5.0.0 (x86_64-unknown-linux-gnu))
 elif type compctl &>/dev/null; then
   _foundry_completion () {
     local cword line point words si
