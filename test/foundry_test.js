@@ -30,15 +30,15 @@ describe('foundry', function () {
       description: null,
       config: {}
     };
-    it('updates the package version', function () {
-      // ['setVersion', {version, message, description}, cb]
+    it('updates the package files', function () {
+      // ['updateFiles', {version, message, description}, cb]
       // DEV: We are verifying we meet the spec
       var method = this.releaseLib.calls[0][0];
-      expect(method).to.equal('setVersion');
+      expect(method).to.equal('updateFiles');
 
-      var setVersionArgs = this.releaseLib.calls[0][1];
-      expect(setVersionArgs[0]).to.deep.equal(expectedParams);
-      expect(setVersionArgs[1]).to.be.a('function');
+      var updateFilesArgs = this.releaseLib.calls[0][1];
+      expect(updateFilesArgs[0]).to.deep.equal(expectedParams);
+      expect(updateFilesArgs[1]).to.be.a('function');
     });
     it('commits the updates', function () {
       var method = this.releaseLib.calls[1][0];
@@ -76,9 +76,9 @@ describe('foundry', function () {
       delete this.releaseLib;
     });
 
-    it('updates the package version', function () {
+    it('updates the package files', function () {
       var firstMethod = this.releaseLib.calls[0][0];
-      expect(firstMethod).to.equal('setVersion');
+      expect(firstMethod).to.equal('updateFiles');
     });
 
     it('does not register the package', function () {
