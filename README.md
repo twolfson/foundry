@@ -89,7 +89,7 @@ foundry release 1.0.0
 
 When a release occurs, the following steps are processed:
 
-1. Set version, update package metadata with the new version (e.g. update `package.json`)
+1. Update files, update package files with the new version and changes (e.g. update `package.json`, add to `CHANGELOG.md`)
 2. Commit, persist any changes to a version control system (e.g. `git commit && git tag`)
 3. Register, if the package is new (semver === `0.1.0`), then register it to its repository (e.g. `python setup.py register`)
 4. Publish, release changes to package's repostiroy manager (e.g. `npm publish`)
