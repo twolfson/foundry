@@ -4,6 +4,7 @@ function FoundryReleaseCacheFactory() {
   this.calls = [];
 }
 FoundryReleaseCacheFactory.prototype = {
+  specVersion: '1.1.0',
   updateFiles: function (params, cb) {
     this.calls.push(['updateFiles', [].slice.call(arguments)]);
     process.nextTick(cb);

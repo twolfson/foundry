@@ -91,7 +91,9 @@ describe('foundry', function () {
 
   describe('releasing a package with no commands', function () {
     it('does not error out', function (done) {
-      var release = new Foundry.Release([{}]);
+      var release = new Foundry.Release([{
+        specVersion: '1.1.0'
+      }]);
       release.release('0.1.0', done);
     });
   });
