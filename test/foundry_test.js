@@ -6,6 +6,7 @@ var ReleaseCacheFactory = require('./test-files/foundry-release-cache-factory.js
 
 // Stop childProcess exec and spawn calls too unless people opt in to our methods
 // DEV: This is borrowed from https://github.com/twolfson/foundry/blob/0.15.0/test/utils/child-process.js
+var _exec = childProcess.exec;
 childProcess.spawn = function () {
   throw new Error('`childProcess.spawn` was being called with ' + JSON.stringify(arguments));
 };
@@ -122,12 +123,9 @@ describe('Foundry.getReleaseLibs', function () {
 
 // DEV: This is not a required test but one for peace of mind regarding usability messaing
 describe('foundry using a package with a bad `specVersion`', function () {
-  before(function createRelease () {
-    this.releaseLib = new ReleaseCacheFactory();
-    var release = new Foundry.release({
-
-    });
-    release.release('0.3.0', done);
+  before(function releaseWithBadVersion (done) {
+    _exec(quote(['node', __dirname + '/../bin/foundry',
+      '--plugin-dir', __dirname + '/test-files/plugins-unsupported-version', '1.0.0']), done);
   });
 
   it('notifies the user of the package name', function () {

@@ -43,12 +43,13 @@
     "semver": "~4.1.0"
   },
   "devDependencies": {
-    "mocha": "~1.11.0",
+    "chai": "~1.8.1",
+    "foundry-release-git": "~1.0.1",
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-watch": "~0.4.0",
-    "chai": "~1.8.1",
-    "foundry-release-git": "~1.0.1"
+    "mocha": "~1.11.0",
+    "shell-quote": "~1.4.2"
   },
   "keywords": [
     "release",
