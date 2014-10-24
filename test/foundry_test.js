@@ -118,6 +118,18 @@ describe('foundry listing its current plugins', function () {
   });
 });
 
+describe('foundry releasing an echoing plugin', function () {
+  childUtils.exec(quote(['node', __dirname + '/../bin/foundry',
+    '--plugin-dir', __dirname + '/test-files/plugins-echo/',
+    'release', '1.0.0']));
+
+  it('loads and releases that plugin', function () {
+    expect(this.err).to.equal(null);
+    console.log(this.stderr);
+    expect(this.stdout).to.contain('Hello World!');
+  });
+});
+
 // DEV: Hooray, internal tests ;_;
 var echoReleaseLib = require('./test-files/plugins-mock-node_modules/foundry-release-echo');
 describe('Foundry.getReleaseLibs', function () {
@@ -140,12 +152,6 @@ describe('Foundry.getReleaseLibs', function () {
       // DEV: foundry modules are tagged via a `foundry-release` keyword
       expect(this.releaseLibs).to.deep.equal([echoReleaseLib]);
     });
-  });
-});
-
-describe.skip('foundry releasing an echoing plugin', function () {
-  it('loads and releases that plugin', function () {
-
   });
 });
 
