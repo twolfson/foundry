@@ -45,6 +45,8 @@ git add README.md
 git commit -m "Added documentation"
 
 # Run our release
+#   `./node_modules/.bin` can be avoided by using `npm-run-script`
+#   https://www.npmjs.org/doc/misc/npm-scripts.html#environment
 ./node_modules/.bin/foundry release
 # [master c6ce921] Release 0.1.0
 
