@@ -115,6 +115,9 @@ describe('Foundry.getReleaseLibs', function () {
         done(err);
       });
     });
+    after(function cleanup () {
+      delete this.releaseLibs;
+    });
 
     it('discovers installed foundry modules', function () {
       expect(this.releaseLibs).to.contain(gitReleaseLib);
@@ -128,18 +131,21 @@ describe.only('foundry using a package with a bad `specVersion`', function () {
     var cmd = ['node', __dirname + '/../bin/foundry', 'release',
       '--plugin-dir', __dirname + '/test-files/plugins-unsupported-version', '1.0.0'];
     var that = this;
-    console.log(quote(cmd));
     _exec(quote(cmd), function handleExec (err, stdout, stderr) {
-      // Save stdout and stderr
+      // Save err, stdout, stderr and callback
+      that.err = err;
       that.stdout = stdout;
       that.stderr = stderr;
-
-      // Callback with error
-      done(err);
+      done();
     });
+  });
+  after(function cleanup () {
+    delete this.err;
+    delete this.stdout;
+    delete this.stderr;
   });
 
   it('notifies the user of the package name', function () {
-    console.log('output', this.stdout, this.stderr);
+    console.log('output', this.err, this.stdout, this.stderr);
   });
 });
