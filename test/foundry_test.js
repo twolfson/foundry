@@ -2,17 +2,19 @@
 var childProcess = require('child_process');
 var expect = require('chai').expect;
 var quote = require('shell-quote').quote;
+var childUtils = require('./utils/child-process');
 var Foundry = require('../');
 var ReleaseCacheFactory = require('./test-files/foundry-release-cache-factory.js');
 
 // Stop childProcess exec and spawn calls too unless people opt in to our methods
 // DEV: This is borrowed from https://github.com/twolfson/foundry/blob/0.15.0/test/utils/child-process.js
-var _exec = childProcess.exec;
-childProcess.spawn = function () {
-  throw new Error('`childProcess.spawn` was being called with ' + JSON.stringify(arguments));
-};
+childProcess._exec = childProcess.exec;
+childProcess._spawn = childProcess.spawn;
 childProcess.exec = function () {
   throw new Error('`childProcess.exec` was being called with ' + JSON.stringify(arguments));
+};
+childProcess.spawn = function () {
+  throw new Error('`childProcess.spawn` was being called with ' + JSON.stringify(arguments));
 };
 
 describe('foundry', function () {
@@ -127,23 +129,8 @@ describe('Foundry.getReleaseLibs', function () {
 
 // DEV: This is not a required test but one for peace of mind regarding usability messaing
 describe('foundry using a package with a bad `specVersion`', function () {
-  before(function releaseWithBadVersion (done) {
-    var cmd = ['node', __dirname + '/../bin/foundry', 'release',
-      '--plugin-dir', __dirname + '/test-files/plugins-unsupported-version', '1.0.0'];
-    var that = this;
-    _exec(quote(cmd), function handleExec (err, stdout, stderr) {
-      // Save err, stdout, stderr and callback
-      that.err = err;
-      that.stdout = stdout;
-      that.stderr = stderr;
-      done();
-    });
-  });
-  after(function cleanup () {
-    delete this.err;
-    delete this.stdout;
-    delete this.stderr;
-  });
+  childUtils.exec(quote(['node', __dirname + '/../bin/foundry', 'release',
+    '--plugin-dir', __dirname + '/test-files/plugins-unsupported-version', '1.0.0']));
 
   it('notifies the user of the package name', function () {
     expect(this.err).to.not.equal(null);
