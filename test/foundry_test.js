@@ -104,12 +104,12 @@ describe('foundry', function () {
 });
 
 // DEV: Hooray, internal tests ;_;
-var gitReleaseLib = require('foundry-release-git');
+var echoReleaseLib = require('./test-files/plugins-mock-node_modules/foundry-release-echo');
 describe('Foundry.getReleaseLibs', function () {
-  describe('resolving local node_modules', function () {
+  describe('resolving a plugin directory', function () {
     before(function getLocalReleaseLibs (done) {
       // Resolve our local release libs
-      var params = {pluginDir: __dirname + '/../node_modules/'};
+      var params = {pluginDir: __dirname + '/test-files/plugins-mock-node_modules/'};
       var that = this;
       Foundry.getReleaseLibs(params, function handleReleaseLibs (err, releaseLibs) {
         // Save the release libs and callback
@@ -122,7 +122,8 @@ describe('Foundry.getReleaseLibs', function () {
     });
 
     it('discovers installed foundry modules', function () {
-      expect(this.releaseLibs).to.contain(gitReleaseLib);
+      // DEV: foundry modules are tagged via a `foundry-release` keyword
+      expect(this.releaseLibs).to.deep.equal([echoReleaseLib]);
     });
   });
 });
