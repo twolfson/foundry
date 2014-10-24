@@ -146,6 +146,7 @@ describe.only('foundry using a package with a bad `specVersion`', function () {
   });
 
   it('notifies the user of the package name', function () {
-    console.log('output', this.err, this.stdout, this.stderr);
+    expect(this.err).to.not.equal(null);
+    expect(this.err.message).to.contain('Actual: "1.0.0". `support-not-found.specVersion` is below the required semver for `foundry`. Please install a supported version.');
   });
 });
