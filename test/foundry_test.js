@@ -1,6 +1,7 @@
 // Load in dependencies
 var childProcess = require('child_process');
 var expect = require('chai').expect;
+var quote = require('shell-quote').quote;
 var Foundry = require('../');
 var ReleaseCacheFactory = require('./test-files/foundry-release-cache-factory.js');
 
@@ -122,13 +123,23 @@ describe('Foundry.getReleaseLibs', function () {
 });
 
 // DEV: This is not a required test but one for peace of mind regarding usability messaing
-describe('foundry using a package with a bad `specVersion`', function () {
+describe.only('foundry using a package with a bad `specVersion`', function () {
   before(function releaseWithBadVersion (done) {
-    _exec(quote(['node', __dirname + '/../bin/foundry',
-      '--plugin-dir', __dirname + '/test-files/plugins-unsupported-version', '1.0.0']), done);
+    var cmd = ['node', __dirname + '/../bin/foundry', 'release',
+      '--plugin-dir', __dirname + '/test-files/plugins-unsupported-version', '1.0.0'];
+    var that = this;
+    console.log(quote(cmd));
+    _exec(quote(cmd), function handleExec (err, stdout, stderr) {
+      // Save stdout and stderr
+      that.stdout = stdout;
+      that.stderr = stderr;
+
+      // Callback with error
+      done(err);
+    });
   });
 
   it('notifies the user of the package name', function () {
-
+    console.log('output', this.stdout, this.stderr);
   });
 });
