@@ -57,7 +57,7 @@ git log --decorate --oneline
 ```
 
 ### Global installation
-`foundry` supports global installation as it loads plugins from its peer node modules. This previous example can be done globally via
+`foundry` supports global installation since it loads plugins from its peer `node modules`. This previous example can be done globally via:
 
 ```bash
 npm install -g foundry
