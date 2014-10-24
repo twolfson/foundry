@@ -129,8 +129,9 @@ describe('Foundry.getReleaseLibs', function () {
 
 // DEV: This is not a required test but one for peace of mind regarding usability messaing
 describe('foundry using a package with a bad `specVersion`', function () {
-  childUtils.exec(quote(['node', __dirname + '/../bin/foundry', 'release',
-    '--plugin-dir', __dirname + '/test-files/plugins-unsupported-version', '1.0.0']));
+  childUtils.exec(quote(['node', __dirname + '/../bin/foundry',
+    '--plugin-dir', __dirname + '/test-files/plugins-unsupported-version',
+    'release', '1.0.0']));
 
   it('notifies the user of the package name', function () {
     expect(this.err).to.not.equal(null);
