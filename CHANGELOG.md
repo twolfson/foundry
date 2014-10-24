@@ -1,4 +1,6 @@
 # foundry changelog
+2.3.2 - Expanded `echo` test to further verify CLI/Release linkage
+
 2.3.1 - Added another test for `release`
 
 2.3.0 - Fixed and added test for `plugins` command
