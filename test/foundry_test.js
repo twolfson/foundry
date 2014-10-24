@@ -143,6 +143,12 @@ describe('Foundry.getReleaseLibs', function () {
   });
 });
 
+describe.skip('foundry releasing an echoing plugin', function () {
+  it('loads and releases that plugin', function () {
+
+  });
+});
+
 // DEV: This is not a required test but one for peace of mind regarding usability messaing
 describe('foundry using a package with a bad `specVersion`', function () {
   childUtils.exec(quote(['node', __dirname + '/../bin/foundry',
