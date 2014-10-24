@@ -54,6 +54,16 @@ git log --decorate --oneline
 # f0c25b3 Added documentation
 ```
 
+### Global installation
+`foundry` supports global installation as it loads plugins from its peer node modules. This previous example can be done globally via
+
+```bash
+npm install -g foundry
+npm install
+# ...
+foundry release
+```
+
 ## Documentation
 `foundry` provides a command line interface for releasing.
 
