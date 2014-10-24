@@ -126,7 +126,7 @@ describe('Foundry.getReleaseLibs', function () {
 });
 
 // DEV: This is not a required test but one for peace of mind regarding usability messaing
-describe.only('foundry using a package with a bad `specVersion`', function () {
+describe('foundry using a package with a bad `specVersion`', function () {
   before(function releaseWithBadVersion (done) {
     var cmd = ['node', __dirname + '/../bin/foundry', 'release',
       '--plugin-dir', __dirname + '/test-files/plugins-unsupported-version', '1.0.0'];
