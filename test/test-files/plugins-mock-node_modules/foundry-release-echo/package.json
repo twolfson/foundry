@@ -1,5 +1,5 @@
 {
-  "name": "support-not-found",
+  "name": "foundry-release-echo",
   "version": "1.0.0",
   "main": "index.js",
   "keywords": [
