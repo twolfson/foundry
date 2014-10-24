@@ -109,12 +109,12 @@ describe('foundry listing its current plugins', function () {
     'plugins']));
 
   it('includes foundry plugins', function () {
-    expect(this.err).to.not.equal(null);
-    expect(this.err.message).to.contain('foundry-release-echo@1.0.0');
+    expect(this.err).to.equal(null);
+    expect(this.stdout).to.contain('foundry-release-echo@1.0.0');
   });
 
   it('does not include other node modules', function () {
-    expect(this.err.message).to.not.contain('async');
+    expect(this.stdout).to.not.contain('async');
   });
 });
 
