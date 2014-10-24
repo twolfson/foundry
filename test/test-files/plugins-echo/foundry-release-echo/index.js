@@ -17,6 +17,6 @@ exports.register = function (params, cb) {
 };
 
 exports.publish = function (params, cb) {
-  console.log('Publish occurred');
+  console.log('publish occurred');
   cb();
 };

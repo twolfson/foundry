@@ -119,13 +119,41 @@ describe('foundry listing its current plugins', function () {
 });
 
 describe('foundry releasing an echoing plugin', function () {
-  childUtils.exec(quote(['node', __dirname + '/../bin/foundry',
-    '--plugin-dir', __dirname + '/test-files/plugins-echo/',
-    'release', '1.0.0']));
+  describe('for the first time', function () {
+    // TODO: Move to `1.0.0` as default in support of more logical semvers
+    childUtils.exec(quote(['node', __dirname + '/../bin/foundry',
+      '--plugin-dir', __dirname + '/test-files/plugins-echo/',
+      'release', '0.1.0']));
 
-  it('loads and releases that plugin', function () {
-    expect(this.err).to.equal(null);
-    expect(this.stdout).to.contain('Hello World!');
+    it('updates files, commits, registers, and publishes', function () {
+      expect(this.err).to.equal(null);
+      expect(this.stdout).to.contain([
+        'updateFiles occurred',
+        'commit occurred',
+        'register occurred',
+        'publish occurred',
+      ].join('\n'));
+    });
+  });
+
+  describe('for a second time', function () {
+    childUtils.exec(quote(['node', __dirname + '/../bin/foundry',
+      '--plugin-dir', __dirname + '/test-files/plugins-echo/',
+      'release', '0.2.0']));
+
+    it('updates files, commits, and publishes', function () {
+      expect(this.err).to.equal(null);
+      expect(this.stdout).to.contain([
+        'updateFiles occurred',
+        'commit occurred',
+        'publish occurred',
+      ].join('\n'));
+    });
+
+    it('does not register', function () {
+      expect(this.err).to.equal(null);
+      expect(this.stdout).to.not.contain('register');
+    });
   });
 });
 
