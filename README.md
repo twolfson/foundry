@@ -71,6 +71,7 @@ $ foundry --help
   Options:
 
     -h, --help     output usage information
+    --plugin-dir <directory>  Directory to load plugins from. Should have same structure as `node_modules`
     -V, --version  output the version number
 
 ```
