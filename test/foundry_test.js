@@ -103,6 +103,21 @@ describe('foundry', function () {
   });
 });
 
+describe('foundry listing its current plugins', function () {
+  childUtils.exec(quote(['node', __dirname + '/../bin/foundry',
+    '--plugin-dir', __dirname + '/test-files/plugins-mock-node_modules/',
+    'plugins']));
+
+  it('includes foundry plugins', function () {
+    expect(this.err).to.not.equal(null);
+    expect(this.err.message).to.contain('foundry-release-echo');
+  });
+
+  it('does not include other node modules', function () {
+    expect(this.err.message).to.not.contain('async');
+  });
+});
+
 // DEV: Hooray, internal tests ;_;
 var echoReleaseLib = require('./test-files/plugins-mock-node_modules/foundry-release-echo');
 describe('Foundry.getReleaseLibs', function () {
@@ -131,7 +146,7 @@ describe('Foundry.getReleaseLibs', function () {
 // DEV: This is not a required test but one for peace of mind regarding usability messaing
 describe('foundry using a package with a bad `specVersion`', function () {
   childUtils.exec(quote(['node', __dirname + '/../bin/foundry',
-    '--plugin-dir', __dirname + '/test-files/plugins-unsupported-version',
+    '--plugin-dir', __dirname + '/test-files/plugins-unsupported-version/',
     'release', '1.0.0']));
 
   it('notifies the user of the package name', function () {
