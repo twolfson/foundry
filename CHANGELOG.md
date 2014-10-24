@@ -1,4 +1,6 @@
 # foundry changelog
+2.2.0 - Added support for `--plugin-dir` and better assertion errors for out of date plugins
+
 2.1.0 - Added `specVersion` requirement. Fixes #20
 
 2.0.0 - Moved from `setVersion` to `updateFiles` to match `foundry-release-spec@1.0.0`
