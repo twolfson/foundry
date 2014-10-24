@@ -99,6 +99,21 @@ describe('foundry', function () {
   });
 });
 
+// DEV: This is not a required test but one for peace of mind regarding usability messaing
+describe('foundry using a package with a bad `specVersion`', function () {
+  before(function createRelease () {
+    this.releaseLib = new ReleaseCacheFactory();
+    var release = new Foundry.release({
+
+    });
+    release.release('0.3.0', done);
+  });
+
+  it('notifies the user of the package name', function () {
+
+  });
+});
+
 // DEV: Hooray, internal tests ;_;
 var gitReleaseLib = require('foundry-release-git');
 describe('Foundry.getReleaseLibs', function () {
