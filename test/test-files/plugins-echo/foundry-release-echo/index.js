@@ -1,7 +1,7 @@
-// Export up to date plugin with echo upon release
+// Export up to date plugin with echo upon publish
 exports.specVersion = '1.1.0';
 
-exports.release = function (params, cb) {
+exports.publish = function (params, cb) {
   console.log('Hello World!');
   cb();
 };

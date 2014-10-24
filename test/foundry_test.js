@@ -125,7 +125,6 @@ describe('foundry releasing an echoing plugin', function () {
 
   it('loads and releases that plugin', function () {
     expect(this.err).to.equal(null);
-    console.log(this.stderr);
     expect(this.stdout).to.contain('Hello World!');
   });
 });
