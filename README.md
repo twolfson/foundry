@@ -47,7 +47,7 @@ git commit -m "Added documentation"
 # Run our release
 #   `./node_modules/.bin` can be avoided by using `npm-run-script`
 #   https://www.npmjs.org/doc/misc/npm-scripts.html#environment
-./node_modules/.bin/foundry release
+./node_modules/.bin/foundry release 0.1.0
 # [master c6ce921] Release 0.1.0
 
 # See the release commit and tag
@@ -60,10 +60,12 @@ git log --decorate --oneline
 `foundry` supports global installation since it loads plugins from its peer `node modules`. This previous example can be done globally via:
 
 ```bash
+# Install `foundry` and a `git` foundry-release plugin
 npm install -g foundry
-npm install
-# ...
-foundry release
+npm install -g foundry-release-git
+
+# Run our release
+foundry release 0.1.0
 ```
 
 ## Documentation
