@@ -1,4 +1,6 @@
 # foundry changelog
+2.3.1 - Added another test for `release`
+
 2.3.0 - Fixed and added test for `plugins` command
 
 2.2.0 - Added support for `--plugin-dir` and better assertion errors for out of date plugins
