@@ -16,16 +16,16 @@ This was created out of frustration; there was no generic *sharable* release man
 ![Example foundry-release](docs/foundry-release.png)
 
 ## Getting Started
-Install the module globally via: `npm install -g foundry`
+Install the module via: `npm install foundry`
 
-By default, `foundry` is not configured with any release libraries. Install a release library via `npm` globally:
+By default, `foundry` is not configured with any release libraries. Install a release library via `npm`:
 
 ```bash
-npm install -g foundry-release-bower  # bower
-npm install -g foundry-release-component  # component.io
-npm install -g foundry-release-git  # git
-npm install -g foundry-release-npm  # npm
-npm install -g foundry-release-pypi  # PyPI
+npm install foundry-release-bower  # bower
+npm install foundry-release-component  # component.io
+npm install foundry-release-git  # git
+npm install foundry-release-npm  # npm
+npm install foundry-release-pypi  # PyPI
 ```
 
 Details about existing plugins and their documentation can be found under the [Plugins](#plugins) heading.
@@ -34,7 +34,7 @@ For example purposes, we will create/release on a local-only `git` repository.
 
 ```bash
 # Install a `git` foundry-release plugin
-npm install -g foundry-release-git
+npm install foundry-release-git
 
 # Create git repo
 mkdir foundry-example
@@ -45,7 +45,7 @@ git add README.md
 git commit -m "Added documentation"
 
 # Run our release
-foundry release
+./node_modules/.bin/foundry release
 # [master c6ce921] Release 0.1.0
 
 # See the release commit and tag
