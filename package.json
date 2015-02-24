@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "async": "~0.2.9",
-    "chalk": "~0.4.0",
+    "chalk": "~1.0.0",
     "commander": "~2.1.0",
     "commander-completion": "~0.1.0",
     "glob": "~3.2.8",
