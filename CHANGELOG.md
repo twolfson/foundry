@@ -1,4 +1,6 @@
 # foundry changelog
+3.1.0 - Upgraded to `chalk@1.0.0` to resolve any instability issues via @jbnicolai in #22
+
 3.0.1 - Added fix for `npm` for Travis CI
 
 3.0.0 - Moved from global `node modules` to peer `node modules` for plugins
