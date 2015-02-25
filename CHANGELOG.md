@@ -1,4 +1,6 @@
 # foundry changelog
+3.0.1 - Added fix for `npm` for Travis CI
+
 3.0.0 - Moved from global `node modules` to peer `node modules` for plugins
 
 2.3.2 - Expanded `echo` test to further verify CLI/Release linkage
