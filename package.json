@@ -39,7 +39,8 @@
     "commander-completion": "~0.1.0",
     "glob": "~3.2.8",
     "obj-extend": "~0.1.0",
-    "semver": "~4.1.0"
+    "semver": "~4.1.0",
+    "shell-quote": "~1.4.3"
   },
   "devDependencies": {
     "chai": "~1.8.1",
