@@ -37,7 +37,6 @@
     "chalk": "~1.0.0",
     "commander": "~2.1.0",
     "commander-completion": "~0.1.0",
-    "semver": "~4.1.0",
     "shell-quote": "~1.4.3",
     "underscore": "~1.8.3"
   },
