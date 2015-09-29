@@ -1,6 +1,10 @@
 # foundry [![Build status](https://travis-ci.org/twolfson/foundry.png?branch=master)](https://travis-ci.org/twolfson/foundry)
 
-Release manager for [npm][], [bower][], [component][], [PyPI][], [git tags][], and any plugin you can write.
+// TODO: Update screenshot
+// TODO: Build `foundry resume`
+// TODO: Replace `plugin` with `command`
+
+Release manager for [npm][], [bower][], [component][], [PyPI][], [git tags][], and any command you want.
 
 [npm]: http://npmjs.org/
 [bower]: http://bower.io/
@@ -8,17 +12,23 @@ Release manager for [npm][], [bower][], [component][], [PyPI][], [git tags][], a
 [PyPI]: http://pypi.python.org/
 [git tags]: http://git-scm.com/
 
-This was created out of frustration; there was no generic *sharable* release manager. Previously, I was using [git-extra's git-release][] command with [dotfiles git hooks][].
+This was created out of frustration; there was no generic *sharable* release manager.
 
-[git-extra's git-release]: https://github.com/visionmedia/git-extras/blob/1.9.0/Readme.md#git-release
-[dotfiles git hooks]: https://github.com/twolfson/dotfiles/tree/0.39.1/git-template-dir/hooks
+**Features:**
+
+- Tests, tests, and more tests
+- Modular, allows for any CLI tool (both specification based and custom ones)
+- Specification is CLI based, allowing for any language implementation
+    - https://github.com/twolfson/foundry-release-spec
+- Resumable releases in case of issues (e.g. repository is having issues, never set up username/password)
+    - TODO: Link to `foundry resume` documentation
 
 ![Example foundry-release](docs/foundry-release.png)
 
 ## Getting Started
 Install the module via: `npm install foundry`
 
-By default, `foundry` is not configured with any release libraries. Install a release library via `npm`:
+By default, `foundry` is not configured with any release commands. Install a release command via `npm`:
 
 ```bash
 npm install foundry-release-bower  # bower
@@ -28,12 +38,12 @@ npm install foundry-release-npm  # npm
 npm install foundry-release-pypi  # PyPI
 ```
 
-Details about existing plugins and their documentation can be found under the [Plugins](#plugins) heading.
+Details about existing commands and their documentation can be found under the [Commands](#commands) heading.
 
 For example purposes, we will create/release on a local-only `git` repository.
 
 ```bash
-# Install a `git` foundry-release plugin
+# Install a `git` foundry-release command
 npm install foundry-release-git
 
 # Create git repo
@@ -43,6 +53,17 @@ git init
 echo "Hello World" > README.md
 git add README.md
 git commit -m "Added documentation"
+
+# Generate `package.json` with `foundry` config
+cat > package.json <<EOF
+{
+  "foundry": {
+    "releaseCommands": [
+      "foundry-release-git"
+    ]
+  }
+}
+EOF
 
 # Run our release
 #   `./node_modules/.bin` can be avoided by using `npm-run-script`
@@ -54,18 +75,6 @@ git commit -m "Added documentation"
 git log --decorate --oneline
 # c6ce921 (HEAD, tag: 0.1.0, master) Release 0.1.0
 # f0c25b3 Added documentation
-```
-
-### Global installation
-`foundry` supports global installation since it loads plugins from its peer `node modules`. This previous example can be done globally via:
-
-```bash
-# Install `foundry` and a `git` foundry-release plugin
-npm install -g foundry
-npm install -g foundry-release-git
-
-# Run our release
-foundry release 0.1.0
 ```
 
 ## Documentation

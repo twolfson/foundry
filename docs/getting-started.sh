@@ -6,6 +6,17 @@ echo "Hello World" > README.md
 git add README.md
 git commit -m "Added documentation"
 
+# Generate `package.json` with `foundry` config
+cat > package.json <<EOF
+{
+  "foundry": {
+    "releaseCommands": [
+      "foundry-release-git"
+    ]
+  }
+}
+EOF
+
 # Run our release
 foundry release
 # [master c6ce921] Release 0.1.0
