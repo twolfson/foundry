@@ -88,13 +88,11 @@ $ foundry --help
   Commands:
 
     release <version>      Set version for package metadata and publish to registries
-    plugins                List installed `foundry` plugins
     completion             Get potential completions for a command. Looks for `COMP_CWORD`, `COMP_LINE`, `COMP_POINT`.
 
   Options:
 
     -h, --help     output usage information
-    --plugin-dir <directory>  Directory to load plugins from. Should have same structure as `node_modules`
     -V, --version  output the version number
 
 ```
@@ -102,9 +100,9 @@ $ foundry --help
 Example releases are:
 
 ```bash
-foundry release 0.1.0
-foundry release 0.3.0
 foundry release 1.0.0
+foundry release 1.1.0
+foundry release 2.0.0
 ```
 
 > Commands that automatically increment semver are planned (e.g. `foundry release major`, `foundry release minor`). See https://github.com/twolfson/foundry/issues/16 for more information.
@@ -118,19 +116,19 @@ When a release occurs, the following steps are processed:
 3. Register, if the package is new (semver === `0.1.0`), then register it to its repository (e.g. `python setup.py register`)
 4. Publish, release changes to package's repostiroy manager (e.g. `npm publish`)
 
-### Plugins
-`foundry` plugins contain the `foundry-plugin` keyword and adhered to the `foundry` release plugin specification:
+### Commands
+`foundry` release commands contain the `foundry-release` keyword and adhered to the `foundry` release command specification:
 
 https://github.com/twolfson/foundry-release-spec
 
-Existing plugins are:
+Existing commands are:
 
 - [foundry-release-bower][], manages `version` in `bower.json`
 - [foundry-release-component][], manages `version` in `component.json`
 - [foundry-release-git][], runs `git tag` and `git commit` upon release
 - [foundry-release-npm][], manages `version` in `package.json` and runs `npm publish` upon release
 - [foundry-release-pypi][], manages `version` in `setup.py` and registers/zips/gzips package upon release
-- More plugins can be found at https://www.npmjs.org/browse/keyword/foundry-release
+- More commands can be found at https://www.npmjs.org/browse/keyword/foundry-release
 
 [foundry-release-bower]: https://github.com/twolfson/foundry-release-bower
 [foundry-release-component]: https://github.com/twolfson/foundry-release-component
