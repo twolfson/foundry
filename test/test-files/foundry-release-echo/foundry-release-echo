@@ -5,19 +5,19 @@ var FoundryReleaseBase = require('foundry-release-base');
 // Define our library
 var myReleaseCommand = new FoundryReleaseBase({
   updateFiles: function (params, cb) {
-    console.log('Step run: update-files ' + params.version + ' ' + params.message);
+    console.log('Step run (echo): update-files ' + params.version + ' ' + params.message);
     process.nextTick(cb);
   },
   commit: function (params, cb) {
-    console.log('Step run: commit ' + params.version + ' ' + params.message);
+    console.log('Step run (echo): commit ' + params.version + ' ' + params.message);
     process.nextTick(cb);
   },
   register: function (params, cb) {
-    console.log('Step run: register ' + params.version + ' ' + params.message);
+    console.log('Step run (echo): register ' + params.version + ' ' + params.message);
     process.nextTick(cb);
   },
   publish: function (params, cb) {
-    console.log('Step run: publish ' + params.version + ' ' + params.message);
+    console.log('Step run (echo): publish ' + params.version + ' ' + params.message);
     process.nextTick(cb);
   }
 });

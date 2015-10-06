@@ -7,49 +7,32 @@ var Foundry = require('../');
 // Start our tests
 describe('foundry', function () {
   describe('releasing a new package', function () {
+    childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
     before(function releaseNewPackage (done) {
       var release = new Foundry.Release(['foundry-release-echo']);
       release.release('1.0.0', done);
     });
 
-    it('has no errors', function () {
-      expect(this.err).to.equal(null);
-      expect(this.stderr).to.equal('');
-    });
-
+    // Verify we are meeting our spec
     it('updates the package files', function () {
-      // updateFiles', {version, message, description}, cb]
-      // DEV: We are verifying we meet the spec
-      var method = this.releaseLib.calls[0][0];
-      expect(method).to.equal('updateFiles');
-
-      var updateFilesArgs = this.releaseLib.calls[0][1];
-      expect(updateFilesArgs[0]).to.deep.equal(expectedParams);
-      expect(updateFilesArgs[1]).to.be.a('function');
+      expect(this.stdout).to.contain('Step run (echo): update-files 1.0.0 Release 1.0.0');
     });
     it('commits the updates', function () {
-      var method = this.releaseLib.calls[1][0];
-      expect(method).to.equal('commit');
-
-      var commitArgs = this.releaseLib.calls[1][1];
-      expect(commitArgs[0]).to.deep.equal(expectedParams);
-      expect(commitArgs[1]).to.be.a('function');
+      expect(this.stdout).to.contain('Step run (echo): commit 1.0.0 Release 1.0.0');
     });
     it('registers the package', function () {
-      var method = this.releaseLib.calls[2][0];
-      expect(method).to.equal('register');
-
-      var registerArgs = this.releaseLib.calls[2][1];
-      expect(registerArgs[0]).to.deep.equal(expectedParams);
-      expect(registerArgs[1]).to.be.a('function');
+      expect(this.stdout).to.contain('Step run (echo): register 1.0.0 Release 1.0.0');
     });
     it('publishes the package', function () {
-      var method = this.releaseLib.calls[3][0];
-      expect(method).to.equal('publish');
+      expect(this.stdout).to.contain('Step run (echo): publish 1.0.0 Release 1.0.0');
+    });
+    it('calls our steps in order', function () {
+      expect(this.stdout).to.match(/update-files.*commit.*register.*publish/);
+    });
 
-      var publishArgs = this.releaseLib.calls[3][1];
-      expect(publishArgs[0]).to.deep.equal(expectedParams);
-      expect(publishArgs[1]).to.be.a('function');
+    // Verify we are being nice to our users =)
+    it('provides the user with semantic step info', function () {
+      expect(this.stdout).to.contain('Running step: foundry-release-echo update-files 1.0.0 "Release 1.0.0"');
     });
   });
 
