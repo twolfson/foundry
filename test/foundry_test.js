@@ -39,12 +39,15 @@ describe('foundry', function () {
       expect(this.output).to.contain('Step run (echo): publish 1.0.0 Release 1.0.0');
     });
     it('calls our steps in order', function () {
-      expect(this.output).to.match(/update-files.*commit.*register.*publish/);
+      expect(this.output.replace(/\n/g, ' ')).to.match(/update-files.*commit.*register.*publish/);
     });
 
     // Verify we are being nice to our users =)
     it('provides the user with semantic step info', function () {
-      expect(this.output).to.contain('Running step: foundry-release-echo update-files 1.0.0 "Release 1.0.0"');
+      expect(this.output).to.contain('FOUNDRY_VERSION: 1.0.0');
+      expect(this.output).to.contain('FOUNDRY_MESSAGE: Release 1.0.0');
+      expect(this.output).to.contain(
+        'Running step: foundry-release-echo update-files "$FOUNDRY_VERSION" "$FOUNDRY_MESSAGE"');
     });
   });
 
