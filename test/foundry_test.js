@@ -1,6 +1,7 @@
 // Load in dependencies
 var expect = require('chai').expect;
 var quote = require('shell-quote').quote;
+var BufferList = require('bl');
 var childUtils = require('./utils/child-process');
 var Foundry = require('../');
 
