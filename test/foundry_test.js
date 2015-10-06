@@ -7,7 +7,7 @@ var Foundry = require('../');
 
 // Start our tests
 describe('foundry', function () {
-  describe('releasing a new package', function () {
+  describe.only('releasing a new package', function () {
     childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
     before(function releaseNewPackage (done) {
       this.stdout = new WritableStreamBuffer();
@@ -25,7 +25,7 @@ describe('foundry', function () {
     });
 
     // Verify we are meeting our spec
-    it.only('updates the package files', function () {
+    it('updates the package files', function () {
       expect(this.output).to.contain('Step run (echo): update-files 1.0.0 Release 1.0.0');
     });
     it('commits the updates', function () {
@@ -33,21 +33,17 @@ describe('foundry', function () {
       expect(this.output).to.contain('Step run (echo): commit 1.0.0 Release 1.0.0');
     });
     it('registers the package', function () {
-      console.log(this.output);
       expect(this.output).to.contain('Step run (echo): register 1.0.0 Release 1.0.0');
     });
     it('publishes the package', function () {
-      console.log(this.output);
       expect(this.output).to.contain('Step run (echo): publish 1.0.0 Release 1.0.0');
     });
     it('calls our steps in order', function () {
-      console.log(this.output);
       expect(this.output).to.match(/update-files.*commit.*register.*publish/);
     });
 
     // Verify we are being nice to our users =)
     it('provides the user with semantic step info', function () {
-      console.log(this.output);
       expect(this.output).to.contain('Running step: foundry-release-echo update-files 1.0.0 "Release 1.0.0"');
     });
   });
