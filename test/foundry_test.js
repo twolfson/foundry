@@ -12,7 +12,8 @@ describe('foundry', function () {
     before(function releaseNewPackage (done) {
       this.stdout = new WritableStreamBuffer();
       var release = new Foundry.Release(['foundry-release-echo'], {
-        stdout: this.stdout
+        stdout: this.stdout,
+        color: false
       });
       release.release('1.0.0', done);
     });
@@ -29,7 +30,6 @@ describe('foundry', function () {
       expect(this.output).to.contain('Step run (echo): update-files 1.0.0 Release 1.0.0');
     });
     it('commits the updates', function () {
-      console.log(this.output);
       expect(this.output).to.contain('Step run (echo): commit 1.0.0 Release 1.0.0');
     });
     it('registers the package', function () {

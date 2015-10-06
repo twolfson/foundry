@@ -26,7 +26,7 @@
   },
   "main": "lib/foundry",
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 0.10.0"
   },
   "scripts": {
     "link-bash-completion": "sudo ln -s $PWD/bin/completion/foundry /etc/bash_completion.d/foundry",
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "async": "~0.2.9",
-    "chalk": "~1.0.0",
+    "chalk": "~1.1.1",
     "commander": "~2.1.0",
     "commander-completion": "~0.1.0",
     "shell-quote": "~1.4.3",
@@ -47,7 +47,6 @@
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-watch": "~0.4.0",
     "mocha": "~1.11.0",
-    "shell-quote": "~1.4.2",
     "stream-buffers": "~2.2.0"
   },
   "keywords": [
