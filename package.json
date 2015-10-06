@@ -41,6 +41,7 @@
     "underscore": "~1.8.3"
   },
   "devDependencies": {
+    "bl": "~1.0.0",
     "chai": "~1.8.1",
     "foundry-release-base": "~1.0.1",
     "grunt": "~0.4.1",

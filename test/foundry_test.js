@@ -9,8 +9,14 @@ describe('foundry', function () {
   describe('releasing a new package', function () {
     childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
     before(function releaseNewPackage (done) {
-      var release = new Foundry.Release(['foundry-release-echo']);
+      this.stdout = new BufferList();
+      var release = new Foundry.Release(['foundry-release-echo'], {
+        stdout: this.stdout
+      });
       release.release('1.0.0', done);
+    });
+    after(function cleanup () {
+      delete this.stdout;
     });
 
     // Verify we are meeting our spec
