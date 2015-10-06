@@ -68,12 +68,12 @@ EOF
 # Run our release
 #   `./node_modules/.bin` can be avoided by using `npm-run-script`
 #   https://www.npmjs.org/doc/misc/npm-scripts.html#environment
-./node_modules/.bin/foundry release 0.1.0
-# [master c6ce921] Release 0.1.0
+./node_modules/.bin/foundry release 1.0.0
+# [master c6ce921] Release 1.0.0
 
 # See the release commit and tag
 git log --decorate --oneline
-# c6ce921 (HEAD, tag: 0.1.0, master) Release 0.1.0
+# c6ce921 (HEAD, tag: 1.0.0, master) Release 1.0.0
 # f0c25b3 Added documentation
 ```
 
@@ -113,7 +113,7 @@ When a release occurs, the following steps are processed:
 
 1. Update files, update package files with the new version and changes (e.g. update `package.json`, add to `CHANGELOG.md`)
 2. Commit, persist any changes to a version control system (e.g. `git commit && git tag`)
-3. Register, if the package is new (semver === `0.1.0`), then register it to its repository (e.g. `python setup.py register`)
+3. Register, if the package is new (semver === `1.0.0`), then register it to its repository (e.g. `python setup.py register`)
 4. Publish, release changes to package's repostiroy manager (e.g. `npm publish`)
 
 ### Commands
