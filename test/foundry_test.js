@@ -11,10 +11,12 @@ var ReleaseCacheFactory = require('./test-files/foundry-release-cache-factory.js
 childProcess._exec = childProcess.exec;
 childProcess._spawn = childProcess.spawn;
 childProcess.exec = function () {
-  throw new Error('`childProcess.exec` was being called with ' + JSON.stringify(arguments));
+  throw new Error('`childProcess.exec` was being called with ' + JSON.stringify(arguments) +
+    '. Please mock over this call.');
 };
 childProcess.spawn = function () {
-  throw new Error('`childProcess.spawn` was being called with ' + JSON.stringify(arguments));
+  throw new Error('`childProcess.spawn` was being called with ' + JSON.stringify(arguments) +
+    '. Please mock over this call.');
 };
 
 describe('foundry', function () {
