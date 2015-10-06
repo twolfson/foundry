@@ -1,8 +1,0 @@
-{
-  "name": "foundry-release-echo",
-  "version": "1.1.0",
-  "main": "index.js",
-  "keywords": [
-    "foundry-release"
-  ]
-}
