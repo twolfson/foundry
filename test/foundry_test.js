@@ -14,7 +14,7 @@ describe('foundry', function () {
     });
 
     // Verify we are meeting our spec
-    it('updates the package files', function () {
+    it.only('updates the package files', function () {
       expect(this.stdout).to.contain('Step run (echo): update-files 1.0.0 Release 1.0.0');
     });
     it('commits the updates', function () {
