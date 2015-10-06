@@ -1,7 +1,7 @@
 // Load in dependencies
 var expect = require('chai').expect;
 var quote = require('shell-quote').quote;
-var BufferList = require('bl');
+var WritableStreamBuffer = require('stream-buffers').WritableStreamBuffer;
 var childUtils = require('./utils/child-process');
 var Foundry = require('../');
 
@@ -10,7 +10,7 @@ describe('foundry', function () {
   describe('releasing a new package', function () {
     childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
     before(function releaseNewPackage (done) {
-      this.stdout = new BufferList();
+      this.stdout = new WritableStreamBuffer();
       var release = new Foundry.Release(['foundry-release-echo'], {
         stdout: this.stdout
       });
@@ -22,24 +22,30 @@ describe('foundry', function () {
 
     // Verify we are meeting our spec
     it.only('updates the package files', function () {
-      expect(this.stdout).to.contain('Step run (echo): update-files 1.0.0 Release 1.0.0');
+      console.log(this.stdout.getContents() + '');
+      expect(this.stdout.getContents()).to.contain('Step run (echo): update-files 1.0.0 Release 1.0.0');
     });
     it('commits the updates', function () {
-      expect(this.stdout).to.contain('Step run (echo): commit 1.0.0 Release 1.0.0');
+      console.log(this.stdout.getContents());
+      expect(this.stdout.getContents()).to.contain('Step run (echo): commit 1.0.0 Release 1.0.0');
     });
     it('registers the package', function () {
-      expect(this.stdout).to.contain('Step run (echo): register 1.0.0 Release 1.0.0');
+      console.log(this.stdout.getContents());
+      expect(this.stdout.getContents()).to.contain('Step run (echo): register 1.0.0 Release 1.0.0');
     });
     it('publishes the package', function () {
-      expect(this.stdout).to.contain('Step run (echo): publish 1.0.0 Release 1.0.0');
+      console.log(this.stdout.getContents());
+      expect(this.stdout.getContents()).to.contain('Step run (echo): publish 1.0.0 Release 1.0.0');
     });
     it('calls our steps in order', function () {
-      expect(this.stdout).to.match(/update-files.*commit.*register.*publish/);
+      console.log(this.stdout.getContents());
+      expect(this.stdout.getContents()).to.match(/update-files.*commit.*register.*publish/);
     });
 
     // Verify we are being nice to our users =)
     it('provides the user with semantic step info', function () {
-      expect(this.stdout).to.contain('Running step: foundry-release-echo update-files 1.0.0 "Release 1.0.0"');
+      console.log(this.stdout.getContents());
+      expect(this.stdout.getContents()).to.contain('Running step: foundry-release-echo update-files 1.0.0 "Release 1.0.0"');
     });
   });
 
