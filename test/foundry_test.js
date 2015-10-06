@@ -4,7 +4,6 @@ var expect = require('chai').expect;
 var quote = require('shell-quote').quote;
 var childUtils = require('./utils/child-process');
 var Foundry = require('../');
-var ReleaseCacheFactory = require('./test-files/foundry-release-cache-factory.js');
 
 // Stop childProcess exec and spawn calls too unless people opt in to our methods
 // DEV: This is borrowed from https://github.com/twolfson/foundry/blob/0.15.0/test/utils/child-process.js
@@ -21,21 +20,13 @@ childProcess.spawn = function () {
 
 describe('foundry', function () {
   describe('releasing a new package', function () {
+    childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
     before(function releaseNewPackage (done) {
-      var release = new Foundry.Release([this.releaseLib]);
+      var release = new Foundry.Release(['foundry-release-echo']);
       release.release('1.0.0', done);
     });
-    after(function cleanup () {
-      delete this.releaseLib;
-    });
 
-    var expectedParams = {
-      version: '1.0.0',
-      message: 'Release 1.0.0',
-      description: null,
-      config: {}
-    };
-    it('updates the package files', function () {
+    it.only('updates the package files', function () {
       // ['updateFiles', {version, message, description}, cb]
       // DEV: We are verifying we meet the spec
       var method = this.releaseLib.calls[0][0];
@@ -159,7 +150,7 @@ describe('foundry releasing an echoing plugin', function () {
 });
 
 // DEV: Hooray, internal tests ;_;
-var echoReleaseLib = require('./test-files/plugins-mock-node_modules/foundry-release-echo');
+// var echoReleaseLib = require('./test-files/plugins-mock-node_modules/foundry-release-echo');
 describe('Foundry.getReleaseLibs', function () {
   describe('resolving a plugin directory', function () {
     before(function getLocalReleaseLibs (done) {
