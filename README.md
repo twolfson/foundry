@@ -3,6 +3,7 @@
 // TODO: Update screenshot
 // TODO: Build `foundry resume`
 // TODO: Replace `plugin` with `command`
+// TODO: Test in Appveyor (Windows support)
 
 Release manager for [npm][], [bower][], [component][], [PyPI][], [git tags][], and any command you want.
 

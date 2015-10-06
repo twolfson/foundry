@@ -5,6 +5,9 @@ var WritableStreamBuffer = require('stream-buffers').WritableStreamBuffer;
 var childUtils = require('./utils/child-process');
 var Foundry = require('../');
 
+// Define our test constants
+var foundryCmd = __dirname + '/../bin/foundry';
+
 // Start our tests
 describe('foundry', function () {
   describe('releasing a new package', function () {
@@ -74,27 +77,33 @@ describe('foundry', function () {
   });
 });
 
-describe('foundry listing its current plugins', function () {
-  childUtils.exec(quote(['node', __dirname + '/../bin/foundry',
-    '--plugin-dir', __dirname + '/test-files/plugins-mock-node_modules/',
-    'plugins']));
+describe('foundry', function () {
+  describe.skip('releasing with an `releaseCommand` object', function () {
+    it('runs each of the release command steps', function () {
 
-  it('includes foundry plugins', function () {
-    expect(this.err).to.equal(null);
-    expect(this.stdout).to.contain('foundry-release-echo@1.0.0');
+    });
   });
 
-  it('does not include other node modules', function () {
-    expect(this.stdout).to.not.contain('async');
+  describe.skip('releasing with an `customCommand` object', function () {
+    it('runs the command\'s specific steps', function () {
+
+    });
   });
 });
 
-describe('foundry releasing an echoing plugin', function () {
-  describe('for the first time', function () {
+describe('foundry listing its commands', function () {
+  childUtils.exec(quote(['node', foundryCmd, 'commands']));
+
+  it.only('lists all its commands', function () {
+    expect(this.err).to.equal(null);
+    expect(this.stdout).to.contain('foundry-release-echo@1.0.0');
+  });
+});
+
+describe.skip('foundry releasing an echoing plugin', function () {
+  describe.skip('for the first time', function () {
     // TODO: Move to `1.0.0` as default in support of more logical semvers
-    childUtils.exec(quote(['node', __dirname + '/../bin/foundry',
-      '--plugin-dir', __dirname + '/test-files/plugins-echo/',
-      'release', '1.0.0']));
+    childUtils.exec(quote(['node', foundryCmd, 'release', '1.0.0']));
 
     it('updates files, commits, registers, and publishes', function () {
       expect(this.err).to.equal(null);
@@ -107,10 +116,8 @@ describe('foundry releasing an echoing plugin', function () {
     });
   });
 
-  describe('for a second time', function () {
-    childUtils.exec(quote(['node', __dirname + '/../bin/foundry',
-      '--plugin-dir', __dirname + '/test-files/plugins-echo/',
-      'release', '1.1.0']));
+  describe.skip('for a second time', function () {
+    childUtils.exec(quote(['node', foundryCmd, 'release', '1.1.0']));
 
     it('updates files, commits, and publishes', function () {
       expect(this.err).to.equal(null);
@@ -128,34 +135,9 @@ describe('foundry releasing an echoing plugin', function () {
   });
 });
 
-// DEV: Hooray, internal tests ;_;
-// var echoReleaseLib = require('./test-files/plugins-mock-node_modules/foundry-release-echo');
-describe('Foundry.getReleaseLibs', function () {
-  describe('resolving a plugin directory', function () {
-    before(function getLocalReleaseLibs (done) {
-      // Resolve our local release libs
-      var params = {pluginDir: __dirname + '/test-files/plugins-mock-node_modules/'};
-      var that = this;
-      Foundry.getReleaseLibs(params, function handleReleaseLibs (err, releaseLibs) {
-        // Save the release libs and callback
-        that.releaseLibs = releaseLibs;
-        done(err);
-      });
-    });
-    after(function cleanup () {
-      delete this.releaseLibs;
-    });
-
-    it('discovers installed foundry modules', function () {
-      // DEV: foundry modules are tagged via a `foundry-release` keyword
-      expect(this.releaseLibs).to.deep.equal([echoReleaseLib]);
-    });
-  });
-});
-
 // DEV: This is not a required test but one for peace of mind regarding usability messaing
-describe('foundry using a package with a bad `specVersion`', function () {
-  childUtils.exec(quote(['node', __dirname + '/../bin/foundry',
+describe.skip('foundry using a package with a bad `specVersion`', function () {
+  childUtils.exec(quote(['node', foundryCmd,
     '--plugin-dir', __dirname + '/test-files/plugins-unsupported-version/',
     'release', '1.0.0']));
 
