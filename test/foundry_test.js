@@ -22,17 +22,16 @@ childProcess.spawn = function () {
 describe('foundry', function () {
   describe('releasing a new package', function () {
     before(function releaseNewPackage (done) {
-      this.releaseLib = new ReleaseCacheFactory();
       var release = new Foundry.Release([this.releaseLib]);
-      release.release('0.1.0', done);
+      release.release('1.0.0', done);
     });
     after(function cleanup () {
       delete this.releaseLib;
     });
 
     var expectedParams = {
-      version: '0.1.0',
-      message: 'Release 0.1.0',
+      version: '1.0.0',
+      message: 'Release 1.0.0',
       description: null,
       config: {}
     };
@@ -76,7 +75,7 @@ describe('foundry', function () {
     before(function releaseNewPackage (done) {
       this.releaseLib = new ReleaseCacheFactory();
       var release = new Foundry.Release([this.releaseLib]);
-      release.release('0.3.0', done);
+      release.release('1.2.0', done);
     });
     after(function cleanup () {
       delete this.releaseLib;
@@ -100,7 +99,7 @@ describe('foundry', function () {
       var release = new Foundry.Release([{
         specVersion: '1.1.0'
       }]);
-      release.release('0.1.0', done);
+      release.release('1.0.0', done);
     });
   });
 });
@@ -125,7 +124,7 @@ describe('foundry releasing an echoing plugin', function () {
     // TODO: Move to `1.0.0` as default in support of more logical semvers
     childUtils.exec(quote(['node', __dirname + '/../bin/foundry',
       '--plugin-dir', __dirname + '/test-files/plugins-echo/',
-      'release', '0.1.0']));
+      'release', '1.0.0']));
 
     it('updates files, commits, registers, and publishes', function () {
       expect(this.err).to.equal(null);
@@ -141,7 +140,7 @@ describe('foundry releasing an echoing plugin', function () {
   describe('for a second time', function () {
     childUtils.exec(quote(['node', __dirname + '/../bin/foundry',
       '--plugin-dir', __dirname + '/test-files/plugins-echo/',
-      'release', '0.2.0']));
+      'release', '1.1.0']));
 
     it('updates files, commits, and publishes', function () {
       expect(this.err).to.equal(null);
