@@ -18,16 +18,25 @@ childProcess.spawn = function () {
     '. Please mock over this call.');
 };
 
+// DEV: First we will test that we match the spec via mocks
+//   This prevents any unwanted releases and makes debugging easier
+
+// TODO: Definitely test CLI integration though
+//   we want FOUNDRY_VERSION as an environment variable AND as a CLI replacement
 describe('foundry', function () {
   describe('releasing a new package', function () {
-    childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
     before(function releaseNewPackage (done) {
       var release = new Foundry.Release(['foundry-release-echo']);
       release.release('1.0.0', done);
     });
 
-    it.only('updates the package files', function () {
-      // ['updateFiles', {version, message, description}, cb]
+    it('has no errors', function () {
+      expect(this.err).to.equal(null);
+      expect(this.stderr).to.equal('');
+    });
+
+    it('updates the package files', function () {
+      // updateFiles', {version, message, description}, cb]
       // DEV: We are verifying we meet the spec
       var method = this.releaseLib.calls[0][0];
       expect(method).to.equal('updateFiles');
