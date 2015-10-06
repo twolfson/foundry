@@ -21,7 +21,7 @@ exports.addToPath = function (dir) {
 exports.exec = function (cmd, options) {
   before(function execFn (done) {
     var that = this;
-    childProcess._exec(cmd, options, function handleExec (err, stdout, stderr) {
+    childProcess.exec(cmd, options, function handleExec (err, stdout, stderr) {
       // Save result and callback
       that.err = err;
       that.stdout = stdout;

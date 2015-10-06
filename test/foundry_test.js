@@ -1,28 +1,10 @@
 // Load in dependencies
-var childProcess = require('child_process');
 var expect = require('chai').expect;
 var quote = require('shell-quote').quote;
 var childUtils = require('./utils/child-process');
 var Foundry = require('../');
 
-// Stop childProcess exec and spawn calls too unless people opt in to our methods
-// DEV: This is borrowed from https://github.com/twolfson/foundry/blob/0.15.0/test/utils/child-process.js
-childProcess._exec = childProcess.exec;
-childProcess._spawn = childProcess.spawn;
-childProcess.exec = function () {
-  throw new Error('`childProcess.exec` was being called with ' + JSON.stringify(arguments) +
-    '. Please mock over this call.');
-};
-childProcess.spawn = function () {
-  throw new Error('`childProcess.spawn` was being called with ' + JSON.stringify(arguments) +
-    '. Please mock over this call.');
-};
-
-// DEV: First we will test that we match the spec via mocks
-//   This prevents any unwanted releases and makes debugging easier
-
-// TODO: Definitely test CLI integration though
-//   we want FOUNDRY_VERSION as an environment variable AND as a CLI replacement
+// Start our tests
 describe('foundry', function () {
   describe('releasing a new package', function () {
     before(function releaseNewPackage (done) {
