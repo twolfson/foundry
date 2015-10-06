@@ -7,7 +7,7 @@ var Foundry = require('../');
 
 // Start our tests
 describe('foundry', function () {
-  describe.only('releasing a new package', function () {
+  describe('releasing a new package', function () {
     childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
     before(function releaseNewPackage (done) {
       this.stdout = new WritableStreamBuffer();
@@ -52,34 +52,24 @@ describe('foundry', function () {
   });
 
   describe('releasing an existing package', function () {
-    before(function releaseNewPackage (done) {
-      this.releaseLib = new ReleaseCacheFactory();
-      var release = new Foundry.Release([this.releaseLib]);
+    childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
+    before(function releaseExistingPackage (done) {
+      this.stdout = new WritableStreamBuffer();
+      var release = new Foundry.Release(['foundry-release-echo'], {
+        stdout: this.stdout
+      });
       release.release('1.2.0', done);
     });
     after(function cleanup () {
-      delete this.releaseLib;
+      delete this.stdout;
     });
 
     it('updates the package files', function () {
-      var firstMethod = this.releaseLib.calls[0][0];
-      expect(firstMethod).to.equal('updateFiles');
+      expect(this.stdout.getContents().toString()).to.contain('update-files');
     });
 
     it('does not register the package', function () {
-      var methods = this.releaseLib.calls.map(function (call) {
-        return call[0];
-      });
-      expect(methods).to.not.contain('register');
-    });
-  });
-
-  describe('releasing a package with no commands', function () {
-    it('does not error out', function (done) {
-      var release = new Foundry.Release([{
-        specVersion: '1.1.0'
-      }]);
-      release.release('1.0.0', done);
+      expect(this.stdout.getContents().toString()).to.not.contain('register');
     });
   });
 });
