@@ -1,4 +1,6 @@
 # foundry changelog
+4.0.1 - Version bump for a better screenshot
+
 4.0.0 - Moved from plugin system to command system. This solves a lot of issues like transparency and resuming releases
 
 3.1.0 - Upgraded to `chalk@1.0.0` to resolve any instability issues via @jbnicolai in #22
