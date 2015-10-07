@@ -1,4 +1,6 @@
 # foundry changelog
+4.0.3 - Added previously unreleased foundry-release dependencies
+
 4.0.2 - Updated screenshot
 
 4.0.1 - Version bump for a better screenshot
