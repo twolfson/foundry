@@ -69,9 +69,12 @@ cat > package.json <<EOF
 EOF
 
 # Run our release
-#   `./node_modules/.bin` can be avoided by using `npm-run-script`
+#   Prepending `./node_modules/.bin/` to `PATH` can be avoided by using `foundry-cli`
+#   https://github.com/twolfson/foundry-cli
+#   or by using `npm-run-script`
 #   https://www.npmjs.org/doc/misc/npm-scripts.html#environment
-./node_modules/.bin/foundry release 1.0.0
+PATH="$PATH:./node_modules/.bin/foundry"
+foundry release 1.0.0
 # [master c6ce921] Release 1.0.0
 
 # See the release commit and tag
@@ -90,7 +93,8 @@ $ foundry --help
 
   Commands:
 
-    release <version>      Set version for package metadata and publish to registries
+    release <version>      Update package metadata and publish to registries
+    commands               List commands used by current package
     completion             Get potential completions for a command. Looks for `COMP_CWORD`, `COMP_LINE`, `COMP_POINT`.
 
   Options:
