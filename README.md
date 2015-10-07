@@ -1,7 +1,5 @@
 # foundry [![Build status](https://travis-ci.org/twolfson/foundry.png?branch=master)](https://travis-ci.org/twolfson/foundry)
 
-// TODO: Update screenshot
-
 Release manager for [npm][], [bower][], [component][], [PyPI][], [git tags][], and any command you want.
 
 [npm]: http://npmjs.org/
