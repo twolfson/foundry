@@ -128,8 +128,26 @@ describe('foundry', function () {
   });
 });
 
-describe.only('foundry listing its commands', function () {
+describe('foundry listing its commands from a package.json', function () {
   childUtils.exec(quote(['node', foundryCmd, 'commands']), {cwd: __dirname + '/test-files/package.json-project/'});
+
+  it('has no errors', function () {
+    expect(this.err).to.equal(null);
+  });
+
+  it('lists string based commands', function () {
+    expect(this.stdout).to.contain('foundry-release-string');
+  });
+  it('lists releaseCommands', function () {
+    expect(this.stdout).to.contain('foundry-release-object');
+  });
+  it('lists customCommands', function () {
+    expect(this.stdout).to.contain('echo hello');
+  });
+});
+
+describe('foundry listing its commands from a .foundryrc', function () {
+  childUtils.exec(quote(['node', foundryCmd, 'commands']), {cwd: __dirname + '/test-files/foundryrc-project/'});
 
   it('has no errors', function () {
     expect(this.err).to.equal(null);

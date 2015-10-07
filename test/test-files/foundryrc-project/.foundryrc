@@ -1,0 +1,14 @@
+{
+  "releaseCommands": [
+    "foundry-release-string",
+    {
+      "type": "customCommand",
+      "updateFiles": "echo hello",
+      "commit": "echo world"
+    },
+    {
+      "type": "releaseCommand",
+      "command": "foundry-release-object"
+    }
+  ]
+}
