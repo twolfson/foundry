@@ -7,7 +7,6 @@
 // TODO: Test in Appveyor (Windows support)
 // TODO: Add --dry-run to `release`
 // TODO: Build `foundry-cli`
-// TODO: Make `1.0.0` as the 'registerVersion' (or registerAt) a config setting
 
 
 Release manager for [npm][], [bower][], [component][], [PyPI][], [git tags][], and any command you want.
@@ -130,6 +129,7 @@ When a release occurs, the following steps are processed:
     - We provide `FOUNDRY_VERSION` and `FOUNDRY_MESSAGE` via environment variables
     - An example command is `echo "$FOUNDRY_VERSION: $FOUNDRY_MESSAGE" >> CHANGELOG.md`
         - This is converted into `echo "1.0.0: Release 1.0.0" >> CHANGELOG.md` via `sh`
+    - A more practical command would be `npm run build` to compile pre-release assets
 - commit `String` - Script to run when committing changes to files
     - This is invoked in the same fashion as `updateFiles` with `sh/cmd` and environment variables
 - register `String` - Script to run when registering a package
