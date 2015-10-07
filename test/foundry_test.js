@@ -199,13 +199,15 @@ describe('foundry releasing an echoing plugin', function () {
 });
 
 // DEV: This is not a required test but one for peace of mind regarding usability messaing
-describe.only('foundry using a command with a bad `--spec-version`', function () {
+describe('foundry using a command with a bad `--spec-version`', function () {
+  childUtils.addToPath(__dirname + '/test-files/foundry-release-bad-spec-version/');
   childUtils.exec(quote(['node', foundryCmd, 'release', '1.0.0']), {
     cwd: __dirname + '/test-files/foundry-release-bad-spec-version/'
   });
 
   it('notifies the user of the package name', function () {
     expect(this.err).to.not.equal(null);
-    expect(this.err.message).to.contain('Actual: "1.0.0". `support-not-found.specVersion` is below the required semver for `foundry`. Please install a supported version.');
+    expect(this.err.message).to.match(
+      /Expected release command "foundry-release-bad-spec-version".*2.0.0.*but it was.*1.2.0/);
   });
 });
