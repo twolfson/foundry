@@ -9,6 +9,7 @@ var Foundry = require('../');
 var foundryCmd = __dirname + '/../bin/foundry';
 
 // Start our tests
+// DEV: Run our tests internally first to help with debugging
 describe('foundry', function () {
   describe('releasing a new package', function () {
     childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
@@ -128,6 +129,7 @@ describe('foundry', function () {
   });
 });
 
+// DEV: Verify each of our configuration patterns work
 describe('foundry listing its commands from a package.json', function () {
   childUtils.exec(quote(['node', foundryCmd, 'commands']), {cwd: __dirname + '/test-files/package.json-project/'});
 
@@ -146,11 +148,10 @@ describe('foundry listing its commands from a package.json', function () {
   });
 });
 
-describe.only('foundry listing its commands from a .foundryrc', function () {
+describe('foundry listing its commands from a .foundryrc', function () {
   childUtils.exec(quote(['node', foundryCmd, 'commands']), {cwd: __dirname + '/test-files/foundryrc-project/'});
-console.log(__dirname + '/test-files/foundryrc-project/');
+
   it('has no errors', function () {
-    expect(this.stderr).to.equal(null);
     expect(this.err).to.equal(null);
   });
 
@@ -165,32 +166,29 @@ console.log(__dirname + '/test-files/foundryrc-project/');
   });
 });
 
-describe.skip('foundry releasing an echoing plugin', function () {
-  describe.skip('for the first time', function () {
-    // TODO: Move to `1.0.0` as default in support of more logical semvers
-    childUtils.exec(quote(['node', foundryCmd, 'release', '1.0.0']));
+// DEV: Perform a release on the CLI for full accuracy
+describe('foundry releasing an echoing plugin', function () {
+  describe('for the first time', function () {
+    childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
+    childUtils.exec(quote(['node', foundryCmd, 'release', '1.0.0']), {
+      cwd: __dirname + '/test-files/foundry-release-echo/'
+    });
 
     it('updates files, commits, registers, and publishes', function () {
       expect(this.err).to.equal(null);
-      expect(this.stdout).to.contain([
-        'updateFiles occurred',
-        'commit occurred',
-        'register occurred',
-        'publish occurred',
-      ].join('\n'));
+      expect(this.stdout.replace(/\n/g, ' ')).to.match(/update-files.*commit.*register.*publish/);
     });
   });
 
-  describe.skip('for a second time', function () {
-    childUtils.exec(quote(['node', foundryCmd, 'release', '1.1.0']));
+  describe('for a second time', function () {
+    childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
+    childUtils.exec(quote(['node', foundryCmd, 'release', '1.1.0']), {
+      cwd: __dirname + '/test-files/foundry-release-echo/'
+    });
 
     it('updates files, commits, and publishes', function () {
       expect(this.err).to.equal(null);
-      expect(this.stdout).to.contain([
-        'updateFiles occurred',
-        'commit occurred',
-        'publish occurred',
-      ].join('\n'));
+      expect(this.stdout.replace(/\n/g, ' ')).to.match(/update-files.*commit.*publish/);
     });
 
     it('does not register', function () {
