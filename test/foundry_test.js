@@ -78,9 +78,25 @@ describe('foundry', function () {
 });
 
 describe('foundry', function () {
-  describe.skip('releasing with an `releaseCommand` object', function () {
-    it('runs each of the release command steps', function () {
+  describe.only('releasing with an `releaseCommand` object', function () {
+    childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
+    before(function releaseExistingPackage (done) {
+      this.stdout = new WritableStreamBuffer();
+      var release = new Foundry.Release([{
+        type: 'releaseCommand',
+        command: 'foundry-release-echo'
+      }], {
+        stdout: this.stdout
+      });
+      release.release('1.0.0', done);
+    });
+    after(function cleanup () {
+      delete this.stdout;
+    });
 
+    it('runs each of the release command steps', function () {
+      var output = this.stdout.getContents().toString();
+      expect(output.replace(/\n/g, ' ')).to.match(/update-files.*commit.*register.*publish/);
     });
   });
 
@@ -94,7 +110,7 @@ describe('foundry', function () {
 describe('foundry listing its commands', function () {
   childUtils.exec(quote(['node', foundryCmd, 'commands']));
 
-  it.only('lists all its commands', function () {
+  it('lists all its commands', function () {
     expect(this.err).to.equal(null);
     expect(this.stdout).to.contain('foundry-release-echo@1.0.0');
   });
