@@ -1,13 +1,6 @@
 # foundry [![Build status](https://travis-ci.org/twolfson/foundry.png?branch=master)](https://travis-ci.org/twolfson/foundry)
 
 // TODO: Update screenshot
-// TODO: Build `foundry resume`
-- Resumable releases in case of issues (e.g. repository is having issues, never set up username/password)
-    - TODO: Link to `foundry resume` documentation
-// TODO: Test in Appveyor (Windows support)
-// TODO: Add --dry-run to `release`
-// TODO: Build `foundry-cli`
-
 
 Release manager for [npm][], [bower][], [component][], [PyPI][], [git tags][], and any command you want.
 
