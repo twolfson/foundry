@@ -12,7 +12,7 @@ This was created out of frustration; there was no generic *sharable* release man
 
 **Features:**
 
-- Well tested release library as well as commands
+- Well tested release library with well tested commands
 - Specification is CLI based, allowing for any language implementation
     - https://github.com/twolfson/foundry-release-spec
 - Transparent output; always know what commands are being executed
