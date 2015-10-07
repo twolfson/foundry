@@ -78,16 +78,14 @@ describe('foundry', function () {
 });
 
 describe('foundry', function () {
-  describe.only('releasing with an `releaseCommand` object', function () {
+  describe('releasing with an `releaseCommand` object', function () {
     childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
-    before(function releaseExistingPackage (done) {
+    before(function releaseWithReleaseCommand (done) {
       this.stdout = new WritableStreamBuffer();
       var release = new Foundry.Release([{
         type: 'releaseCommand',
         command: 'foundry-release-echo'
-      }], {
-        stdout: this.stdout
-      });
+      }], {stdout: this.stdout});
       release.release('1.0.0', done);
     });
     after(function cleanup () {
@@ -100,9 +98,30 @@ describe('foundry', function () {
     });
   });
 
-  describe.skip('releasing with an `customCommand` object', function () {
-    it('runs the command\'s specific steps', function () {
+  describe.only('releasing with an `customCommand` object', function () {
+    before(function releaseWithCustomCommand (done) {
+      this.stdout = new WritableStreamBuffer();
+      var release = new Foundry.Release([{
+        type: 'customCommand',
+        updateFiles: 'node --eval "console.log(\'Custom update-files: \' + process.env.FOUNDRY_VERSION + \' \'+ process.env.FOUNDRY_MESSAGE);"'
+      }], {stdout: this.stdout, color: false});
+      release.release('1.0.0', done);
+    });
+    after(function cleanup () {
+      delete this.stdout;
+    });
 
+    it('runs the command\'s specific steps', function () {
+      var output = this.stdout.getContents().toString();
+      expect(output).to.contain('Running step: node --eval');
+      expect(output).to.contain('Custom update-files: 1.0.0 Release 1.0.0');
+    });
+
+    it('runs no other steps', function () {
+      var output = this.stdout.getContents().toString();
+      var stepRunMatches = output.match(/Running step/);
+      console.log(stepRunMatches, output);
+      expect(stepRunMatches).to.have.length(1);
     });
   });
 });
