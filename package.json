@@ -42,7 +42,10 @@
   },
   "devDependencies": {
     "chai": "~1.8.1",
+    "foundry": "~4.0.2",
     "foundry-release-base": "~1.0.1",
+    "foundry-release-git": "~2.0.1",
+    "foundry-release-npm": "~2.0.1",
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-watch": "~0.4.0",
