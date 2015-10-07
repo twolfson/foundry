@@ -3,5 +3,5 @@
 set -e
 
 # Run foundry release with an adjusted PATH
-PATH="$PATH:$PWD/bin:$PWD/node_modules/.bin/"
+PATH="$PATH:$PWD/node_modules/.bin/"
 foundry release $*
