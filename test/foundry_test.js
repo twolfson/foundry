@@ -131,10 +131,18 @@ describe('foundry', function () {
 describe.only('foundry listing its commands', function () {
   childUtils.exec(quote(['node', foundryCmd, 'commands']), {cwd: __dirname + '/test-files/package.json-project/'});
 
-  it('lists all its commands', function () {
-    console.log(this.stderr);
+  it('has no errors', function () {
     expect(this.err).to.equal(null);
-    expect(this.stdout).to.contain('foundry-release-echo@1.0.0');
+  });
+
+  it('lists string based commands', function () {
+    expect(this.stdout).to.contain('foundry-release-string');
+  });
+  it('lists releaseCommands', function () {
+    expect(this.stdout).to.contain('foundry-release-object');
+  });
+  it('lists customCommands', function () {
+    expect(this.stdout).to.contain('echo hello');
   });
 });
 

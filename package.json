@@ -33,7 +33,6 @@
     "test": "(test \"$VAGRANT\" = \"true\" || test \"$TRAVIS\" = \"true\" || (echo \"Tests must be run in enclosed environment (e.g. Vagrant, Travis) to prevent accidental publishes\n\" 1>&2 && exit 1)) && mocha --bail"
   },
   "dependencies": {
-    "archy": "~1.0.0",
     "async": "~0.2.9",
     "chalk": "~1.1.1",
     "commander": "~2.1.0",
