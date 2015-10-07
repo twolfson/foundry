@@ -57,7 +57,7 @@
     "component",
     "pypi",
     "git",
-    "plugin",
+    "module",
     "distribute",
     "package",
     "tag",

@@ -4,7 +4,6 @@
 // TODO: Build `foundry resume`
 - Resumable releases in case of issues (e.g. repository is having issues, never set up username/password)
     - TODO: Link to `foundry resume` documentation
-// TODO: Replace `plugin` with `command`
 // TODO: Test in Appveyor (Windows support)
 // TODO: Add --dry-run to `release`
 // TODO: Build `foundry-cli`
@@ -115,7 +114,6 @@ foundry release 2.0.0
 > Commands that automatically increment semver are planned (e.g. `foundry release major`, `foundry release minor`). See https://github.com/twolfson/foundry/issues/16 for more information.
 
 ### Release process
-
 When a release occurs, the following steps are processed:
 
 1. Update files, update package files with the new version and changes (e.g. update `package.json`, add to `CHANGELOG.md`)
