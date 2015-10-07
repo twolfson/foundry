@@ -62,5 +62,11 @@
     "package",
     "tag",
     "semver"
-  ]
+  ],
+  "foundry": {
+    "releaseCommands": [
+      "foundry-release-git",
+      "foundry-release-npm"
+    ]
+  }
 }
