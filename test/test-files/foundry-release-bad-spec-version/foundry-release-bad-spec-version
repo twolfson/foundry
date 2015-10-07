@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+// Load in our dependencies
+var program = require('commander-completion');
+
+// Define our spec version
+program.option('--spec-version', 'Output the spec-version for foundry');
+program.on('spec-version', function outputSpecVersion () {
+  process.stdout.write('1.2.0\n');
+  process.exit(0);
+});
+
+// Parse CLI arguments
+program.parse(process.argv);

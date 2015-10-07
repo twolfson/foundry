@@ -199,10 +199,10 @@ describe('foundry releasing an echoing plugin', function () {
 });
 
 // DEV: This is not a required test but one for peace of mind regarding usability messaing
-describe.skip('foundry using a package with a bad `specVersion`', function () {
-  childUtils.exec(quote(['node', foundryCmd,
-    '--plugin-dir', __dirname + '/test-files/plugins-unsupported-version/',
-    'release', '1.0.0']));
+describe.only('foundry using a command with a bad `--spec-version`', function () {
+  childUtils.exec(quote(['node', foundryCmd, 'release', '1.0.0']), {
+    cwd: __dirname + '/test-files/foundry-release-bad-spec-version/'
+  });
 
   it('notifies the user of the package name', function () {
     expect(this.err).to.not.equal(null);
