@@ -2,8 +2,12 @@
 
 // TODO: Update screenshot
 // TODO: Build `foundry resume`
+- Resumable releases in case of issues (e.g. repository is having issues, never set up username/password)
+    - TODO: Link to `foundry resume` documentation
 // TODO: Replace `plugin` with `command`
 // TODO: Test in Appveyor (Windows support)
+// TODO: Add --dry-run to `release`
+// TODO: Build `foundry-cli`
 
 Release manager for [npm][], [bower][], [component][], [PyPI][], [git tags][], and any command you want.
 
@@ -17,12 +21,10 @@ This was created out of frustration; there was no generic *sharable* release man
 
 **Features:**
 
-- Tests, tests, and more tests
-- Modular, allows for any CLI tool (both specification based and custom ones)
+- Well tested release library as well as commands
 - Specification is CLI based, allowing for any language implementation
     - https://github.com/twolfson/foundry-release-spec
-- Resumable releases in case of issues (e.g. repository is having issues, never set up username/password)
-    - TODO: Link to `foundry resume` documentation
+- Transparent output; always know what commands are being executed
 
 ![Example foundry-release](docs/foundry-release.png)
 

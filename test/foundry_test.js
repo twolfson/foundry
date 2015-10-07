@@ -167,7 +167,7 @@ describe('foundry listing its commands from a .foundryrc', function () {
 });
 
 // DEV: Perform a release on the CLI for full accuracy
-describe('foundry releasing an echoing plugin', function () {
+describe('foundry releasing an echoing command', function () {
   describe('for the first time', function () {
     childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
     childUtils.exec(quote(['node', foundryCmd, 'release', '1.0.0']), {
