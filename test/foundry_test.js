@@ -148,7 +148,7 @@ describe('foundry listing its commands from a package.json', function () {
 
 describe.only('foundry listing its commands from a .foundryrc', function () {
   childUtils.exec(quote(['node', foundryCmd, 'commands']), {cwd: __dirname + '/test-files/foundryrc-project/'});
-
+console.log(__dirname + '/test-files/foundryrc-project/');
   it('has no errors', function () {
     expect(this.stderr).to.equal(null);
     expect(this.err).to.equal(null);
