@@ -37,7 +37,7 @@ ln -s ../../../bin/foundry ./node_modules/.bin/
 #   https://github.com/twolfson/foundry-cli
 #   or by using `npm-run-script`
 #   https://www.npmjs.org/doc/misc/npm-scripts.html#environment
-PATH="$PATH:./node_modules/.bin/foundry"
+PATH="$PATH:./node_modules/.bin/"
 foundry release 1.0.0
 # [master c6ce921] Release 1.0.0
 

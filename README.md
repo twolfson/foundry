@@ -45,9 +45,6 @@ Details about existing commands and their documentation can be found under the [
 For example purposes, we will create/release on a local-only `git` repository.
 
 ```bash
-# Install a `git` foundry-release command
-npm install foundry-release-git
-
 # Create git repo
 mkdir foundry-example
 cd foundry-example
@@ -67,12 +64,15 @@ cat > package.json <<EOF
 }
 EOF
 
+# Install `foundry` and corresponding `git` foundry-release command
+npm install foundry foundry-release-git
+
 # Run our release
 #   Prepending `./node_modules/.bin/` to `PATH` can be avoided by using `foundry-cli`
 #   https://github.com/twolfson/foundry-cli
 #   or by using `npm-run-script`
 #   https://www.npmjs.org/doc/misc/npm-scripts.html#environment
-PATH="$PATH:./node_modules/.bin/foundry"
+PATH="$PATH:./node_modules/.bin/"
 foundry release 1.0.0
 # [master c6ce921] Release 1.0.0
 
