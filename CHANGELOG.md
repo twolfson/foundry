@@ -1,4 +1,6 @@
 # foundry changelog
+4.0.2 - Updated screenshot
+
 4.0.1 - Version bump for a better screenshot
 
 4.0.0 - Moved from plugin system to command system. This solves a lot of issues like transparency and resuming releases
