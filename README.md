@@ -7,6 +7,8 @@
 // TODO: Test in Appveyor (Windows support)
 // TODO: Add --dry-run to `release`
 // TODO: Build `foundry-cli`
+// TODO: Make `1.0.0` as the 'registerVersion' (or registerAt) a config setting
+
 
 Release manager for [npm][], [bower][], [component][], [PyPI][], [git tags][], and any command you want.
 
@@ -64,17 +66,25 @@ cat > package.json <<EOF
 }
 EOF
 
-# Install `foundry` and corresponding `git` foundry-release command
-npm install foundry foundry-release-git
+# Install corresponding `git` foundry-release command
+npm install twolfson/foundry-release-git#ec8aa239
+
+# Copy over symlink to our foundry instance
+ln -s ../../../../bin/foundry ./node_modules/.bin/
 
 # Run our release
-#   Prepending `./node_modules/.bin/` to `PATH` can be avoided by using `foundry-cli`
-#   https://github.com/twolfson/foundry-cli
-#   or by using `npm-run-script`
+#   Prepending `./node_modules/.bin/` to `PATH` can be avoided by using `npm-run-script`
 #   https://www.npmjs.org/doc/misc/npm-scripts.html#environment
-PATH="$PATH:./node_modules/.bin/"
+PATH="$PATH:$PWD/node_modules/.bin/"
 foundry release 1.0.0
-# [master c6ce921] Release 1.0.0
+# Configuring steps with FOUNDRY_VERSION: 1.0.0
+# Configuring steps with FOUNDRY_MESSAGE: Release 1.0.0
+# Running step: foundry-release-git update-files "$FOUNDRY_VERSION" "$FOUNDRY_MESSAGE"
+# Running step: foundry-release-git commit "$FOUNDRY_VERSION" "$FOUNDRY_MESSAGE"
+# [master ec7a32d] Release 1.0.0
+# Running step: foundry-release-git register "$FOUNDRY_VERSION" "$FOUNDRY_MESSAGE"
+# Running step: foundry-release-git publish "$FOUNDRY_VERSION" "$FOUNDRY_MESSAGE"
+# Pushes to remote server
 
 # See the release commit and tag
 git log --decorate --oneline
@@ -83,6 +93,83 @@ git log --decorate --oneline
 ```
 
 ## Documentation
+### Release process
+When a release occurs, the following steps are processed:
+
+1. Update files, update package files with the new version and changes (e.g. update `package.json`, add to `CHANGELOG.md`)
+2. Commit, persist any changes to a version control system (e.g. `git commit && git tag`)
+3. Register, if the package is new (semver === `1.0.0`), then register it to its repository (e.g. `python setup.py register`)
+4. Publish, release changes to package's repostiroy manager (e.g. `npm publish`)
+
+### Configuration
+`foundry` can be configured via a JSON `.foundryrc` file or under a `foundry` key in a `package.json`. In both cases, we expect the JSON to be the same.
+
+- releaseCommands `Array` - Collection of commands to use when releasing
+    - * `String|Object` - Information about command to run when releasing
+        - A string is shorthand for `{type: releaseCommand, command: {{string}}}`
+        - Objects have a required `type` property that changes their behavior
+            - type `String` - Classification of command
+                - This can be `releaseCommand` or `customCommand`
+
+**releaseCommand** is a CLI command that lines up with [foundry-release-spec][]
+
+- type `String` - Classification of command
+- command `String` - Name of command to use
+    - During `release`, we will each of the release steps (e.g.  `{{command}} update-files FOUNDRY_VERSION FOUNDRY_MESSAGE`)
+    - For example, this would be `foundry-release-git update-files 1.0.0 "Release 1.0.0"`
+
+```js
+{
+  "type": "releaseCommand",
+  "command": "foundry-release-git"
+}
+```
+
+**customCommand** is a command with a custom setup
+
+- type `String` - Classification of command
+- updateFiles `String` - Script to run when updating files
+    - This will be invoked via `sh` or `cmd` depending on our OS
+    - We provide `FOUNDRY_VERSION` and `FOUNDRY_MESSAGE` via environment variables
+    - An example command is `echo "$FOUNDRY_VERSION: $FOUNDRY_MESSAGE" >> CHANGELOG.md`
+        - This is converted into `echo "1.0.0: Release 1.0.0" >> CHANGELOG.md` via `sh`
+- commit `String` - Script to run when committing changes to files
+    - This is invoked in the same fashion as `updateFiles` with `sh/cmd` and environment variables
+- register `String` - Script to run when registering a package
+    - This is only runs if registration requisite is met
+    - This is invoked in the same fashion as `updateFiles` with `sh/cmd` and environment variables
+- publish `String` - Script to run when publishing a package
+    - This is invoked in the same fashion as `updateFiles` with `sh/cmd` and environment variables
+
+```js
+{
+  "type": "customCommand",
+  "updateFiles": "echo \"$FOUNDRY_VERSION\" > VERSION.txt"
+}
+```
+
+**Example config with all variations:**
+
+```js
+// This is for a `.foundryrc`
+// In a `package.json`, we would be nested inside of the `foundry` key
+{
+  "releaseCommands": [
+    "foundry-release-git", // Shorthand
+    {
+      "type": "releaseCommand",
+      "command": "foundry-release-npm"
+    },
+    {
+      "type": "customCommand",
+      "updateFiles": "echo \"$FOUNDRY_VERSION\" > VERSION.txt"
+    }
+  ]
+}
+```
+
+
+### CLI
 `foundry` provides a command line interface for releasing.
 
 ```bash
@@ -112,14 +199,6 @@ foundry release 2.0.0
 ```
 
 > Commands that automatically increment semver are planned (e.g. `foundry release major`, `foundry release minor`). See https://github.com/twolfson/foundry/issues/16 for more information.
-
-### Release process
-When a release occurs, the following steps are processed:
-
-1. Update files, update package files with the new version and changes (e.g. update `package.json`, add to `CHANGELOG.md`)
-2. Commit, persist any changes to a version control system (e.g. `git commit && git tag`)
-3. Register, if the package is new (semver === `1.0.0`), then register it to its repository (e.g. `python setup.py register`)
-4. Publish, release changes to package's repostiroy manager (e.g. `npm publish`)
 
 ### Commands
 `foundry` release commands contain the `foundry-release` keyword and adhered to the `foundry` release command specification:

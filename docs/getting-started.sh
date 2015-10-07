@@ -33,9 +33,7 @@ npm install twolfson/foundry-release-git#ec8aa239
 ln -s ../../../../bin/foundry ./node_modules/.bin/
 
 # Run our release
-#   Prepending `./node_modules/.bin/` to `PATH` can be avoided by using `foundry-cli`
-#   https://github.com/twolfson/foundry-cli
-#   or by using `npm-run-script`
+#   Prepending `./node_modules/.bin/` to `PATH` can be avoided by using `npm-run-script`
 #   https://www.npmjs.org/doc/misc/npm-scripts.html#environment
 PATH="$PATH:$PWD/node_modules/.bin/"
 foundry release 1.0.0
