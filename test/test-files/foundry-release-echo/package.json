@@ -1,7 +1,0 @@
-{
-  "foundry": {
-    "releaseCommands": [
-      "foundry-release-echo"
-    ]
-  }
-}

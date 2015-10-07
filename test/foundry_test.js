@@ -98,38 +98,41 @@ describe('foundry', function () {
     });
   });
 
-  describe.only('releasing with an `customCommand` object', function () {
+  describe('releasing with an `customCommand` object', function () {
     before(function releaseWithCustomCommand (done) {
       this.stdout = new WritableStreamBuffer();
       var release = new Foundry.Release([{
         type: 'customCommand',
-        updateFiles: 'node --eval "console.log(\'Custom update-files: \' + process.env.FOUNDRY_VERSION + \' \'+ process.env.FOUNDRY_MESSAGE);"'
+        updateFiles: 'node --eval "console.log(\'Custom update-files: \' + process.env.FOUNDRY_VERSION + \' \'+ process.env.FOUNDRY_MESSAGE);"',
+        commit: 'node --eval "console.log(\'Custom update-files: \' + process.env.FOUNDRY_VERSION + \' \'+ process.env.FOUNDRY_MESSAGE);"'
       }], {stdout: this.stdout, color: false});
       release.release('1.0.0', done);
     });
+    before(function processOutput () {
+      this.output = this.stdout.getContents().toString();
+    });
     after(function cleanup () {
       delete this.stdout;
+      delete this.output;
     });
 
     it('runs the command\'s specific steps', function () {
-      var output = this.stdout.getContents().toString();
-      expect(output).to.contain('Running step: node --eval');
-      expect(output).to.contain('Custom update-files: 1.0.0 Release 1.0.0');
+      expect(this.output).to.contain('Running step: node --eval');
+      expect(this.output).to.contain('Custom update-files: 1.0.0 Release 1.0.0');
     });
 
     it('runs no other steps', function () {
-      var output = this.stdout.getContents().toString();
-      var stepRunMatches = output.match(/Running step/);
-      console.log(stepRunMatches, output);
+      var stepRunMatches = this.output.match(/Running step/);
       expect(stepRunMatches).to.have.length(1);
     });
   });
 });
 
-describe('foundry listing its commands', function () {
-  childUtils.exec(quote(['node', foundryCmd, 'commands']));
+describe.only('foundry listing its commands', function () {
+  childUtils.exec(quote(['node', foundryCmd, 'commands']), {cwd: __dirname + '/test-files/package.json-project/'});
 
   it('lists all its commands', function () {
+    console.log(this.stderr);
     expect(this.err).to.equal(null);
     expect(this.stdout).to.contain('foundry-release-echo@1.0.0');
   });
