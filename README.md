@@ -67,10 +67,7 @@ cat > package.json <<EOF
 EOF
 
 # Install corresponding `git` foundry-release command
-npm install twolfson/foundry-release-git#ec8aa239
-
-# Copy over symlink to our foundry instance
-ln -s ../../../../bin/foundry ./node_modules/.bin/
+npm install foundry-release-git
 
 # Run our release
 #   Prepending `./node_modules/.bin/` to `PATH` can be avoided by using `npm-run-script`
