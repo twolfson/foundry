@@ -112,6 +112,8 @@ When a release occurs, the following steps are processed:
 }
 ```
 
+[foundry-release-spec]: https://github.com/twolfson/foundry-release-spec
+
 **customCommand** is a command with a custom setup
 
 - type `String` - Classification of command
