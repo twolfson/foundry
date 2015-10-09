@@ -1,6 +1,6 @@
 // Load in dependencies
-var childProcess = require('child_process');
 var path = require('path');
+var bufferedSpawn = require('buffered-spawn');
 
 // Define our utilities
 exports.addToPath = function (dir) {
@@ -19,18 +19,23 @@ exports.addToPath = function (dir) {
   });
 };
 
-exports.exec = function (cmd, options) {
-  before(function execFn (done) {
+exports.spawn = function (command, args) {
+  before(function spawnFn (done) {
+    // Run our command
     var that = this;
-    childProcess.exec(cmd, options, function handleExec (err, stdout, stderr) {
-      // Save result and callback
+    bufferedSpawn(command, args, function handleBufferedSpawn (err, stdout, stderr) {
+      // Save our results
       that.err = err;
       that.stdout = stdout;
       that.stderr = stderr;
+
+      // Callback with no errors
       done();
     });
   });
-  after(function cleanupExec () {
+
+  after(function cleanup () {
+    // Clean up our results
     delete this.err;
     delete this.stdout;
     delete this.stderr;
