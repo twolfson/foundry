@@ -30,7 +30,7 @@
   },
   "scripts": {
     "link-bash-completion": "sudo ln -s $PWD/bin/completion/foundry /etc/bash_completion.d/foundry",
-    "test": "(test \"$VAGRANT\" = \"true\" || test \"$TRAVIS\" = \"true\" || (echo \"Tests must be run in enclosed environment (e.g. Vagrant, Travis) to prevent accidental publishes\n\" 1>&2 && exit 1)) && mocha --bail",
+    "test": "(test \"$VAGRANT\" = \"true\" || test \"$TRAVIS\" = \"true\" || (echo \"Tests must be run in enclosed environment (e.g. Vagrant, Travis) to prevent accidental publishes\n\" 1>&2 && exit 1)) && mocha --bail --reporter dot",
     "test-windows-ci": "mocha --bail --reporter spec --timeout 10000"
   },
   "dependencies": {
@@ -50,7 +50,7 @@
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-watch": "~0.4.0",
-    "mocha": "~1.11.0",
+    "mocha": "~2.3.3",
     "stream-buffers": "~2.2.0"
   },
   "keywords": [
