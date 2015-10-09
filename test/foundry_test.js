@@ -1,7 +1,6 @@
 // Load in dependencies
 var path = require('path');
 var expect = require('chai').expect;
-var quote = require('shell-quote').quote;
 var WritableStreamBuffer = require('stream-buffers').WritableStreamBuffer;
 var childUtils = require('./utils/child-process');
 var Foundry = require('../');
@@ -132,7 +131,7 @@ describe('foundry', function () {
 
 // DEV: Verify each of our configuration patterns work
 describe('foundry listing its commands from a package.json', function () {
-  childUtils.exec(quote(['node', foundryCmd, 'commands']), {
+  childUtils.spawn('node', [foundryCmd, 'commands'], {
     cwd: path.join(__dirname, 'test-files', 'package.json-project')
   });
 
@@ -152,7 +151,7 @@ describe('foundry listing its commands from a package.json', function () {
 });
 
 describe('foundry listing its commands from a .foundryrc', function () {
-  childUtils.exec(quote(['node', foundryCmd, 'commands']), {
+  childUtils.spawn('node', [foundryCmd, 'commands'], {
     cwd: path.join(__dirname, 'test-files', 'foundryrc-project')
   });
 
@@ -175,7 +174,7 @@ describe('foundry listing its commands from a .foundryrc', function () {
 describe('foundry releasing an echoing command', function () {
   describe('for the first time', function () {
     childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
-    childUtils.exec(quote(['node', foundryCmd, 'release', '1.0.0']), {
+    childUtils.spawn('node', [foundryCmd, 'release', '1.0.0'], {
       cwd: path.join(__dirname, 'test-files', 'foundry-release-echo')
     });
 
@@ -187,7 +186,7 @@ describe('foundry releasing an echoing command', function () {
 
   describe('for a second time', function () {
     childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
-    childUtils.exec(quote(['node', foundryCmd, 'release', '1.1.0']), {
+    childUtils.spawn('node', [foundryCmd, 'release', '1.1.0'], {
       cwd: path.join(__dirname, 'test-files', 'foundry-release-echo')
     });
 
@@ -206,7 +205,7 @@ describe('foundry releasing an echoing command', function () {
 // DEV: This is not a required test but one for peace of mind regarding usability messaing
 describe('foundry using a command with a bad `--spec-version`', function () {
   childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-bad-spec-version'));
-  childUtils.exec(quote(['node', foundryCmd, 'release', '1.0.0']), {
+  childUtils.spawn('node', [foundryCmd, 'release', '1.0.0'], {
     cwd: path.join(__dirname, 'test-files', 'foundry-release-bad-spec-version')
   });
 
