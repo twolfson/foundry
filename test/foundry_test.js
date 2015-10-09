@@ -51,8 +51,8 @@ describe('foundry', function () {
     it('provides the user with semantic step info', function () {
       expect(this.output).to.contain('FOUNDRY_VERSION: 1.0.0');
       expect(this.output).to.contain('FOUNDRY_MESSAGE: Release 1.0.0');
-      expect(this.output).to.contain(
-        'Running step: foundry-release-echo update-files "$FOUNDRY_VERSION" "$FOUNDRY_MESSAGE"');
+      expect(this.output).to.match(
+        /Running step: foundry-release-echo update-files "(\$FOUNDRY_VERSION|%FOUNDRY_VERSION%)" "(\$FOUNDRY_MESSAGE|%FOUNDRY_VERSION%)"/);
     });
   });
 
