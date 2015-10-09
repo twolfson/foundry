@@ -1,4 +1,4 @@
-# foundry [![Build status](https://travis-ci.org/twolfson/foundry.png?branch=master)](https://travis-ci.org/twolfson/foundry)
+# foundry [![Build status](https://travis-ci.org/twolfson/foundry.png?branch=master)](https://travis-ci.org/twolfson/foundry) [![Build status](https://ci.appveyor.com/api/projects/status/6k6r8d0k4g2mmcwx/branch/master?svg=true)](https://ci.appveyor.com/project/twolfson/foundry/branch/master)
 
 Release manager for [npm][], [bower][], [component][], [PyPI][], [git tags][], and any command you want.
 
