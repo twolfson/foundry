@@ -12,7 +12,7 @@ var foundryCmd = __dirname + '/../bin/foundry';
 // DEV: Run our tests internally first to help with debugging
 describe('foundry', function () {
   describe('releasing a new package', function () {
-    childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
+    childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
     before(function releaseNewPackage (done) {
       this.stdout = new WritableStreamBuffer();
       var release = new Foundry.Release(['foundry-release-echo'], {
@@ -56,7 +56,7 @@ describe('foundry', function () {
   });
 
   describe('releasing an existing package', function () {
-    childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
+    childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
     before(function releaseExistingPackage (done) {
       this.stdout = new WritableStreamBuffer();
       var release = new Foundry.Release(['foundry-release-echo'], {
@@ -80,7 +80,7 @@ describe('foundry', function () {
 
 describe('foundry', function () {
   describe('releasing with an `releaseCommand` object', function () {
-    childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
+    childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
     before(function releaseWithReleaseCommand (done) {
       this.stdout = new WritableStreamBuffer();
       var release = new Foundry.Release([{
@@ -169,7 +169,7 @@ describe('foundry listing its commands from a .foundryrc', function () {
 // DEV: Perform a release on the CLI for full accuracy
 describe('foundry releasing an echoing command', function () {
   describe('for the first time', function () {
-    childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
+    childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
     childUtils.exec(quote(['node', foundryCmd, 'release', '1.0.0']), {
       cwd: __dirname + '/test-files/foundry-release-echo/'
     });
@@ -181,7 +181,7 @@ describe('foundry releasing an echoing command', function () {
   });
 
   describe('for a second time', function () {
-    childUtils.addToPath(__dirname + '/test-files/foundry-release-echo/');
+    childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
     childUtils.exec(quote(['node', foundryCmd, 'release', '1.1.0']), {
       cwd: __dirname + '/test-files/foundry-release-echo/'
     });
@@ -200,7 +200,7 @@ describe('foundry releasing an echoing command', function () {
 
 // DEV: This is not a required test but one for peace of mind regarding usability messaing
 describe('foundry using a command with a bad `--spec-version`', function () {
-  childUtils.addToPath(__dirname + '/test-files/foundry-release-bad-spec-version/');
+  childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-bad-spec-version'));
   childUtils.exec(quote(['node', foundryCmd, 'release', '1.0.0']), {
     cwd: __dirname + '/test-files/foundry-release-bad-spec-version/'
   });

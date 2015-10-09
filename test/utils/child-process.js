@@ -1,5 +1,6 @@
 // Load in dependencies
 var childProcess = require('child_process');
+var path = require('path');
 
 // Define our utilities
 exports.addToPath = function (dir) {
@@ -9,7 +10,7 @@ exports.addToPath = function (dir) {
     this._pathStack.push(process.env.PATH);
 
     // Prepend the new directory to the PATH so it's hit first
-    process.env.PATH = dir + ':' + process.env.PATH;
+    process.env.PATH = dir + path.delimiter + process.env.PATH;
   });
   after(function restorePath () {
     // Pop the most recent PATH and restore it
