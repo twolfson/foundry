@@ -1,4 +1,5 @@
 // Load in dependencies
+var path = require('path');
 var expect = require('chai').expect;
 var quote = require('shell-quote').quote;
 var WritableStreamBuffer = require('stream-buffers').WritableStreamBuffer;
