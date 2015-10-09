@@ -16,6 +16,7 @@ This was created out of frustration; there was no generic *sharable* release man
 - Specification is CLI based, allowing for any language implementation
     - https://github.com/twolfson/foundry-release-spec
 - Transparent output; always know what commands are being executed
+- Cross platform support (GNU/Linux, OS X, Windows)
 
 ![Example foundry-release](docs/foundry-release.png)
 
