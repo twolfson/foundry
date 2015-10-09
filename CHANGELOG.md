@@ -1,4 +1,6 @@
 # foundry changelog
+4.0.4 - Added documentation for `foundry.cli`
+
 4.0.3 - Added previously unreleased foundry-release dependencies
 
 4.0.2 - Updated screenshot
