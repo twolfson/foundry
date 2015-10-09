@@ -19,11 +19,11 @@ exports.addToPath = function (dir) {
   });
 };
 
-exports.spawn = function (command, args) {
+exports.spawn = function (command, args, options) {
   before(function spawnFn (done) {
     // Run our command
     var that = this;
-    bufferedSpawn(command, args, function handleBufferedSpawn (err, stdout, stderr) {
+    bufferedSpawn(command, args, options, function handleBufferedSpawn (err, stdout, stderr) {
       // Save our results
       that.err = err;
       that.stdout = stdout;
