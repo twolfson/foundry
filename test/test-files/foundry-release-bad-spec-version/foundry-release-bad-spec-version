@@ -6,6 +6,12 @@ var program = require('commander-completion');
 program.option('--spec-version', 'Output the spec-version for foundry');
 program.on('spec-version', function outputSpecVersion () {
   process.stdout.write('1.2.0\n');
+  // Forcefully end stdout
+  // DEV: This is required for `node@0.10` on Windows (otherwise, it's too slow and we can exit before the flush)
+  // DEV: We have a try/catch because this is illegal in `node>=0.12`
+  //    Another option is the `exit` package but this is simpler since we are a CLI
+  // https://github.com/twolfson/foundry-release-base/blob/1.0.2/lib/foundry-release-base.js#L27-L31
+  try { process.stdout.end(); } catch (err) {}
   process.exit(0);
 });
 
