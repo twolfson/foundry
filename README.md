@@ -59,7 +59,7 @@ EOF
 # Install corresponding `git` foundry-release command
 npm install foundry-release-git
 
-# Run our release
+# Run our release (links repeated at bottom of example)
 #   Prepending `./node_modules/.bin/` to `PATH` can be avoided by using `foundry.cli`
 #   https://github.com/twolfson/foundry.cli
 #   or by using `npm-run-script`
