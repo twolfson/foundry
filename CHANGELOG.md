@@ -1,4 +1,6 @@
 # foundry changelog
+4.0.5 - Added AppVeyor integration and replaced `shell-quote` with `buffered-spawn`
+
 4.0.4 - Added documentation for `foundry.cli`
 
 4.0.3 - Added previously unreleased foundry-release dependencies
