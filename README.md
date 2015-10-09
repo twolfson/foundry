@@ -60,7 +60,9 @@ EOF
 npm install foundry-release-git
 
 # Run our release
-#   Prepending `./node_modules/.bin/` to `PATH` can be avoided by using `npm-run-script`
+#   Prepending `./node_modules/.bin/` to `PATH` can be avoided by using `foundry.cli`
+#   https://github.com/twolfson/foundry.cli
+#   or by using `npm-run-script`
 #   https://www.npmjs.org/doc/misc/npm-scripts.html#environment
 PATH="$PATH:$PWD/node_modules/.bin/"
 foundry release 1.0.0
@@ -78,6 +80,13 @@ git log --decorate --oneline
 # c6ce921 (HEAD, tag: 1.0.0, master) Release 1.0.0
 # f0c25b3 Added documentation
 ```
+
+Links to alternatives to extending `PATH`:
+
+- `foundry.cli`, global CLI bindings for `foundry`
+    - https://github.com/twolfson/foundry.cli
+- `npm-run-script`, run scripts from within `npm's` context
+    - https://www.npmjs.org/doc/misc/npm-scripts.html#environment
 
 ## Documentation
 ### Release process
