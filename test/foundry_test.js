@@ -211,7 +211,7 @@ describe('foundry using a command with a bad `--spec-version`', function () {
 
   it('notifies the user of the package name', function () {
     expect(this.err).to.not.equal(null);
-    expect(this.err.message).to.match(
+    expect(this.stderr).to.match(
       /Expected release command "foundry-release-bad-spec-version".*2.0.0.*but it was.*1.2.0/);
   });
 });
