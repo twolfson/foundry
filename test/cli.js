@@ -92,3 +92,14 @@ describe('foundry using a command with a bad `--spec-version`', function () {
       /Expected release command "foundry-release-bad-spec-version".*2.0.0.*but it was.*1.2.0/);
   });
 });
+
+describe('foundry using a missing command', function () {
+  childUtils.spawn('node', [foundryCmd, 'release', '1.0.0'], {
+    cwd: path.join(__dirname, 'test-files', 'foundry-release-unknown')
+  });
+
+  it('notifies the user of the missing command', function () {
+    expect(this.err).to.not.equal(null);
+    expect(this.stderr).to.match(/Attempted to run "foundry-release-unknown --spec-version" but/);
+  });
+});
