@@ -167,7 +167,7 @@ describe('foundry', function () {
 
 describe('foundry', function () {
   // DEV: Typically `register` and `publish` fail due to not being logged in
-  describe('releasing a package that has a failing `register` command', function () {
+  describe.only('releasing a package that has a failing `register` command', function () {
     // TODO: Clean up existing `foundry-resume.json` (and assert it's not on disk)
 
     it('runs update-files and commit', function () {
