@@ -50,8 +50,10 @@ describe('foundry', function () {
     it('provides the user with semantic step info', function () {
       expect(this.output).to.contain('FOUNDRY_VERSION: 1.0.0');
       expect(this.output).to.contain('FOUNDRY_MESSAGE: Release 1.0.0');
+      // jscs:disable maximumLineLength
       expect(this.output).to.match(
         /Running step: foundry-release-echo update-files "(\$FOUNDRY_VERSION|%FOUNDRY_VERSION%)" "(\$FOUNDRY_MESSAGE|%FOUNDRY_MESSAGE%)"/);
+      // jscs:enable maximumLineLength
     });
   });
 
@@ -104,8 +106,10 @@ describe('foundry', function () {
       this.stdout = new WritableStreamBuffer();
       var release = new Foundry.Release([{
         type: 'customCommand',
+        // jscs:disable maximumLineLength
         updateFiles: 'node --eval "console.log(\'Custom update-files: \' + process.env.FOUNDRY_VERSION + \' \'+ process.env.FOUNDRY_MESSAGE);"',
         commit: 'node --eval "console.log(\'Custom update-files: \' + process.env.FOUNDRY_VERSION + \' \'+ process.env.FOUNDRY_MESSAGE);"'
+        // jscs:enable maximumLineLength
       }], {stdout: this.stdout, color: false});
       release.release('1.0.0', done);
     });
