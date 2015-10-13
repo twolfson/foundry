@@ -239,6 +239,7 @@ describe('foundry', function () {
     it.skip('generates a `foundry-resume.json` with the expected format', function () {
       // TODO: On Windows, we need to convert `$` to `%` =/
       // Load in file and assert it matches `resume-continue` 1:1
+      void expectedFoundryResumePath;
     });
   });
 
