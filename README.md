@@ -221,7 +221,7 @@ Existing commands are:
 [foundry-release-pypi]: https://github.com/twolfson/foundry-release-pypi
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint via [grunt](https://github.com/gruntjs/grunt) and test via `npm test`.
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint via `npm run lint` and test via `npm test`.
 
 ## Donating
 Support this project and [others by twolfson][gittip] via [gittip][].
