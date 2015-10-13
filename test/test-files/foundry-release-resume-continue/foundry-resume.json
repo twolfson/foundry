@@ -1,0 +1,18 @@
+[
+  {
+    "command": "foundry-release-echo update-files \"$FOUNDRY_VERSION\" \"$FOUNDRY_COMMAND\"",
+    "completed": true
+  },
+  {
+    "command": "foundry-release-echo commit \"$FOUNDRY_VERSION\" \"$FOUNDRY_COMMAND\"",
+    "completed": true
+  },
+  {
+    "command": "foundry-release-echo register \"$FOUNDRY_VERSION\" \"$FOUNDRY_COMMAND\"",
+    "completed": false
+  },
+  {
+    "command": "foundry-release-echo publish \"$FOUNDRY_VERSION\" \"$FOUNDRY_COMMAND\"",
+    "completed": false
+  }
+]
