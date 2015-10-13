@@ -1,0 +1,7 @@
+{
+  "foundry": {
+    "releaseCommands": [
+      "foundry-release-unknown"
+    ]
+  }
+}
