@@ -5,9 +5,6 @@ var WritableStreamBuffer = require('stream-buffers').WritableStreamBuffer;
 var childUtils = require('./utils/child-process');
 var Foundry = require('../');
 
-// Define our test constants
-var foundryCmd = path.join(__dirname, '..', 'bin', 'foundry');
-
 // Start our tests
 // DEV: Run our tests internally first to help with debugging
 describe('foundry', function () {
