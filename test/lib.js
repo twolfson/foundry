@@ -243,7 +243,7 @@ describe('foundry', function () {
     });
   });
 
-  describe('resuming a failed release', function () {
+  describe('resuming a failed release and succeeding', function () {
     // TODO: Add back `foundry-resume.json`
 
     it('does not run update-files and commit', function () {
@@ -261,6 +261,28 @@ describe('foundry', function () {
     });
 
     it('cleans up the `foundry-resume.json`', function () {
+      // TODO: Verify file no longer exists on disk
+    });
+  });
+
+  describe('resuming a failed release and failing', function () {
+    // TODO: Add back `foundry-resume.json`
+
+    it('does not run update-files and commit', function () {
+      // Assert stdout
+    });
+
+    it('runs register successfully', function () {
+      // Assert stdout has step info/invocation
+      // Assert there is the failure message from `foundry-release-echo`
+    });
+
+    it('attempts to run publish and fails', function () {
+      // Assert stdout has step info/invocation
+      // Assert there is the failure message from `foundry-release-echo`
+    });
+
+    it('outputs an updated `foundry-resume.json`', function () {
       // TODO: Verify file no longer exists on disk
     });
   });
