@@ -1,7 +1,7 @@
 {
   "name": "foundry",
   "description": "Release manager for npm, bower, component, PyPI, git tags, and any plugin you can write",
-  "version": "4.0.7",
+  "version": "4.0.8",
   "homepage": "https://github.com/twolfson/foundry",
   "author": {
     "name": "Todd Wolfson",
@@ -30,7 +30,10 @@
   },
   "scripts": {
     "link-bash-completion": "sudo ln -s $PWD/bin/completion/foundry /etc/bash_completion.d/foundry",
-    "test": "(test \"$VAGRANT\" = \"true\" || test \"$TRAVIS\" = \"true\" || (echo \"Tests must be run in enclosed environment (e.g. Vagrant, Travis) to prevent accidental publishes\n\" 1>&2 && exit 1)) && mocha --bail --reporter dot",
+    "lint": "twolfson-style lint bin/ lib/ test/",
+    "precheck": "twolfson-style precheck bin/ lib/ test/",
+    "_test": "npm run precheck && mocha --bail --reporter dot && npm run lint",
+    "test": "(test \"$VAGRANT\" = \"true\" || test \"$TRAVIS\" = \"true\" || (echo \"Tests must be run in enclosed environment (e.g. Vagrant, Travis) to prevent accidental publishes\n\" 1>&2 && exit 1)) && npm run _test",
     "test-windows-ci": "mocha --bail --reporter spec --timeout 10000"
   },
   "dependencies": {
@@ -47,11 +50,11 @@
     "foundry-release-base": "~1.0.1",
     "foundry-release-git": "~2.0.1",
     "foundry-release-npm": "~2.0.1",
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.6.0",
-    "grunt-contrib-watch": "~0.4.0",
+    "jscs": "~2.3.0",
+    "jshint": "~2.8.0",
     "mocha": "~2.3.3",
-    "stream-buffers": "~2.2.0"
+    "stream-buffers": "~2.2.0",
+    "twolfson-style": "~1.6.1"
   },
   "keywords": [
     "release",
