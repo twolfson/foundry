@@ -1,4 +1,6 @@
 # foundry changelog
+4.0.7 - Updated screenshot
+
 4.0.6 - Documented cross platform support as a feature
 
 4.0.5 - Added AppVeyor integration and replaced `shell-quote` with `buffered-spawn`
