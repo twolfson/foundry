@@ -1,3 +1,13 @@
+// Load in dependencies
+var path = require('path');
+var expect = require('chai').expect;
+var WritableStreamBuffer = require('stream-buffers').WritableStreamBuffer;
+var childUtils = require('./utils/child-process');
+var Foundry = require('../');
+
+// Define our test constants
+var foundryCmd = path.join(__dirname, '..', 'bin', 'foundry');
+
 // DEV: Verify each of our configuration patterns work
 describe('foundry listing its commands from a package.json', function () {
   childUtils.spawn('node', [foundryCmd, 'commands'], {
