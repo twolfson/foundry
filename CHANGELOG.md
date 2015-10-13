@@ -1,4 +1,6 @@
 # foundry changelog
+4.1.1 - Added better errors for when commands aren't found
+
 4.1.0 - Added `--dry-run` for release
 
 4.0.8 - Added `twolfson-style` for linting
