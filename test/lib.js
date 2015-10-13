@@ -184,6 +184,10 @@ describe('foundry', function () {
       // Assert there is the failure message from `foundry-release-echo`
     });
 
+    it('informs user how to resume execution', function () {
+      // Assert message about running `foundry resume` once command is done
+    });
+
     it('generates a `foundry-resume.json` with the expected format', function () {
       // Load in file and assert it matches `resume-continue` 1:1
     });
@@ -197,6 +201,33 @@ describe('foundry', function () {
     });
 
     it('runs register successfully', function () {
+      // Assert stdout has step info/invocation
+      // Assert there is the failure message from `foundry-release-echo`
+    });
+
+    it('runs publish successfully', function () {
+      // Assert stdout has step info/invocation
+      // Assert there is the failure message from `foundry-release-echo`
+    });
+
+    it('cleans up the `foundry-resume.json`', function () {
+      // TODO: Verify file no longer exists on disk
+    });
+  });
+
+  describe('resuming a failed release with mismatched commands', function () {
+    it('does not run any steps', function () {
+      // Assert stdout
+      // TODO: We should compare the entirety of steps before anything is run or written to stdout
+      //   This means if the length is different
+      //   or the commands themselves have changed, then error out
+    });
+
+    it('notifies user of mismatched steps', function () {
+      //
+    });
+
+    it('does not clean up `foundry-resume.json`', function () {
       // Assert stdout has step info/invocation
       // Assert there is the failure message from `foundry-release-echo`
     });
