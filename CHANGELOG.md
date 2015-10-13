@@ -1,4 +1,6 @@
 # foundry changelog
+4.0.8 - Added `twolfson-style` for linting
+
 4.0.7 - Updated screenshot
 
 4.0.6 - Documented cross platform support as a feature
