@@ -1,18 +1,22 @@
-[
-  {
-    "command": "foundry-release-echo update-files \"$FOUNDRY_VERSION\" \"$FOUNDRY_COMMAND\"",
-    "completed": true
-  },
-  {
-    "command": "foundry-release-echo commit \"$FOUNDRY_VERSION\" \"$FOUNDRY_COMMAND\"",
-    "completed": true
-  },
-  {
-    "command": "foundry-release-echo register \"$FOUNDRY_VERSION\" \"$FOUNDRY_COMMAND\"",
-    "completed": false
-  },
-  {
-    "command": "foundry-release-echo publish \"$FOUNDRY_VERSION\" \"$FOUNDRY_COMMAND\"",
-    "completed": false
-  }
-]
+{
+  "FOUNDRY_VERSION": "1.0.0",
+  "FOUNDRY_MESSAGE": "Release 1.0.0",
+  "scripts": [
+    {
+      "script": "foundry-release-echo update-files \"$FOUNDRY_VERSION\" \"$FOUNDRY_MESSAGE\"",
+      "completed": true
+    },
+    {
+      "script": "foundry-release-echo commit \"$FOUNDRY_VERSION\" \"$FOUNDRY_MESSAGE\"",
+      "completed": true
+    },
+    {
+      "script": "foundry-release-echo register \"$FOUNDRY_VERSION\" \"$FOUNDRY_MESSAGE\"",
+      "completed": false
+    },
+    {
+      "script": "foundry-release-echo publish \"$FOUNDRY_VERSION\" \"$FOUNDRY_MESSAGE\"",
+      "completed": false
+    }
+  ]
+}

@@ -167,8 +167,39 @@ describe('foundry', function () {
 
 describe('foundry', function () {
   // DEV: Typically `register` and `publish` fail due to not being logged in
+
   describe.only('releasing a package that has a failing `register` command', function () {
-    // TODO: Clean up existing `foundry-resume.json` (and assert it's not on disk)
+    var actualFoundryResumePath = __dirname + '/test-files/foundry-release-resume-failure/foundry-resume.json';
+    var expectedFoundryResumePath = __dirname + '/test-files/foundry-resume.json';
+
+    before(function removeExistingResume (done) {
+      fs.unlink(actualFoundryResumePath, function handleRemoval (err) {
+        // If there was an error but it was for the file not existing, nullify it
+        if (err && err.code === 'ENOENT') {
+          err = null;
+        }
+
+        // Callback with our error
+        done(err);
+      });
+    });
+
+    childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-resume-failure'));
+    before(function releaseDryPackage (done) {
+      this.stdout = new WritableStreamBuffer();
+      var release = new Foundry.Release(['foundry-release-echo'], {
+        color: false,
+        stdout: this.stdout
+      });
+      release.release('1.0.0', done);
+    });
+    before(function processOutput () {
+      this.output = this.stdout.getContents().toString();
+    });
+    after(function cleanup () {
+      delete this.output;
+      delete this.stdout;
+    });
 
     it('runs update-files and commit', function () {
       // Assert stdout
