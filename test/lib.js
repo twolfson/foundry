@@ -164,3 +164,50 @@ describe('foundry', function () {
     });
   });
 });
+
+describe('foundry', function () {
+  // DEV: Typically `register` and `publish` fail due to not being logged in
+  describe('releasing a package that has a failing `register` command', function () {
+    // TODO: Clean up existing `foundry-resume.json` (and assert it's not on disk)
+
+    it('runs update-files and commit', function () {
+      // Assert stdout
+    });
+
+    it('attempts to run register', function () {
+      // Assert stdout has step info/invocation
+      // Assert there is the failure message from `foundry-release-echo`
+    });
+
+    it('does not run publish', function () {
+      // Assert stdout has step info/invocation
+      // Assert there is the failure message from `foundry-release-echo`
+    });
+
+    it('generates a `foundry-resume.json` with the expected format', function () {
+      // Load in file and assert it matches `resume-continue` 1:1
+    });
+  });
+
+  describe('resuming a failed release', function () {
+    // TODO: Add back `foundry-resume.json`
+
+    it('does not run update-files and commit', function () {
+      // Assert stdout
+    });
+
+    it('runs register successfully', function () {
+      // Assert stdout has step info/invocation
+      // Assert there is the failure message from `foundry-release-echo`
+    });
+
+    it('runs publish successfully', function () {
+      // Assert stdout has step info/invocation
+      // Assert there is the failure message from `foundry-release-echo`
+    });
+
+    it('cleans up the `foundry-resume.json`', function () {
+      // TODO: Verify file no longer exists on disk
+    });
+  });
+});
