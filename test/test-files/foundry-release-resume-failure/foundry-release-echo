@@ -9,11 +9,11 @@ var myReleaseCommand = new FoundryReleaseBase({
     process.nextTick(cb);
   },
   commit: function (params, cb) {
-    throw new Error('Something went wrong =(');
+    console.log('Step run (echo): commit ' + params.version + ' ' + params.message);
+    process.nextTick(cb);
   },
   register: function (params, cb) {
-    console.log('Step run (echo): register ' + params.version + ' ' + params.message);
-    process.nextTick(cb);
+    throw new Error('(echo) Something went wrong =(');
   },
   publish: function (params, cb) {
     console.log('Step run (echo): publish ' + params.version + ' ' + params.message);

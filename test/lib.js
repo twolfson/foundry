@@ -1,4 +1,5 @@
 // Load in dependencies
+var fs = require('fs');
 var path = require('path');
 var expect = require('chai').expect;
 var WritableStreamBuffer = require('stream-buffers').WritableStreamBuffer;
@@ -185,41 +186,58 @@ describe('foundry', function () {
     });
 
     childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-resume-failure'));
-    before(function releaseDryPackage (done) {
+    before(function releaseFailingPackage (done) {
       this.stdout = new WritableStreamBuffer();
+      this.stderr = new WritableStreamBuffer();
       var release = new Foundry.Release(['foundry-release-echo'], {
         color: false,
-        stdout: this.stdout
+        stdout: this.stdout,
+        stderr: this.stderr
       });
-      release.release('1.0.0', done);
+      release.release('1.0.0', function saveError (err) {
+        this.err = err;
+        done();
+      });
     });
     before(function processOutput () {
       this.output = this.stdout.getContents().toString();
+      this.stderrOutput = this.stderr.getContents().toString();
     });
     after(function cleanup () {
+      delete this.err;
       delete this.output;
       delete this.stdout;
+      delete this.stderr;
+      delete this.stderrOutput;
+    });
+
+    it('calls back with an error', function () {
+      expect(this.err).to.not.equal(null);
     });
 
     it('runs update-files and commit', function () {
-      // Assert stdout
+      expect(this.output).to.contain('Step run (echo): update-files 1.0.0 Release 1.0.0');
+      expect(this.output).to.contain('Step run (echo): commit 1.0.0 Release 1.0.0');
     });
 
     it('attempts to run register', function () {
-      // Assert stdout has step info/invocation
-      // Assert there is the failure message from `foundry-release-echo`
+      expect(this.output).to.contain('Running step: foundry-release-echo register');
+    });
+
+    it('outputs failure message', function () {
+      expect(this.stderrOutput).to.contain('(echo) Something went wrong =(');
     });
 
     it('does not run publish', function () {
-      // Assert stdout has step info/invocation
-      // Assert there is the failure message from `foundry-release-echo`
+      expect(this.output).to.not.contain('Running step: foundry-release-echo publish');
     });
 
-    it('informs user how to resume execution', function () {
+    it.skip('informs user how to resume execution', function () {
       // Assert message about running `foundry resume` once command is done
     });
 
-    it('generates a `foundry-resume.json` with the expected format', function () {
+    it.skip('generates a `foundry-resume.json` with the expected format', function () {
+      // TODO: On Windows, we need to convert `$` to `%` =/
       // Load in file and assert it matches `resume-continue` 1:1
     });
   });
