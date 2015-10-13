@@ -1,4 +1,6 @@
 # foundry changelog
+4.1.0 - Added `--dry-run` for release
+
 4.0.8 - Added `twolfson-style` for linting
 
 4.0.7 - Updated screenshot
