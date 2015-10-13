@@ -6,7 +6,7 @@ var childUtils = require('./utils/child-process');
 var Foundry = require('../');
 
 // Start our tests
-// DEV: Run our tests internally first to help with debugging
+// DEV: We have tests internally to help with debugging
 describe('foundry', function () {
   describe('releasing a new package', function () {
     childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
@@ -126,6 +126,41 @@ describe('foundry', function () {
     it('runs no other steps', function () {
       var stepRunMatches = this.output.match(/Running step/);
       expect(stepRunMatches).to.have.length(1);
+    });
+  });
+});
+
+describe('foundry', function () {
+  describe('releasing a package with `--dry-run` enabled', function () {
+    childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
+    before(function releaseDryPackage (done) {
+      this.stdout = new WritableStreamBuffer();
+      var release = new Foundry.Release(['foundry-release-echo'], {
+        color: false,
+        dryRun: true,
+        stdout: this.stdout
+      });
+      release.release('1.0.0', done);
+    });
+    before(function processOutput () {
+      this.output = this.stdout.getContents().toString();
+    });
+    after(function cleanup () {
+      delete this.output;
+      delete this.stdout;
+    });
+
+    it('provides the user with step info', function () {
+      expect(this.output).to.contain('FOUNDRY_VERSION: 1.0.0');
+      expect(this.output).to.contain('FOUNDRY_MESSAGE: Release 1.0.0');
+      // jscs:disable maximumLineLength
+      expect(this.output).to.match(
+        /Running step: foundry-release-echo update-files "(\$FOUNDRY_VERSION|%FOUNDRY_VERSION%)" "(\$FOUNDRY_MESSAGE|%FOUNDRY_MESSAGE%)"/);
+      // jscs:enable maximumLineLength
+    });
+
+    it('does not call the command', function () {
+      expect(this.output).to.not.contain('Step run (echo)');
     });
   });
 });
