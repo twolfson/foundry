@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "chai": "~1.8.1",
-    "foundry": "~4.0.2",
+    "foundry": "~4.2.0",
     "foundry-release-base": "~1.0.1",
     "foundry-release-git": "~2.0.1",
     "foundry-release-npm": "~2.0.1",
