@@ -17,6 +17,8 @@ This was created out of frustration; there was no generic *sharable* release man
     - https://github.com/twolfson/foundry-release-spec
 - Transparent output; always know what commands are being executed
 - Cross platform support (GNU/Linux, OS X, Windows)
+- Resumable releases via `foundry resume`
+     - Allows for human error (e.g. forgetting to log in)
 
 ![Example foundry-release](docs/foundry-release.png)
 
@@ -179,7 +181,8 @@ $ foundry --help
 
   Commands:
 
-    release <version>      Update package metadata and publish to registries
+    release [options] <version> Update package metadata and publish to registries
+    resume [options]       Resume an incomplete release
     commands               List commands used by current package
     completion             Get potential completions for a command. Looks for `COMP_CWORD`, `COMP_LINE`, `COMP_POINT`.
 
