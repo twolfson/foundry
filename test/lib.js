@@ -248,6 +248,8 @@ describe('foundry', function () {
     });
   });
 
+  // TODO: Since this will be more complex to set up inline, let's go with invoking on the CLI for this feature
+  //   it will reduce the amount of redundant tests we need
   describe('resuming a failed release and succeeding', function () {
     // TODO: Add back `foundry-resume.json`
 
