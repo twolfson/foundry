@@ -1,4 +1,6 @@
 # foundry changelog
+4.2.0 - Added `foundry resume` support
+
 4.1.1 - Added better errors for when commands aren't found
 
 4.1.0 - Added `--dry-run` for release
