@@ -1,4 +1,6 @@
 # foundry changelog
+4.2.1 - Upgraded to latest `foundry` to guarantee dogfooding
+
 4.2.0 - Added `foundry resume` support
 
 4.1.1 - Added better errors for when commands aren't found
