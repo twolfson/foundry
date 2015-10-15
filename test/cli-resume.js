@@ -155,7 +155,7 @@ describe('foundry', function () {
     });
   });
 
-  describe.only('resuming a failed release with mismatched commands', function () {
+  describe('resuming a failed release with mismatched commands', function () {
     var sourceFoundryResumePath = __dirname + '/test-files/foundry-resume.json';
     var targetFoundryResumePath = __dirname + '/test-files/foundry-release-resume-continue/foundry-resume.json';
     before(function adjustResumeJson () {
