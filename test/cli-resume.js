@@ -68,7 +68,11 @@ describe('foundry', function () {
     var sourceFoundryResumePath = __dirname + '/test-files/foundry-resume.json';
     var targetFoundryResumePath = __dirname + '/test-files/foundry-release-resume-continue/foundry-resume.json';
     before(function guaranteeResumeJson () {
-      var sourceContent = fs.readFileSync(sourceFoundryResumePath);
+      var sourceContent = fs.readFileSync(sourceFoundryResumePath, 'utf8');
+      if (process.platform === 'win32') {
+        sourceContent = sourceContent.replace(/\$FOUNDRY_VERSION/g, '%FOUNDRY_VERSION%');
+        sourceContent = sourceContent.replace(/\$FOUNDRY_MESSAGE/g, '%FOUNDRY_MESSAGE%');
+      }
       fs.writeFileSync(targetFoundryResumePath, sourceContent);
     });
 
@@ -119,6 +123,10 @@ describe('foundry', function () {
     var targetFoundryResumePath = __dirname + '/test-files/foundry-release-resume-failure/foundry-resume.json';
     before(function guaranteeResumeJson () {
       var sourceContent = fs.readFileSync(sourceFoundryResumePath);
+      if (process.platform === 'win32') {
+        sourceContent = sourceContent.replace(/\$FOUNDRY_VERSION/g, '%FOUNDRY_VERSION%');
+        sourceContent = sourceContent.replace(/\$FOUNDRY_MESSAGE/g, '%FOUNDRY_MESSAGE%');
+      }
       fs.writeFileSync(targetFoundryResumePath, sourceContent);
     });
 
@@ -160,6 +168,10 @@ describe('foundry', function () {
     var targetFoundryResumePath = __dirname + '/test-files/foundry-release-resume-continue/foundry-resume.json';
     before(function adjustResumeJson () {
       var sourceContent = fs.readFileSync(sourceFoundryResumePath);
+      if (process.platform === 'win32') {
+        sourceContent = sourceContent.replace(/\$FOUNDRY_VERSION/g, '%FOUNDRY_VERSION%');
+        sourceContent = sourceContent.replace(/\$FOUNDRY_MESSAGE/g, '%FOUNDRY_MESSAGE%');
+      }
       var sourceObject = JSON.parse(sourceContent);
       sourceObject.steps.pop();
       this.adjustedContent = JSON.stringify(sourceObject, null, 2);

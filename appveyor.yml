@@ -2,7 +2,8 @@ version: "{build}"
 
 environment:
   matrix:
-    - nodejs_version: "0.10"
+    # DEV: Disabled `node@0.10` on Windows because it's extremely finnicky with `stdout` and processes closing
+    # - nodejs_version: "0.10"
     - nodejs_version: "0.12"
     - nodejs_version: "4.1"
 
