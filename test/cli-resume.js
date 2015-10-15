@@ -56,10 +56,10 @@ describe('foundry', function () {
 
     it('generates a `foundry-resume.json` with the expected format', function () {
       // DEV: We need to convert `%` to `$` to support Windows
-      var expectedFoundryContent = fs.readFileSync(expectedFoundryResumePath, 'utf8');
-      expectedFoundryContent = expectedFoundryContent.replace(/%FOUNDRY_VERSION%/, '$FOUNDRY_VERSION');
-      expectedFoundryContent = expectedFoundryContent.replace(/%FOUNDRY_MESSAGE%/, '$FOUNDRY_MESSAGE');
       var actualFoundryContent = fs.readFileSync(actualFoundryResumePath, 'utf8');
+      actualFoundryContent = actualFoundryContent.replace(/%FOUNDRY_VERSION%/g, '$FOUNDRY_VERSION');
+      actualFoundryContent = actualFoundryContent.replace(/%FOUNDRY_MESSAGE%/g, '$FOUNDRY_MESSAGE');
+      var expectedFoundryContent = fs.readFileSync(expectedFoundryResumePath, 'utf8');
       expect(actualFoundryContent).to.equal(expectedFoundryContent);
     });
   });
@@ -147,10 +147,10 @@ describe('foundry', function () {
 
     it('leaves another `foundry-resume.json`', function () {
       // DEV: We need to convert `%` to `$` to support Windows
-      var expectedFoundryContent = fs.readFileSync(sourceFoundryResumePath, 'utf8');
-      expectedFoundryContent = expectedFoundryContent.replace(/%FOUNDRY_VERSION%/, '$FOUNDRY_VERSION');
-      expectedFoundryContent = expectedFoundryContent.replace(/%FOUNDRY_MESSAGE%/, '$FOUNDRY_MESSAGE');
       var actualFoundryContent = fs.readFileSync(targetFoundryResumePath, 'utf8');
+      actualFoundryContent = actualFoundryContent.replace(/%FOUNDRY_VERSION%/g, '$FOUNDRY_VERSION');
+      actualFoundryContent = actualFoundryContent.replace(/%FOUNDRY_MESSAGE%/g, '$FOUNDRY_MESSAGE');
+      var expectedFoundryContent = fs.readFileSync(sourceFoundryResumePath, 'utf8');
       expect(actualFoundryContent).to.equal(expectedFoundryContent);
     });
   });
@@ -189,10 +189,10 @@ describe('foundry', function () {
 
     it('does not adjust `foundry-resume.json`', function () {
       // DEV: We need to convert `%` to `$` to support Windows
-      var expectedFoundryContent = this.adjustedContent;
-      expectedFoundryContent = expectedFoundryContent.replace(/%FOUNDRY_VERSION%/, '$FOUNDRY_VERSION');
-      expectedFoundryContent = expectedFoundryContent.replace(/%FOUNDRY_MESSAGE%/, '$FOUNDRY_MESSAGE');
       var actualFoundryContent = fs.readFileSync(targetFoundryResumePath, 'utf8');
+      actualFoundryContent = actualFoundryContent.replace(/%FOUNDRY_VERSION%/g, '$FOUNDRY_VERSION');
+      actualFoundryContent = actualFoundryContent.replace(/%FOUNDRY_MESSAGE%/g, '$FOUNDRY_MESSAGE');
+      var expectedFoundryContent = this.adjustedContent;
       expect(actualFoundryContent).to.equal(expectedFoundryContent);
     });
   });
