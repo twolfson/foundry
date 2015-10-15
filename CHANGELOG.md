@@ -1,4 +1,6 @@
 # foundry changelog
+4.2.2 - Adjusted documentation for `foundry resume`
+
 4.2.1 - Upgraded to latest `foundry` to guarantee dogfooding
 
 4.2.0 - Added `foundry resume` support
