@@ -9,10 +9,9 @@ var foundryCmd = path.join(__dirname, '..', 'bin', 'foundry');
 
 describe('foundry', function () {
   // DEV: Typically `register` and `publish` fail due to not being logged in
-  describe.only('releasing a package that has a failing `register` command', function () {
+  describe('releasing a package that has a failing `register` command', function () {
     var actualFoundryResumePath = __dirname + '/test-files/foundry-release-resume-failure/foundry-resume.json';
     var expectedFoundryResumePath = __dirname + '/test-files/foundry-resume.json';
-
     before(function removeExistingResume (done) {
       fs.unlink(actualFoundryResumePath, function handleRemoval (err) {
         // If there was an error but it was for the file not existing, nullify it
@@ -65,27 +64,53 @@ describe('foundry', function () {
     });
   });
 
-  // TODO: Since this will be more complex to set up inline, let's go with invoking on the CLI for this feature
-  //   it will reduce the amount of redundant tests we need
-  describe('resuming a failed release and succeeding', function () {
-    // TODO: Add back `foundry-resume.json`
+  describe.only('resuming a failed release and succeeding', function () {
+    var sourceFoundryResumePath = __dirname + '/test-files/foundry-resume.json';
+    var targetFoundryResumePath = __dirname + '/test-files/foundry-release-resume-continue/foundry-resume.json';
+    before(function guaranteeResumeJson () {
+      var sourceContent = fs.readFileSync(sourceFoundryResumePath);
+      fs.writeFileSync(targetFoundryResumePath, sourceContent);
+    });
+
+    childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-resume-continue'));
+    childUtils.spawn('node', [foundryCmd, 'release', '--no-color', '1.0.0'], {
+      cwd: path.join(__dirname, 'test-files', 'foundry-release-resume-continue')
+    });
+
+    it('has no errors', function () {
+      expect(this.err).to.equal(null);
+    });
 
     it('does not run update-files and commit', function () {
-      // Assert stdout
+      expect(this.stdout).to.not.contain('Step run (echo): update-files 1.0.0 Release 1.0.0');
+      expect(this.stdout).to.not.contain('Step run (echo): commit 1.0.0 Release 1.0.0');
     });
 
+    it('notifies user about skipping update-files and commit', function () {
+      // jscs:disable maximumLineLength
+      expect(this.stdout).to.match(
+        /Step already complete: foundry-release-echo-echo update-files "(\$FOUNDRY_VERSION|%FOUNDRY_VERSION%)" "(\$FOUNDRY_MESSAGE|%FOUNDRY_MESSAGE%)"/);
+      expect(this.stdout).to.match(
+        /Step already complete: foundry-release-echo-echo commit "(\$FOUNDRY_VERSION|%FOUNDRY_VERSION%)" "(\$FOUNDRY_MESSAGE|%FOUNDRY_MESSAGE%)"/);
+      // jscs:enable maximumLineLength
+    });
+
+    // DEV: This is the previously failing step
     it('runs register successfully', function () {
-      // Assert stdout has step info/invocation
-      // Assert there is the failure message from `foundry-release-echo`
+      expect(this.stdout).to.contain('Step run (echo): register 1.0.0 Release 1.0.0');
     });
 
+    // DEV: This is an unresumed step
     it('runs publish successfully', function () {
-      // Assert stdout has step info/invocation
-      // Assert there is the failure message from `foundry-release-echo`
+      expect(this.stdout).to.contain('Step run (echo): publish 1.0.0 Release 1.0.0');
     });
 
     it('cleans up the `foundry-resume.json`', function () {
-      // TODO: Verify file no longer exists on disk
+      fs.stat(function handleStat (err, stat) {
+        // Verify we have an error and it's about the file not existing
+        expect(err).to.not.equal(null);
+        expect(err.code).to.equal('ENOENT');
+      });
     });
   });
 
