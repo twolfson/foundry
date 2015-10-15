@@ -200,10 +200,8 @@ describe('foundry', function () {
     });
 
     it('does not adjust `foundry-resume.json`', function () {
-      // DEV: We need to convert `%` to `$` to support Windows
+      // DEV: No adjustment needed here because we alrady performed our coercion
       var actualFoundryContent = fs.readFileSync(targetFoundryResumePath, 'utf8');
-      actualFoundryContent = actualFoundryContent.replace(/%FOUNDRY_VERSION%/g, '$FOUNDRY_VERSION');
-      actualFoundryContent = actualFoundryContent.replace(/%FOUNDRY_MESSAGE%/g, '$FOUNDRY_MESSAGE');
       var expectedFoundryContent = this.adjustedContent;
       expect(actualFoundryContent).to.equal(expectedFoundryContent);
     });
