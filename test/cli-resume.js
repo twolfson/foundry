@@ -73,7 +73,7 @@ describe('foundry', function () {
     });
 
     childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-resume-continue'));
-    childUtils.spawn('node', [foundryCmd, 'release', '--no-color', '1.0.0'], {
+    childUtils.spawn('node', [foundryCmd, 'resume', '--no-color'], {
       cwd: path.join(__dirname, 'test-files', 'foundry-release-resume-continue')
     });
 
@@ -105,7 +105,8 @@ describe('foundry', function () {
       expect(this.stdout).to.contain('Step run (echo): publish 1.0.0 Release 1.0.0');
     });
 
-    it('cleans up the `foundry-resume.json`', function () {
+    // TODO: Implement me
+    it.skip('cleans up the `foundry-resume.json`', function () {
       fs.stat(function handleStat (err, stat) {
         // Verify we have an error and it's about the file not existing
         expect(err).to.not.equal(null);
