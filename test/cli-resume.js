@@ -78,8 +78,6 @@ describe('foundry', function () {
     });
 
     it('has no errors', function () {
-      console.log(this.stdout);
-      console.log(this.stderr);
       expect(this.err).to.equal(null);
     });
 
@@ -91,9 +89,9 @@ describe('foundry', function () {
     it('notifies user about skipping update-files and commit', function () {
       // jscs:disable maximumLineLength
       expect(this.stdout).to.match(
-        /Step already complete: foundry-release-echo-echo update-files "(\$FOUNDRY_VERSION|%FOUNDRY_VERSION%)" "(\$FOUNDRY_MESSAGE|%FOUNDRY_MESSAGE%)"/);
+        /Step already complete: foundry-release-echo update-files "(\$FOUNDRY_VERSION|%FOUNDRY_VERSION%)" "(\$FOUNDRY_MESSAGE|%FOUNDRY_MESSAGE%)"/);
       expect(this.stdout).to.match(
-        /Step already complete: foundry-release-echo-echo commit "(\$FOUNDRY_VERSION|%FOUNDRY_VERSION%)" "(\$FOUNDRY_MESSAGE|%FOUNDRY_MESSAGE%)"/);
+        /Step already complete: foundry-release-echo commit "(\$FOUNDRY_VERSION|%FOUNDRY_VERSION%)" "(\$FOUNDRY_MESSAGE|%FOUNDRY_MESSAGE%)"/);
       // jscs:enable maximumLineLength
     });
 
