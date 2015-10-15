@@ -318,4 +318,7 @@ describe('foundry', function () {
       // TODO: Verify file no longer exists on disk
     });
   });
+
+  // TODO: Write an actual integration test now (i.e. where we invoke on the CLI)
+  //   or maybe relocate these tests there... =/
 });
