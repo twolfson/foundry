@@ -78,6 +78,8 @@ describe('foundry', function () {
     });
 
     it('has no errors', function () {
+      console.log(this.stdout);
+      console.log(this.stderr);
       expect(this.err).to.equal(null);
     });
 
