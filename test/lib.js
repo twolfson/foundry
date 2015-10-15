@@ -4,6 +4,7 @@ var path = require('path');
 var expect = require('chai').expect;
 var WritableStreamBuffer = require('stream-buffers').WritableStreamBuffer;
 var childUtils = require('./utils/child-process');
+var processUtils = require('./utils/process');
 var Foundry = require('../');
 
 // Start our tests
@@ -168,7 +169,6 @@ describe('foundry', function () {
 
 describe('foundry', function () {
   // DEV: Typically `register` and `publish` fail due to not being logged in
-
   describe.only('releasing a package that has a failing `register` command', function () {
     var actualFoundryResumePath = __dirname + '/test-files/foundry-release-resume-failure/foundry-resume.json';
     var expectedFoundryResumePath = __dirname + '/test-files/foundry-resume.json';
@@ -186,7 +186,9 @@ describe('foundry', function () {
     });
 
     childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-resume-failure'));
+    processUtils.changeCwd(path.join(__dirname, 'test-files', 'foundry-release-resume-failure'));
     before(function releaseFailingPackage (done) {
+      var that = this;
       this.stdout = new WritableStreamBuffer();
       this.stderr = new WritableStreamBuffer();
       var release = new Foundry.Release(['foundry-release-echo'], {
@@ -195,7 +197,7 @@ describe('foundry', function () {
         stderr: this.stderr
       });
       release.release('1.0.0', function saveError (err) {
-        this.err = err;
+        that.err = err;
         done();
       });
     });
@@ -232,14 +234,17 @@ describe('foundry', function () {
       expect(this.output).to.not.contain('Running step: foundry-release-echo publish');
     });
 
-    it.skip('informs user how to resume execution', function () {
-      // Assert message about running `foundry resume` once command is done
+    it('informs user how to resume execution', function () {
+      expect(this.err.message).to.contain('current release can be resumed by running `foundry resume`');
     });
 
-    it.skip('generates a `foundry-resume.json` with the expected format', function () {
-      // TODO: On Windows, we need to convert `$` to `%` =/
-      // Load in file and assert it matches `resume-continue` 1:1
-      void expectedFoundryResumePath;
+    it('generates a `foundry-resume.json` with the expected format', function () {
+      // DEV: We need to convert `%` to `$` to support Windows
+      var expectedFoundryContent = fs.readFileSync(expectedFoundryResumePath, 'utf8');
+      expectedFoundryContent = expectedFoundryContent.replace(/%FOUNDRY_VERSION%/, '$FOUNDRY_VERSION');
+      expectedFoundryContent = expectedFoundryContent.replace(/%FOUNDRY_MESSAGE%/, '$FOUNDRY_MESSAGE');
+      var actualFoundryContent = fs.readFileSync(actualFoundryResumePath, 'utf8');
+      expect(actualFoundryContent).to.equal(expectedFoundryContent);
     });
   });
 
