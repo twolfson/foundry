@@ -114,12 +114,16 @@ describe('foundry', function () {
     });
   });
 
-  describe.only('resuming a failed release and failing', function () {
+  describe('resuming a failed release and failing', function () {
     var sourceFoundryResumePath = __dirname + '/test-files/foundry-resume.json';
     var targetFoundryResumePath = __dirname + '/test-files/foundry-release-resume-failure/foundry-resume.json';
     before(function guaranteeResumeJson () {
       var sourceContent = fs.readFileSync(sourceFoundryResumePath);
       fs.writeFileSync(targetFoundryResumePath, sourceContent);
+    });
+
+    it('exits with a non-zero code', function () {
+      expect(this.err).to.not.equal(null);
     });
 
     childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-resume-failure'));
@@ -151,30 +155,45 @@ describe('foundry', function () {
     });
   });
 
-  describe('resuming a failed release with mismatched commands', function () {
-    it('does not run any steps', function () {
-      // Assert stdout
-      // TODO: We should compare the entirety of steps before anything is run or written to stdout
-      //   This means if the length is different
-      //   or the commands themselves have changed, then error out
+  describe.only('resuming a failed release with mismatched commands', function () {
+    var sourceFoundryResumePath = __dirname + '/test-files/foundry-resume.json';
+    var targetFoundryResumePath = __dirname + '/test-files/foundry-release-resume-continue/foundry-resume.json';
+    before(function adjustResumeJson () {
+      var sourceContent = fs.readFileSync(sourceFoundryResumePath);
+      var sourceObject = JSON.parse(sourceContent);
+      sourceObject.steps.pop();
+      this.adjustedContent = JSON.stringify(sourceObject, null, 2);
+      fs.writeFileSync(targetFoundryResumePath, this.adjustedContent);
+    });
+    after(function cleanup () {
+      delete this.targetContent;
+    });
+
+    childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-resume-continue'));
+    childUtils.spawn('node', [foundryCmd, 'resume', '--no-color'], {
+      cwd: path.join(__dirname, 'test-files', 'foundry-release-resume-continue')
+    });
+
+    it('exits with a non-zero code', function () {
+      expect(this.err).to.not.equal(null);
+    });
+
+    it('does not run any configuration nor steps', function () {
+      expect(this.stdout).to.equal('');
     });
 
     it('notifies user of mismatched steps', function () {
-      //
+      expect(this.stderr).to.contain(
+        'Expected `foundry-resume.json` and `.foundryrc/package.json` commands to line up exactly');
     });
 
-    it('does not clean up `foundry-resume.json`', function () {
-      // Assert stdout has step info/invocation
-      // Assert there is the failure message from `foundry-release-echo`
-    });
-
-    it('runs publish successfully', function () {
-      // Assert stdout has step info/invocation
-      // Assert there is the failure message from `foundry-release-echo`
-    });
-
-    it('cleans up the `foundry-resume.json`', function () {
-      // TODO: Verify file no longer exists on disk
+    it('does not adjust `foundry-resume.json`', function () {
+      // DEV: We need to convert `%` to `$` to support Windows
+      var expectedFoundryContent = this.adjustedContent;
+      expectedFoundryContent = expectedFoundryContent.replace(/%FOUNDRY_VERSION%/, '$FOUNDRY_VERSION');
+      expectedFoundryContent = expectedFoundryContent.replace(/%FOUNDRY_MESSAGE%/, '$FOUNDRY_MESSAGE');
+      var actualFoundryContent = fs.readFileSync(targetFoundryResumePath, 'utf8');
+      expect(actualFoundryContent).to.equal(expectedFoundryContent);
     });
   });
 });
