@@ -2,3 +2,4 @@ node_modules/
 .vagrant/
 docs/foundry-example/
 test/test-files/foundry-release-resume-failure/foundry-resume.json
+test/test-files/foundry-release-resume-continue/foundry-resume.json
