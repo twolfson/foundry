@@ -105,9 +105,8 @@ describe('foundry', function () {
       expect(this.stdout).to.contain('Step run (echo): publish 1.0.0 Release 1.0.0');
     });
 
-    // TODO: Implement me
-    it.skip('cleans up the `foundry-resume.json`', function () {
-      fs.stat(function handleStat (err, stat) {
+    it('cleans up the `foundry-resume.json`', function () {
+      fs.stat(targetFoundryResumePath, function handleStat (err, stat) {
         // Verify we have an error and it's about the file not existing
         expect(err).to.not.equal(null);
         expect(err.code).to.equal('ENOENT');
