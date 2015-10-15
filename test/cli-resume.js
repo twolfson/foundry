@@ -64,7 +64,7 @@ describe('foundry', function () {
     });
   });
 
-  describe.only('resuming a failed release and succeeding', function () {
+  describe('resuming a failed release and succeeding', function () {
     var sourceFoundryResumePath = __dirname + '/test-files/foundry-resume.json';
     var targetFoundryResumePath = __dirname + '/test-files/foundry-release-resume-continue/foundry-resume.json';
     before(function guaranteeResumeJson () {
@@ -114,25 +114,40 @@ describe('foundry', function () {
     });
   });
 
-  describe('resuming a failed release and failing', function () {
-    // TODO: Add back `foundry-resume.json`
+  describe.only('resuming a failed release and failing', function () {
+    var sourceFoundryResumePath = __dirname + '/test-files/foundry-resume.json';
+    var targetFoundryResumePath = __dirname + '/test-files/foundry-release-resume-failure/foundry-resume.json';
+    before(function guaranteeResumeJson () {
+      var sourceContent = fs.readFileSync(sourceFoundryResumePath);
+      fs.writeFileSync(targetFoundryResumePath, sourceContent);
+    });
+
+    childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-resume-failure'));
+    childUtils.spawn('node', [foundryCmd, 'resume', '--no-color'], {
+      cwd: path.join(__dirname, 'test-files', 'foundry-release-resume-failure')
+    });
 
     it('does not run update-files and commit', function () {
-      // Assert stdout
+      expect(this.stdout).to.not.contain('Step run (echo): update-files 1.0.0 Release 1.0.0');
+      expect(this.stdout).to.not.contain('Step run (echo): commit 1.0.0 Release 1.0.0');
     });
 
-    it('runs register successfully', function () {
-      // Assert stdout has step info/invocation
-      // Assert there is the failure message from `foundry-release-echo`
+    it('attempts to run register and fails', function () {
+      expect(this.stdout).to.contain('Running step: foundry-release-echo register');
+      expect(this.stderr).to.contain('(echo) Something went wrong =(');
     });
 
-    it('attempts to run publish and fails', function () {
-      // Assert stdout has step info/invocation
-      // Assert there is the failure message from `foundry-release-echo`
+    it('does not run publish', function () {
+      expect(this.stdout).to.not.contain('Running step: foundry-release-echo publish');
     });
 
-    it('outputs an updated `foundry-resume.json`', function () {
-      // TODO: Verify file no longer exists on disk
+    it('leaves another `foundry-resume.json`', function () {
+      // DEV: We need to convert `%` to `$` to support Windows
+      var expectedFoundryContent = fs.readFileSync(sourceFoundryResumePath, 'utf8');
+      expectedFoundryContent = expectedFoundryContent.replace(/%FOUNDRY_VERSION%/, '$FOUNDRY_VERSION');
+      expectedFoundryContent = expectedFoundryContent.replace(/%FOUNDRY_MESSAGE%/, '$FOUNDRY_MESSAGE');
+      var actualFoundryContent = fs.readFileSync(targetFoundryResumePath, 'utf8');
+      expect(actualFoundryContent).to.equal(expectedFoundryContent);
     });
   });
 
