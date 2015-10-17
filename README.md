@@ -18,7 +18,11 @@ This was created out of frustration; there was no generic *sharable* release man
 - Transparent output; always know what commands are being executed
 - Cross platform support (GNU/Linux, OS X, Windows)
 - Resumable releases via `foundry resume`
-     - Allows for human and machine error (e.g. forget to log in, repository is being flaky)
+    - Allows for human and machine error (e.g. forget to log in, repository is being flaky)
+- [Newsletter][], subscribe to hear about new features and releases
+    - http://eepurl.com/bCWbGj
+
+[Newsletter]: http://eepurl.com/bCWbGj
 
 ![Example foundry-release](docs/foundry-release.png)
 
