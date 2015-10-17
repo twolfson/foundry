@@ -166,7 +166,7 @@ describe('foundry', function () {
 });
 
 describe('foundry', function () {
-  describe('initially releasing a package with a custom `registerVersion`', function () {
+  describe.only('initially releasing a package with a custom `registerVersion`', function () {
     childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
     before(function releaseDryPackage (done) {
       this.stdout = new WritableStreamBuffer();
