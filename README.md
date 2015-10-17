@@ -98,11 +98,16 @@ When a release occurs, the following steps are processed:
 1. Update files, update package files with the new version and changes (e.g. update `package.json`, add to `CHANGELOG.md`)
 2. Commit, persist any changes to a version control system (e.g. `git commit && git tag`)
 3. Register, if the package is new (semver === `1.0.0`), then register it to its repository (e.g. `python setup.py register`)
+    - We can customize the semver for a new package via the `registerVersion` configuration (e.g. `0.1.0`)
 4. Publish, release changes to package's repostiroy manager (e.g. `npm publish`)
 
 ### Configuration
 `foundry` can be configured via a JSON `.foundryrc` file or under a `foundry` key in a `package.json`. In both cases, we expect the JSON to be the same.
 
+- registerVersion `String` - Semver to identify a new package by (e.g. `0.1.0`, `1.0.0`)
+    - When the `release` semver matches this, we will run `register`. Otherwise, we won't.
+    - By default, `registerVersion` is `1.0.0`
+        - We have chosen this to avoid the confusion of allowing "minor" releases in `0.x.y` to introduce breaking changes
 - releaseCommands `Array` - Collection of commands to use when releasing
     - * `String|Object` - Information about command to run when releasing
         - A string is shorthand for `{type: releaseCommand, command: {{string}}}`
