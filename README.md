@@ -105,9 +105,9 @@ When a release occurs, the following steps are processed:
 `foundry` can be configured via a JSON `.foundryrc` file or under a `foundry` key in a `package.json`. In both cases, we expect the JSON to be the same.
 
 - registerVersion `String` - Semver to identify a new package by (e.g. `0.1.0`, `1.0.0`)
-    - When the `release` semver matches this, we will run `register`. Otherwise, we won't.
+    - When the `release` semver matches this, we will run `register` steps. Otherwise, we won't.
     - By default, `registerVersion` is `1.0.0`
-        - We have chosen this to avoid the confusion of allowing "minor" releases in `0.x.y` to introduce breaking changes
+        - We have chosen this to avoid the confusion of allowing "minor" releases in `0.x.y` that introduce breaking changes
 - releaseCommands `Array` - Collection of commands to use when releasing
     - * `String|Object` - Information about command to run when releasing
         - A string is shorthand for `{type: releaseCommand, command: {{string}}}`
