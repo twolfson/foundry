@@ -164,3 +164,52 @@ describe('foundry', function () {
     });
   });
 });
+
+describe('foundry', function () {
+  describe('initially releasing a package with a custom `registerVersion`', function () {
+    childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
+    before(function releaseDryPackage (done) {
+      this.stdout = new WritableStreamBuffer();
+      var release = new Foundry.Release(['foundry-release-echo'], {
+        color: false,
+        registerVersion: '0.1.0',
+        stdout: this.stdout
+      });
+      release.release('0.1.0', done);
+    });
+    before(function processOutput () {
+      this.output = this.stdout.getContents().toString();
+    });
+    after(function cleanup () {
+      delete this.output;
+      delete this.stdout;
+    });
+
+    it('invokes `register`', function () {
+      expect(this.output).to.contain('Running step: foundry-release-echo register');
+    });
+  });
+
+  describe('releasing another version of a package with a custom `registerVersion`', function () {
+    childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
+    before(function releaseDryPackage (done) {
+      var release = new Foundry.Release(['foundry-release-echo'], {
+        color: false,
+        registerVersion: '0.1.0',
+        stdout: this.stdout
+      });
+      release.release('1.0.0', done);
+    });
+    before(function processOutput () {
+      this.output = this.stdout.getContents().toString();
+    });
+    after(function cleanup () {
+      delete this.output;
+      delete this.stdout;
+    });
+
+    it('does not invoke `register`', function () {
+      expect(this.output).to.not.contain('Running step: foundry-release-echo register');
+    });
+  });
+});
