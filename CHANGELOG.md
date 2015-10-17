@@ -1,4 +1,6 @@
 # foundry changelog
+4.3.2 - Fixed typo in README
+
 4.3.1 - Added newsletter to README
 
 4.3.0 - Added `registerVersion` support
