@@ -103,7 +103,7 @@ When a release occurs, the following steps are processed:
 2. Commit, persist any changes to a version control system (e.g. `git commit && git tag`)
 3. Register, if the package is new (semver === `1.0.0`), then register it to its repository (e.g. `python setup.py register`)
     - We can customize this semver via the `registerVersion` configuration
-4. Publish, release changes to package's repostiroy manager (e.g. `npm publish`)
+4. Publish, release changes to package's repository (e.g. `npm publish`)
 
 ### Configuration
 `foundry` can be configured via a JSON `.foundryrc` file or under a `foundry` key in a `package.json`. In both cases, we expect the JSON to be the same.
