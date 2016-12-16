@@ -166,7 +166,7 @@ describe('foundry', function () {
 });
 
 describe('foundry', function () {
-  describe.only('initially releasing a package with a custom `registerVersion`', function () {
+  describe('initially releasing a package with a custom `registerVersion`', function () {
     childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
     before(function releaseDryPackage (done) {
       this.stdout = new WritableStreamBuffer();
@@ -193,6 +193,7 @@ describe('foundry', function () {
   describe('releasing another version of a package with a custom `registerVersion`', function () {
     childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
     before(function releaseDryPackage (done) {
+      this.stdout = new WritableStreamBuffer();
       var release = new Foundry.Release(['foundry-release-echo'], {
         color: false,
         registerVersion: '0.1.0',
