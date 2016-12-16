@@ -59,6 +59,10 @@ describe('foundry releasing an echoing command', function () {
       expect(this.err).to.equal(null);
       expect(this.stdout.replace(/\n/g, ' ')).to.match(/update-files.*commit.*register.*publish/);
     });
+
+    it('handles environment variables properly', function () {
+      expect(this.stdout).to.contain('Step run (echo): update-files 1.0.0 Release 1.0.0');
+    });
   });
 
   describe('for a second time', function () {
