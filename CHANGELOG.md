@@ -1,4 +1,6 @@
 # foundry changelog
+4.3.3 - Added test case for environment variables in CLI
+
 4.3.2 - Fixed typo in README
 
 4.3.1 - Added newsletter to README
