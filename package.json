@@ -26,7 +26,7 @@
   },
   "main": "lib/foundry",
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 4.0.0"
   },
   "scripts": {
     "link-bash-completion": "sudo ln -s $PWD/bin/completion/foundry /etc/bash_completion.d/foundry",

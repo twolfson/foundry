@@ -1,12 +1,12 @@
 language: node_js
 node_js:
-  - "4.0"
-  - "0.12"
-  - "0.11"
-  - "0.10"
+  - "9"
+  - "8"
+  - "6"
+  - "4"
 matrix:
   allow_failures:
-    - node_js: "0.11"
+    - node_js: "9"
 
 before_install:
   # Upgrade npm to avoid semver issues
@@ -18,4 +18,8 @@ before_script:
   - git config --global user.name "Foundry Test"
 
 notifications:
-  email: false
+  email:
+    recipients:
+      - todd@twolfson.com
+    on_success: change
+    on_failure: change
