@@ -10,7 +10,7 @@ var Foundry = require('../');
 describe('foundry', function () {
   describe('releasing a new package', function () {
     childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
-    before(function releaseNewPackage (done) {
+    before(function releaseNewPackage(done) {
       this.stdout = new WritableStreamBuffer();
       var release = new Foundry.Release(['foundry-release-echo'], {
         stdout: this.stdout,
@@ -18,10 +18,10 @@ describe('foundry', function () {
       });
       release.release('1.0.0', done);
     });
-    before(function processOutput () {
+    before(function processOutput() {
       this.output = this.stdout.getContents().toString();
     });
-    after(function cleanup () {
+    after(function cleanup() {
       delete this.output;
       delete this.stdout;
     });
@@ -56,14 +56,14 @@ describe('foundry', function () {
 
   describe('releasing an existing package', function () {
     childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
-    before(function releaseExistingPackage (done) {
+    before(function releaseExistingPackage(done) {
       this.stdout = new WritableStreamBuffer();
       var release = new Foundry.Release(['foundry-release-echo'], {
         stdout: this.stdout
       });
       release.release('1.2.0', done);
     });
-    after(function cleanup () {
+    after(function cleanup() {
       delete this.stdout;
     });
 
@@ -80,7 +80,7 @@ describe('foundry', function () {
 describe('foundry', function () {
   describe('releasing with an `releaseCommand` object', function () {
     childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
-    before(function releaseWithReleaseCommand (done) {
+    before(function releaseWithReleaseCommand(done) {
       this.stdout = new WritableStreamBuffer();
       var release = new Foundry.Release([{
         type: 'releaseCommand',
@@ -88,7 +88,7 @@ describe('foundry', function () {
       }], {stdout: this.stdout});
       release.release('1.0.0', done);
     });
-    after(function cleanup () {
+    after(function cleanup() {
       delete this.stdout;
     });
 
@@ -99,7 +99,7 @@ describe('foundry', function () {
   });
 
   describe('releasing with an `customCommand` object', function () {
-    before(function releaseWithCustomCommand (done) {
+    before(function releaseWithCustomCommand(done) {
       this.stdout = new WritableStreamBuffer();
       var release = new Foundry.Release([{
         type: 'customCommand',
@@ -110,10 +110,10 @@ describe('foundry', function () {
       }], {stdout: this.stdout, color: false});
       release.release('1.0.0', done);
     });
-    before(function processOutput () {
+    before(function processOutput() {
       this.output = this.stdout.getContents().toString();
     });
-    after(function cleanup () {
+    after(function cleanup() {
       delete this.stdout;
       delete this.output;
     });
@@ -133,7 +133,7 @@ describe('foundry', function () {
 describe('foundry', function () {
   describe('releasing a package with `--dry-run` enabled', function () {
     childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
-    before(function releaseDryPackage (done) {
+    before(function releaseDryPackage(done) {
       this.stdout = new WritableStreamBuffer();
       var release = new Foundry.Release(['foundry-release-echo'], {
         color: false,
@@ -142,10 +142,10 @@ describe('foundry', function () {
       });
       release.release('1.0.0', done);
     });
-    before(function processOutput () {
+    before(function processOutput() {
       this.output = this.stdout.getContents().toString();
     });
-    after(function cleanup () {
+    after(function cleanup() {
       delete this.output;
       delete this.stdout;
     });
@@ -168,7 +168,7 @@ describe('foundry', function () {
 describe('foundry', function () {
   describe('initially releasing a package with a custom `registerVersion`', function () {
     childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
-    before(function releaseDryPackage (done) {
+    before(function releaseDryPackage(done) {
       this.stdout = new WritableStreamBuffer();
       var release = new Foundry.Release(['foundry-release-echo'], {
         color: false,
@@ -177,10 +177,10 @@ describe('foundry', function () {
       });
       release.release('0.1.0', done);
     });
-    before(function processOutput () {
+    before(function processOutput() {
       this.output = this.stdout.getContents().toString();
     });
-    after(function cleanup () {
+    after(function cleanup() {
       delete this.output;
       delete this.stdout;
     });
@@ -192,7 +192,7 @@ describe('foundry', function () {
 
   describe('releasing another version of a package with a custom `registerVersion`', function () {
     childUtils.addToPath(path.join(__dirname, 'test-files', 'foundry-release-echo'));
-    before(function releaseDryPackage (done) {
+    before(function releaseDryPackage(done) {
       this.stdout = new WritableStreamBuffer();
       var release = new Foundry.Release(['foundry-release-echo'], {
         color: false,
@@ -201,10 +201,10 @@ describe('foundry', function () {
       });
       release.release('1.0.0', done);
     });
-    before(function processOutput () {
+    before(function processOutput() {
       this.output = this.stdout.getContents().toString();
     });
-    after(function cleanup () {
+    after(function cleanup() {
       delete this.output;
       delete this.stdout;
     });

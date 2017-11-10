@@ -12,8 +12,8 @@ describe('foundry', function () {
   describe('releasing a package that has a failing `register` command', function () {
     var actualFoundryResumePath = __dirname + '/test-files/foundry-release-resume-failure/foundry-resume.json';
     var expectedFoundryResumePath = __dirname + '/test-files/foundry-resume.json';
-    before(function removeExistingResume (done) {
-      fs.unlink(actualFoundryResumePath, function handleRemoval (err) {
+    before(function removeExistingResume(done) {
+      fs.unlink(actualFoundryResumePath, function handleRemoval(err) {
         // If there was an error but it was for the file not existing, nullify it
         if (err && err.code === 'ENOENT') {
           err = null;
@@ -67,7 +67,7 @@ describe('foundry', function () {
   describe('resuming a failed release and succeeding', function () {
     var sourceFoundryResumePath = __dirname + '/test-files/foundry-resume.json';
     var targetFoundryResumePath = __dirname + '/test-files/foundry-release-resume-continue/foundry-resume.json';
-    before(function guaranteeResumeJson () {
+    before(function guaranteeResumeJson() {
       var sourceContent = fs.readFileSync(sourceFoundryResumePath, 'utf8');
       if (process.platform === 'win32') {
         sourceContent = sourceContent.replace(/\$FOUNDRY_VERSION/g, '%FOUNDRY_VERSION%');
@@ -110,7 +110,7 @@ describe('foundry', function () {
     });
 
     it('cleans up the `foundry-resume.json`', function () {
-      fs.stat(targetFoundryResumePath, function handleStat (err, stat) {
+      fs.stat(targetFoundryResumePath, function handleStat(err, stat) {
         // Verify we have an error and it's about the file not existing
         expect(err).to.not.equal(null);
         expect(err.code).to.equal('ENOENT');
@@ -121,7 +121,7 @@ describe('foundry', function () {
   describe('resuming a failed release and failing', function () {
     var sourceFoundryResumePath = __dirname + '/test-files/foundry-resume.json';
     var targetFoundryResumePath = __dirname + '/test-files/foundry-release-resume-failure/foundry-resume.json';
-    before(function guaranteeResumeJson () {
+    before(function guaranteeResumeJson() {
       var sourceContent = fs.readFileSync(sourceFoundryResumePath, 'utf8');
       if (process.platform === 'win32') {
         sourceContent = sourceContent.replace(/\$FOUNDRY_VERSION/g, '%FOUNDRY_VERSION%');
@@ -166,7 +166,7 @@ describe('foundry', function () {
   describe('resuming a failed release with mismatched commands', function () {
     var sourceFoundryResumePath = __dirname + '/test-files/foundry-resume.json';
     var targetFoundryResumePath = __dirname + '/test-files/foundry-release-resume-continue/foundry-resume.json';
-    before(function adjustResumeJson () {
+    before(function adjustResumeJson() {
       var sourceContent = fs.readFileSync(sourceFoundryResumePath, 'utf8');
       if (process.platform === 'win32') {
         sourceContent = sourceContent.replace(/\$FOUNDRY_VERSION/g, '%FOUNDRY_VERSION%');
@@ -177,7 +177,7 @@ describe('foundry', function () {
       this.adjustedContent = JSON.stringify(sourceObject, null, 2);
       fs.writeFileSync(targetFoundryResumePath, this.adjustedContent);
     });
-    after(function cleanup () {
+    after(function cleanup() {
       delete this.targetContent;
     });
 
