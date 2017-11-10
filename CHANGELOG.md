@@ -1,4 +1,6 @@
 # foundry changelog
+4.4.1 - Removed support for Node.js < 4
+
 4.4.0 - Moved from `twolfson-style` to `eslint`
 
 4.3.3 - Added test case for environment variables in CLI
