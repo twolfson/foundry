@@ -91,12 +91,12 @@ describe('foundry', function () {
     });
 
     it('notifies user about skipping update-files and commit', function () {
-      // jscs:disable maximumLineLength
+      /* eslint-disable max-len */
       expect(this.stdout).to.match(
         /Step already complete: foundry-release-echo update-files "(\$FOUNDRY_VERSION|%FOUNDRY_VERSION%)" "(\$FOUNDRY_MESSAGE|%FOUNDRY_MESSAGE%)"/);
       expect(this.stdout).to.match(
         /Step already complete: foundry-release-echo commit "(\$FOUNDRY_VERSION|%FOUNDRY_VERSION%)" "(\$FOUNDRY_MESSAGE|%FOUNDRY_MESSAGE%)"/);
-      // jscs:enable maximumLineLength
+      /* eslint-enable max-len */
     });
 
     // DEV: This is the previously failing step
