@@ -1,4 +1,6 @@
 # foundry changelog
+4.4.2 - Replaced Gratipay with support me page
+
 4.4.1 - Removed support for Node.js < 4
 
 4.4.0 - Moved from `twolfson-style` to `eslint`
