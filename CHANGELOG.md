@@ -1,4 +1,6 @@
 # foundry changelog
+4.5.0 - Upgraded to underscore@1.13.1 to fix vulnerabilities, via @striezel in #29
+
 4.4.2 - Replaced Gratipay with support me page
 
 4.4.1 - Removed support for Node.js < 4
