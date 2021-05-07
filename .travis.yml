@@ -1,11 +1,8 @@
 language: node_js
 node_js:
-  - "15"
+  - "16"
   - "14"
   - "12"
-matrix:
-  allow_failures:
-    - node_js: "15"
 
 before_install:
   # Upgrade npm to avoid semver issues
