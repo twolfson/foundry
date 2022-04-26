@@ -37,7 +37,7 @@
     "test-windows-ci": "mocha --bail --reporter spec --timeout 10000"
   },
   "dependencies": {
-    "async": "~0.2.9",
+    "async": "~2.6.4",
     "buffered-spawn": "~1.1.2",
     "chalk": "~1.1.1",
     "commander": "~2.20.3",
@@ -49,10 +49,10 @@
     "chai": "~1.10.0",
     "eslint": "~4.19.1",
     "eslint-config-twolfson": "~1.0.0",
-    "foundry": "~4.5.0",
-    "foundry-release-base": "~1.0.1",
-    "foundry-release-git": "~2.0.4",
-    "foundry-release-npm": "~2.0.1",
+    "foundry": "~4.6.0",
+    "foundry-release-base": "~1.0.2",
+    "foundry-release-git": "~2.0.5",
+    "foundry-release-npm": "~2.0.3",
     "mocha": "~8.4.0",
     "stream-buffers": "~2.2.0"
   },
