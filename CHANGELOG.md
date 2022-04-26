@@ -1,4 +1,6 @@
 # foundry changelog
+4.7.0 - Updated dependencies, via @striezel in #31
+
 4.6.0 - Updated dependencies, via @striezel in #30
 
 4.5.0 - Upgraded to underscore@1.13.1 to fix vulnerabilities, via @striezel in #29
